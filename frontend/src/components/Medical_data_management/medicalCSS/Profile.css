@@ -1,0 +1,221 @@
+.profile-container {
+    
+    display: flex;
+    position: relative;
+}
+
+.profile-info {
+    flex: 1;
+    padding: 20px;
+    width: 100px;
+    
+}
+
+
+.data-box {
+    flex: 2;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left:auto;
+    
+    width: 50px;
+}
+.table {
+    width: 500px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-radius: 30px;
+    margin-left: 900px;
+}
+
+.table th, .table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    word-wrap: break-word;
+    font-weight: bold;
+}
+.custom-left-button {
+   margin-top: -9px;
+    width:500px;
+    margin-left: 900px;
+    border-radius: 0px;
+    /* Add additional styles as needed */
+}
+
+
+.table1 {
+
+    margin-top: 200px;  /* Adjust the value as needed */
+    margin-left: 10px;
+    
+    max-width: 600px; /* Adjust the maximum width as needed */
+    
+    border: 1px solid #ddd; /* Add a border to the table */
+    padding: 15px;
+    border-radius: 8px; /* Add some border radius for a rounded appearance */
+}
+
+.table1 th, .table1 td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Add a bottom border to each table cell */
+}
+
+.table1 th {
+    background-color: #f2f2f2; /* Add a background color to table header cells */
+}
+
+.table1 input[type="text"], .table1 input[type="file"], .table1 .react-datepicker-wrapper {
+    width: 100%; /* Make text inputs, file inputs, and date picker full width */
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.custom-left-button1 {
+    background-color: #10e133e1;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    width: 468px;
+    margin-left: 10px;
+    
+}
+
+.custom-left-button1:hover {
+    background-color: #05a91ec3; /* Change button background color on hover */
+}
+
+.custom-view-button1{
+    margin-left: 10px;
+    width: 468px;
+    
+    margin-top: 5px;
+    border-radius: 0px;
+   
+}
+
+
+
+
+.table2 {
+
+    margin-top: -300px;  /* Adjust the value as needed */
+    margin-left: 500px;
+    
+    max-width: 600px; /* Adjust the maximum width as needed */
+    
+    border: 1px solid #ddd; /* Add a border to the table */
+    padding: 15px;
+    border-radius: 8px; /* Add some border radius for a rounded appearance */
+}
+
+.table2 th, .table2 td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Add a bottom border to each table cell */
+}
+
+.table2 th {
+    background-color: #f2f2f2; /* Add a background color to table header cells */
+}
+
+.table2 input[type="text"], .table2 input[type="file"], .table2 .react-datepicker-wrapper {
+    width: 100%; /* Make text inputs, file inputs, and date picker full width */
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.custom-left-button2 {
+    background-color: #10e133e1;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    width: 470px;
+    position: absolute;
+    margin-top: 4px; /* Adjust the top position as needed */
+    left: 500px; /* Adjust the right position as needed */
+
+}
+
+.custom-left-button2:hover {
+    background-color: #05a91ec3; /* Change button background color on hover */
+}
+
+.custom-view-button2{
+    position: absolute;
+    margin-top: 50px;
+    left: 500px;
+    width: 470px;
+    
+    
+    border-radius: 0px;
+   
+}
+
+.table3 {
+
+    margin-top: -330px;  /* Adjust the value as needed */
+    margin-left: 1000px;
+    
+    max-width: 1000px; /* Adjust the maximum width as needed */
+    
+    border: 1px solid #ddd; /* Add a border to the table */
+    padding: 15px;
+    border-radius: 8px; /* Add some border radius for a rounded appearance */
+}
+
+.table3 th, .table3 td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Add a bottom border to each table cell */
+}
+
+.table3 th {
+    background-color: #f2f2f2; /* Add a background color to table header cells */
+}
+
+.table3 input[type="text"], .table3 input[type="file"], .table3.react-datepicker-wrapper {
+    width: 100%; /* Make text inputs, file inputs, and date picker full width */
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.custom-left-button3 {
+    background-color: #10e133e1;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    width: 459px;
+    position: absolute;
+    margin-top: 4px; /* Adjust the top position as needed */
+    left: 1000px; /* Adjust the right position as needed */
+    
+}
+
+.custom-left-button3:hover {
+    background-color: #05a91ec3; /* Change button background color on hover */
+}
+
+.custom-view-button3{
+    position: absolute;
+    margin-top: 50px;
+    left: 1000px;
+    width: 459px;
+    
+    
+    border-radius: 0px;
+   
+}
+
+
+

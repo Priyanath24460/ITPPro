@@ -1,0 +1,22 @@
+/* styles.css */
+
+.pressure-data-container {
+    margin: 20px;
+  }
+  
+  .pressure-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .pressure-table th, .pressure-table td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .pressure-table th {
+    background-color: #f2f2f2;
+  }
+  
