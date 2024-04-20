@@ -22,6 +22,9 @@ connection.once("open", () => {
   console.log("MongoDB Connection success!");
 });
 
+
+//medical management
+
 const PatientRouter = require("./routes/medical_data_manager_routes/patientsS.js");
 app.use("/patients",PatientRouter);
 
@@ -42,6 +45,30 @@ app.use("/diabetesMedicine",DiabetesMedicineRouter);
 
 const CholesterolMedicineRouter = require("./routes/medical_data_manager_routes/cholesterolMedicineRoutes.js");
 app.use("/cholesterolMedicine",CholesterolMedicineRouter);
+
+
+
+// user management
+
+
+const corsOptions = {
+  origin: 'http://localhost:3000', // Replace with your client's URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+const customerARouter = require("./routes/user_mangement_routes/customerARoutes.js");
+app.use("/customerA", customerARouter);
+
+const guardianRouter = require("./routes/user_mangement_routes/GuardianRoutes.js");
+app.use("/guardian", guardianRouter);
+
+const staffRouter = require("./routes/user_mangement_routes/StaffRoutes.js");
+app.use("/staff", staffRouter);
+
+
+
 app.listen(PORT, () => {
   console.log(`Server is up and running on port no: ${PORT}`);
 
