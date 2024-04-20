@@ -39,12 +39,9 @@ const patientSchema = new Schema({
     pressure:{
         type:String,
         required:true
-    },
-    
-    otherdiseases:{
-        type:String,
-        required:true
     }
+    
+   
 
     
 

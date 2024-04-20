@@ -46,7 +46,7 @@ export default function View(){
                 <td>{patient.nic}</td>
                 <td>{patient.name}</td>
                 <td>
-                <Link to={`/profile/${patient.nic}/${patient.name}`} className="btn btn-primary">
+                <Link to={`/profile/${patient.nic}/${patient.name}/${patient.name}`} className="btn btn-primary">
                   <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View
                 </Link>
               </td>

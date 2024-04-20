@@ -37,6 +37,11 @@ router.route("/addcholesteroldata").post(upload.single("pdfFile"),(req,res)=>{
       });
 });
 
+
+
+
+
+
 // Update the "getonecholesteroldata" route in your server
 router.route("/getonecholesteroldata/:nic").get(async (req, res) => {
   try {
@@ -56,25 +61,64 @@ router.route("/getonecholesteroldata/:nic").get(async (req, res) => {
   }
 });
 
-// Add a new route to fetch the PDF data
-router.route("/getpdf/:id").get(async (req, res) => {
+
+
+router.route("/viewpdf/:id").get(async (req, res) => {
   try {
     const cholesterolID = req.params.id;
-    const cholesterolEntry = await Cholesterol.findById(cholesterolID);
-
+    const cholesterolEntry = await Cholesterol.findById(cholesterolID );
 
     if (cholesterolEntry && cholesterolEntry.pdf && cholesterolEntry.pdf.data) {
-      res.setHeader("Content-Type", cholesterolEntry.pdf.contentType);
-      res.setHeader("Content-Disposition", `attachment; filename=${cholesterolEntry.pdf.filename}`);
+      res.setHeader('Content-Type', cholesterolEntry.pdf.contentType);
       res.send(cholesterolEntry.pdf.data);
     } else {
       res.status(404).send({ status: "PDF not found" });
     }
   } catch (err) {
     console.log(err.message);
-    res.status(500).send({ status: "Error fetching PDF", error: err.message });
+    res.status(500).send({ status: "Error with view PDF", error: err.message });
   }
 });
+
+
+
+
+
+// Update cholesterol data
+
+router.route("/update/:id").put(upload.single("pdfFile"), async (req, res) => {
+  try {
+    const cholesterolId = req.params.id;
+    const { level, date } = req.body;
+    const pdfFile = req.file;
+
+    // Find the diabetes entry by ID
+    const cholesterolEntry = await Cholesterol.findById(cholesterolId);
+
+    if (!cholesterolEntry) {
+      return res.status(404).send({ status: "cholesterol data not found" });
+    }
+
+    // Update the level and date
+    cholesterolEntry.level = level;
+    cholesterolEntry.date = date;
+
+    // Update the PDF data if a new file is provided
+    if (pdfFile) {
+      cholesterolEntry.pdf.data = pdfFile.buffer;
+      cholesterolEntry.pdf.contentType = pdfFile.mimetype;
+    }
+
+    // Save the updated diabetes entry
+    await cholesterolEntry.save();
+
+    res.status(200).send({ status: "cholesterol data updated", data: cholesterolEntry });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ status: "Error updating cholesterol data", error: err.message });
+  }
+});
+
 
 
 

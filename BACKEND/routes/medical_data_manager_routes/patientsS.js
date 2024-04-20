@@ -9,7 +9,7 @@ router.route("/add").post((req,res) =>{
     const diabetes = req.body.diabetes;
     const cholesterol = req.body.cholesterol;
     const pressure = req.body.pressure;
-    const otherdiseases = req.body.otherDiseases;
+    
 
 
 
@@ -22,7 +22,7 @@ router.route("/add").post((req,res) =>{
         diabetes,
         cholesterol,
         pressure,
-        otherdiseases
+       
     })
 
     newPatient.save().then(()=>{
@@ -56,7 +56,7 @@ router.route("/get").get((req,res)=>{
 router.route("/update").put(async(req,res) =>{
 
     
-    const{nic,name,date,diabetes,cholesterol,pressure,otherdiseases}=req.body;
+    const{nic,name,date,diabetes,cholesterol,pressure}=req.body;
 
     const updatePatient = {
         nic,
@@ -65,7 +65,7 @@ router.route("/update").put(async(req,res) =>{
         diabetes,
         cholesterol,
         pressure,
-        otherdiseases
+        
     };
     
     try {

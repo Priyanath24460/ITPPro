@@ -57,23 +57,61 @@ router.route("/getonepd/:nic").get(async (req, res) => {
 });
 
 // Add a new route to fetch the PDF data
-router.route("/getpdf/:id").get(async (req, res) => {
+router.route("/viewpdf/:id").get(async (req, res) => {
   try {
-    const pressureID = req.params.id;
-    const pressureEntry = await Pressure.findById(pressureID);
+    const PressureID = req.params.id;
+    const pressureEntry = await Pressure.findById(PressureID );
 
-
-    if (pressureEntry&& pressureEntry.pdf && pressureEntry.pdf.data) {
-      res.setHeader("Content-Type", pressureEntry.pdf.contentType);
-      res.setHeader("Content-Disposition", `attachment; filename=${pressureEntry.pdf.filename}`);
+    if (pressureEntry && pressureEntry.pdf && pressureEntry.pdf.data) {
+      res.setHeader('Content-Type', pressureEntry.pdf.contentType);
       res.send(pressureEntry.pdf.data);
     } else {
       res.status(404).send({ status: "PDF not found" });
     }
   } catch (err) {
     console.log(err.message);
-    res.status(500).send({ status: "Error fetching PDF", error: err.message });
+    res.status(500).send({ status: "Error with view PDF", error: err.message });
   }
 });
+
+
+// Update pressure data
+
+router.route("/update/:id").put(upload.single("pdfFile"), async (req, res) => {
+  try {
+    const PressureID = req.params.id;
+    const { high,low, date } = req.body;
+    const pdfFile = req.file;
+
+    // Find the diabetes entry by ID
+    const pressureEntry = await Pressure.findById(PressureID);
+
+    if (!pressureEntry) {
+      return res.status(404).send({ status: "Diabetes data not found" });
+    }
+
+    // Update the level and date
+    pressureEntry.high = high
+    pressureEntry.low = low
+    pressureEntry.date = date;
+
+    // Update the PDF data if a new file is provided
+    if (pdfFile) {
+      pressureEntry.pdf.data = pdfFile.buffer;
+      pressureEntry.pdf.contentType = pdfFile.mimetype;
+    }
+
+    // Save the updated diabetes entry
+    await pressureEntry.save();
+
+    res.status(200).send({ status: "pressure data updated", data: pressureEntry });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ status: "Error updating pressure data", error: err.message });
+  }
+});
+
+
+
 
 module.exports = router;

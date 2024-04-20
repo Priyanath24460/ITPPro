@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const pressureMedicineSchema = new Schema({
+const diabetesMedicineSchema = new Schema({
 
 
     nic:{
@@ -42,5 +42,5 @@ const pressureMedicineSchema = new Schema({
 
 })
 
-const pressureMedicine = mongoose.model("pressuremedicinedata",pressureMedicineSchema);
-module.exports = pressureMedicine;
+const diabetesMedicine = mongoose.model("diabetesmedicinedata",diabetesMedicineSchema);
+module.exports = diabetesMedicine;

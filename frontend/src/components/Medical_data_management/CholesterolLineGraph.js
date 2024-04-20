@@ -1,26 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Chart } from 'chart.js/auto';
 import * as Luxon from 'luxon';
 import 'chartjs-adapter-luxon';
+import './medicalCSS/LineGraph.css'; // Import the CSS file
 
 const LineGraph = ({ cholesterolData }) => {
   const chartRef = useRef(null);
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
 
   useEffect(() => {
     if (!cholesterolData) return;
-  
-    const dates = cholesterolData.map((entry) => Luxon.DateTime.fromISO(entry.date).toMillis());
-    const levels = cholesterolData.map((entry) => entry.level);
-  
+
+    // Filter data based on the selected year
+    const filtered = cholesterolData.filter(entry => {
+      const year = Luxon.DateTime.fromISO(entry.date).year;
+      return year === selectedYear;
+    });
+
+    const dates = filtered.map((entry) => Luxon.DateTime.fromISO(entry.date).toMillis());
+    const levels = filtered.map((entry) => entry.level);
+
     const ctx = chartRef.current.getContext('2d');
 
     if (chartRef.current.chart) {
       chartRef.current.chart.destroy();
     }
-  
+
     // Clear the existing canvas
     ctx.clearRect(0, 0, chartRef.current.width, chartRef.current.height);
-  
+
     // Create a new chart
     const newChart = new Chart(ctx, {
       type: 'line',
@@ -57,16 +66,24 @@ const LineGraph = ({ cholesterolData }) => {
         },
       },
     });
-  
+
     // Save the chart instance in the ref for future reference
     chartRef.current.chart = newChart;
-  }, [cholesterolData]);
-  
+  }, [cholesterolData, selectedYear]);
+
+  const handleYearButtonClick = (year) => {
+    setSelectedYear(year);
+  };
 
   return (
-    <div>
+    <div className="chart-container">
+      <div className="year-buttons">
+        <button onClick={() => handleYearButtonClick(2024)}>2024</button>
+        <button onClick={() => handleYearButtonClick(2023)}>2023</button>
+        <button onClick={() => handleYearButtonClick(2022)}>2022</button>
+      </div>
       <h3>Cholesterol Level Over Time</h3>
-      <canvas ref={chartRef} width="400" height="200" />
+      <canvas ref={chartRef} />
     </div>
   );
 };

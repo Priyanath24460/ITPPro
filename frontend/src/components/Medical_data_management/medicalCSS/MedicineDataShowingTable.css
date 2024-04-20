@@ -2,31 +2,28 @@
 
 .pressure-data-container {
     margin: 20px;
-    height: 400px; /* Set a fixed height for the container */
-    overflow-y: auto; /* Enable vertical scrolling */
     
   }
   
-  .pressure-table {
+  .medicine-table {
     width: 100%;
     
     margin-top: 20px;
     
   }
   
-  .pressure-table th, .pressure-table td {
+  .medicine-table th, .medicine-table td {
     border: 1px solid #dddddd;
     text-align:center;
     padding: 8px;
     
   }
   
-  .pressure-table th {
+  .medicine-table th {
     background-color: #47a5e8;
   }
 
   /* Add hover effect on table rows */
-.pressure-table tbody tr:hover {
+.medicine-table tbody tr:hover {
   background-color: #67ea8c;
 }
-  

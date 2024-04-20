@@ -34,7 +34,14 @@ app.use("/diabetes",DiabetesRouter) ;
 const CholesterolRouter = require("./routes/medical_data_manager_routes/cholesterolroutesS.js");
 app.use("/cholesterol",CholesterolRouter) ;
 
+const PressureMedicineRouter = require("./routes/medical_data_manager_routes/pressureMedicineRoutes.js");
+app.use("/pressureMedicine",PressureMedicineRouter);
 
+const DiabetesMedicineRouter = require("./routes/medical_data_manager_routes/diabetesMedicineRoutes.js");
+app.use("/diabetesMedicine",DiabetesMedicineRouter);
+
+const CholesterolMedicineRouter = require("./routes/medical_data_manager_routes/cholesterolMedicineRoutes.js");
+app.use("/cholesterolMedicine",CholesterolMedicineRouter);
 app.listen(PORT, () => {
   console.log(`Server is up and running on port no: ${PORT}`);
 
