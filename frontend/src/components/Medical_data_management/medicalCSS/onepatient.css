@@ -1,0 +1,139 @@
+.redText {
+    color: red;
+  }
+  .greenText {
+    color: rgb(10, 213, 7);
+  }
+
+
+  .profile-container{
+    
+    display: flex;
+    position: relative;
+}
+
+.profile-info {
+    flex: 3;
+    padding: 60px;
+    width: 400px;
+    
+}
+
+
+.NIC{
+  color: #276CBD;
+  margin-left: 10px;
+  font-size: 30px;
+}
+.Name{
+  color: #276CBD;
+  margin-left: 10px;
+  font-size: 30px;
+}
+  
+/* Define table styles */
+.tablevalue {
+  width: 300px;
+  
+  margin-top: 25px;
+  margin-left:  50px;
+  
+}
+
+.tablevalue th, .tablevalue td {
+  
+  border: none; /* Add borders to cells */
+  padding: 8px;
+  text-align: left;
+}
+
+.tablevalue th {
+  background-color: #f2f2f2; /* Light gray background for table header */
+}
+
+/* Style the button */
+.editbutton{
+  
+ margin-top:5px;
+  margin-left: 50px;
+  width: 300px;
+  background-color: rgb(246, 228, 66);
+  border-radius: 10px;
+}
+
+
+.tableedit {
+  width: 300px;
+  
+  margin-top: 25px;
+  margin-left:  60px;
+  
+}
+
+.tableedit th, .tableedit td {
+  
+  border: none; /* Add borders to cells */
+  padding: 8px;
+  text-align: left;
+}
+
+.tableedit input[type="text"]{
+
+  margin-left:  60px;
+}
+
+.tableedit th {
+  background-color: #f2f2f2; /* Light gray background for table header */
+}
+
+
+
+.savebutton{
+  
+  margin-top:5px;
+   margin-left: 50px;
+   width: 150px;
+   background-color: rgb(246, 228, 66);
+   border-radius: 10px;
+ }
+ .cancelbutton{
+  
+  margin-top:-15px;
+   margin-left: 0px;
+   width: 150px;
+   background-color: rgb(246, 228, 66);
+   border-radius: 10px;
+ }
+
+
+
+.table1-wrapper{
+  box-sizing: border-box;
+  position: absolute;
+  width: 500px; /* Adjust width as needed */
+  height: 200px; /* Adjust height as needed */
+  left: 450px; /* Adjust this value to move the table to the left */
+  margin-top: 20px;
+  background: #FFFFFF;
+  border: 2px solid #276CBD;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  
+
+}
+
+.table2-wrapper{
+  box-sizing: border-box;
+  position: absolute;
+  width: 400px; /* Adjust width as needed */
+  height: 200px; /* Adjust height as needed */
+  left: 1050px; /* Adjust this value to move the table to the left */
+  margin-top: 20px;
+  background: #FFFFFF;
+  border: 2px solid #276CBD;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  
+
+}
+

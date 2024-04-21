@@ -1,0 +1,29 @@
+/* styles.css */
+
+.pressure-data-container {
+    margin: 20px;
+    
+  }
+  
+  .medicine-table {
+    width: 100%;
+    
+    margin-top: 20px;
+    
+  }
+  
+  .medicine-table th, .medicine-table td {
+    border: 1px solid #dddddd;
+    text-align:center;
+    padding: 8px;
+    
+  }
+  
+  .medicine-table th {
+    background-color: #47a5e8;
+  }
+
+  /* Add hover effect on table rows */
+.medicine-table tbody tr:hover {
+  background-color: #67ea8c;
+}

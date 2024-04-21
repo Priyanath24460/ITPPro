@@ -1,0 +1,71 @@
+/* Admindashboard.css */
+
+/* Body styles */
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #343a40;
+    color: #fff;
+    width: 250px;
+    overflow-y: auto;
+  }
+  
+  .sidebar-sticky {
+    position: relative;
+    top: 48px;
+  }
+  
+  .sidebar-brand {
+    padding: 20px 15px;
+    font-size: 1.25rem;
+    line-height: 20px;
+    text-align: center;
+    background-color: #292123;
+  }
+  
+  .nav-link {
+    color: #fff !important;
+  }
+  
+  .nav-link:hover {
+    background-color: #135496;
+  }
+  
+  .main-content {
+    margin-left: 250px;
+    padding: 20px;
+    width: 100% 
+  }
+  
+  /* Chart placeholders styles */
+  .chart-placeholder {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Set the width to 100% */
+  }
+  
+  /* Profile button styles */
+  .profile-button {
+    margin-left: 100%; /* Move the button to the right */
+  }

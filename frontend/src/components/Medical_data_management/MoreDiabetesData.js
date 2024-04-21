@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import DiabetesLineGraph from './DiabetesLineGraph';
 import "./medicalCSS/MorePressureCSS.css";
+import MedicineDataShowingTable from './MedicineDataShowingTable';
 
 export default function DiabetesData() {
   const { nic } = useParams();
@@ -12,6 +13,13 @@ export default function DiabetesData() {
   const [editedLevel, setEditedLevel] = useState("");
   const [editedDate, setEditedDate] = useState("");
   const [pdfFileDiabetes, setPdfFileDiabetes] = useState(null);
+
+
+
+
+    // State variables related to cholesterol medicine data
+    const [DiabetesMedicineData, setDiabetesMedicineData] = useState([]);
+    const [medicinestatus, setmedicineStatus] = useState("");
 
 
 
@@ -174,8 +182,55 @@ const resetEditingState = () => {
   setPdfFileDiabetes(null);
 };
 
-// ... (existing code)
 
+ //////////////////////////////////////////pressureMedicine ////////////////////////////////////////////////
+
+ const fetchDataMedicine = async () => {
+  try {
+    const response = await axios.get(`http://localhost:8070/diabetesMedicine/get_diabetes_Medicine/${nic}`);
+    const data = response.data.data;
+    if (data) {
+      setDiabetesMedicineData(data);
+      setStatus("diabetes data fetched successfully");
+    } else {
+      setDiabetesMedicineData([]);
+      setStatus("diabetes data not found");
+    }
+  } catch (error) {
+    console.error("Error fetching diabetes data:", error);
+    setStatus("Error fetching diabetes data");
+  }
+};
+useEffect(() => {
+
+
+fetchDataMedicine();
+}, [nic]);
+
+
+
+const handleSaveEditMedicine = async (entryId,updatedData) => {
+  try {
+          
+          
+      
+          // Make an API call to update the cholesterol medicine data
+          await axios.put(`http://localhost:8070/diabetesMedicine//update_diabetes_Medicine/${entryId}`, updatedData);
+      
+          // Reset editing state
+          resetEditingState();
+      
+         // Refetch cholesterol medicine data after saving changes
+         fetchDataMedicine();
+            
+      
+          // Update status
+          //setStatus("Cholesterol medicine data updated successfully");
+        } catch (error) {
+          console.error("Error updating cholesterol medicine data:", error);
+          //setStatus("Error updating cholesterol medicine data");
+        }
+  };
 
   
   
@@ -185,7 +240,9 @@ const resetEditingState = () => {
       <h3>Diabetes Data for NIC: {nic}</h3>
       {diabetesData ? (
         <div>
+         
           <DiabetesLineGraph diabetesData={diabetesData} />
+       <div className="pressure-data-container">  
           <table className="pressure-table">
             <thead>
               <tr>
@@ -221,7 +278,7 @@ const resetEditingState = () => {
                     ) : (
                       new Date(entry.date).toLocaleDateString('en-US', {
                         year: 'numeric',
-                        month: '2-digit',
+                        month: 'long',
                         day: '2-digit',
                       })
                     )}
@@ -254,7 +311,19 @@ const resetEditingState = () => {
                 </tr>
               ))}
             </tbody>
+         
           </table>
+        </div>  
+          <MedicineDataShowingTable
+                MedicineData={DiabetesMedicineData}
+                status={medicinestatus}
+                fetchDataMedicine={fetchDataMedicine}
+                //handleEdit={handleEditMedicine}
+                handleSaveEdit={handleSaveEditMedicine}
+                reset={resetEditingState}
+                //handleCancelEdit={handleCancelEditMedicine}
+      />
+
         </div>
       ) : (
         <p>{status}</p>

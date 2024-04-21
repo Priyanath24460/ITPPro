@@ -9,7 +9,7 @@ export default function View(){
     const [patients, setPatients] = useState([]);
 
 
-    function getallpatient() {
+   /* function getallpatient() {
         axios.get("http://localhost:8070/patients/get").then((res) => {
           setPatients(res.data);
         }).catch((err) => {
@@ -21,7 +21,20 @@ export default function View(){
        
     
         getallpatient();
-      }, [])
+      }, [])*/
+
+
+      useEffect(() => {
+        function getCustomersA() {
+          axios.get("http://localhost:8070/customerA/").then((res) => {
+            setPatients(res.data);
+          }).catch((err) => {
+            alert(err.message);
+          });
+        }
+    
+        getCustomersA();
+      }, []);
 
 
 
@@ -45,8 +58,9 @@ export default function View(){
                 <td scope="row">{index + 1}</td>
                 <td>{patient.nic}</td>
                 <td>{patient.name}</td>
+                <td>{patient.age}</td>
                 <td>
-                <Link to={`/profile/${patient.nic}/${patient.name}`} className="btn btn-primary">
+                <Link to={`/profile/${patient.nic}/${patient.name}/${patient.name}`} className="btn btn-primary">
                   <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View
                 </Link>
               </td>

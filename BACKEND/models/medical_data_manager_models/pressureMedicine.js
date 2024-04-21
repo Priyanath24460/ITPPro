@@ -42,5 +42,5 @@ const pressureMedicineSchema = new Schema({
 
 })
 
-const pressureMedicine = mongoose.model("pressureMedicineData",pressureMedicineSchema);
+const pressureMedicine = mongoose.model("pressuremedicinedata",pressureMedicineSchema);
 module.exports = pressureMedicine;
