@@ -12,7 +12,7 @@ export default function AddPatient(){
     const[diabetes,setDiabetes] = useState("No");
     const[cholesterol,setCholesterol] = useState("No");
     const[pressure,setPressure] = useState("No");
-    const [otherDiseases, setOtherDiseases] = useState("No");
+   // const [otherDiseases, setOtherDiseases] = useState("No");
     const [selectedDate, setSelectedDate] = useState(new Date()); // Add state for date
 
     function sendDate(){
@@ -24,7 +24,7 @@ export default function AddPatient(){
             diabetes,
             cholesterol,
             pressure,
-            otherDiseases,
+           // otherDiseases,
         }
 
         axios.post("http://localhost:8070/patients/add",newPatient).then(()=>{
@@ -188,7 +188,7 @@ export default function AddPatient(){
           </div>
         </div>
 
-        <div className="mb-3">
+       {/* <div className="mb-3">
           <label htmlFor="otherDiseases" className="form-label">
             Other Diseases
           </label>
@@ -199,7 +199,7 @@ export default function AddPatient(){
             value={otherDiseases}
             onChange={(e) => setOtherDiseases(e.target.value)}
           />
-        </div>
+          </div> */}
 
         {/* Similar radio button structure for cholesterol and pressure */}
 
