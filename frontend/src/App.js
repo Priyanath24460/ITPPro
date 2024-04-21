@@ -49,6 +49,22 @@ import ResidentDetails from './components/room_management/ResidentDetails';
 import AddResident from './components/room_management/AddResident';
 import EditResident from './components/room_management/EditResident';
 
+
+// staff management
+
+
+import UpDate from './components/staff_management/Update'
+import Delete from './components/staff_management/Delete';
+import AllStaff from "./components/staff_management/AllStaff";
+import AllPayInfo from './components/staff_management/AllPayInfo';
+import UpdatePayInfo from './components/staff_management/UpdatePayInfo';
+import SalaryForm from './components/staff_management/SalaryForm';
+import AllPayRolls from './components/staff_management/AllPayRolls';
+import Register from './components/staff_management/Register';
+
+
+
+
 function App() {
   return (
     <Router>
@@ -94,6 +110,18 @@ function App() {
             <Route path="/getResident/:NIC" element={<ResidentDetails />} />
             <Route path="/addResident" element={<AddResident />} />
             <Route path="/updateResident/:NIC" element={<EditResident />} />
+           
+            
+
+
+          <Route path="/AllPayInfo" element={<AllPayInfo />} />
+          <Route path="/addPayInFo" element={<Register />} />
+          
+          <Route path="/delete/:nic" element={<Delete/>}/>
+          <Route path="/addPayRoll" element={<SalaryForm/>}/>
+          <Route path="/upDate" element={<UpdatePayInfo/>}/>
+          <Route path="/PayRoll" element={<AllPayRolls/>}/>
+
 
 
         </Routes>
