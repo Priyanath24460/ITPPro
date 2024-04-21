@@ -36,6 +36,19 @@ import Staffprofile from './components/user_Management/Staffprofile';
 import Admindashboard from './components/user_Management/Admindashboard';
 import LoginPieChart from './components/user_Management/Loginchart';
 
+
+// room management
+
+import AddRoom from './components/room_management/AddRoom';
+import EditRoom from './components/room_management/EditRoom';
+import RoomDetails from './components/room_management/RoomDetails';
+import NavBar from './components/room_management/NavBar';
+import Home from './components/room_management/Home';
+import AllResidents from './components/room_management/AllResidents';
+import ResidentDetails from './components/room_management/ResidentDetails';
+import AddResident from './components/room_management/AddResident';
+import EditResident from './components/room_management/EditResident';
+
 function App() {
   return (
     <Router>
@@ -49,6 +62,7 @@ function App() {
           <Route path="/pressuremore/:nic" element={<MorePressureData />} />
           <Route path="/diabetesmore/:nic" element={<MoreDiabetesData />} />
           <Route path="/cholesterolmore/:nic" element={<MoreCholesterolData />} />
+         
          
           <Route path="/loginevent" element={<LoginPieChart/>}/>
           <Route path="/admindashboard" element={<Admindashboard/>}/>
@@ -71,6 +85,15 @@ function App() {
           <Route path="/update/:nic" element={<Update />} />
           <Route path="/elderprofile/:nic" element={<Elderprofile />} />
          
+           
+          <Route path="/roomHome" element={<Home />} />
+            <Route path="/addRoom" element={<AddRoom />} />
+            <Route path="/updateRoom/:roomID" element={<EditRoom />} />
+            <Route path="/getRoom/:roomID" element={<RoomDetails />} />
+            <Route path="/allAssignments" element={<AllResidents />} />
+            <Route path="/getResident/:NIC" element={<ResidentDetails />} />
+            <Route path="/addResident" element={<AddResident />} />
+            <Route path="/updateResident/:NIC" element={<EditResident />} />
 
 
         </Routes>

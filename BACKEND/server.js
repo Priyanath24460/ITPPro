@@ -69,6 +69,19 @@ app.use("/staff", staffRouter);
 
 
 
+
+
+// room management
+
+
+const roomsRouter = require("./routes/room_management_routes/rooms.js");
+app.use("/rooms",roomsRouter);
+
+const residentsRouter = require("./routes/room_management_routes/residents.js");
+app.use("/residents",residentsRouter);
+
+
+
 app.listen(PORT, () => {
   console.log(`Server is up and running on port no: ${PORT}`);
 
