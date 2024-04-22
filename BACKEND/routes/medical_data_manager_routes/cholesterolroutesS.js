@@ -119,6 +119,26 @@ router.route("/update/:id").put(upload.single("pdfFile"), async (req, res) => {
   }
 });
 
+//  delete route for cholesterol data
+router.route("/delete/:id").delete(async (req, res) => {
+  try {
+    const cholesterolId = req.params.id;
+
+    // Find the cholesterol entry by ID and delete it
+    const deletedCholesterol = await Cholesterol.findByIdAndDelete(cholesterolId);
+
+    if (!deletedCholesterol) {
+      return res.status(404).send({ status: "Cholesterol data not found" });
+    }
+
+    res.status(200).send({ status: "Cholesterol data deleted", data: deletedCholesterol });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ status: "Error deleting cholesterol data", error: err.message });
+  }
+});
+
+
 
 
 

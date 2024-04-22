@@ -154,6 +154,29 @@ export default function CholesterolData() {
     setEditedDate("");
     setPdfFile(null);
   };
+
+ // Function to delete cholesterol data by ID
+const handleDeleteClick = async (entryId) => {
+  try {
+    // Ask for confirmation before deleting
+    const confirmDelete = window.confirm("Are you sure you want to delete this data?");
+    
+    // If user confirms deletion, proceed with the delete request
+    if (confirmDelete) {
+      const response = await axios.delete(`http://localhost:8070/cholesterol/delete/${entryId}`);
+      if (response.status === 200) {
+        // If deletion is successful, refetch the cholesterol data
+        fetchData();
+        console.log("Cholesterol data deleted successfully");
+      } else {
+        console.error("Failed to delete cholesterol data");
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting cholesterol data:", error);
+  }
+};
+
   
 
 
@@ -338,9 +361,15 @@ export default function CholesterolData() {
                       <button onClick={() => handleCancelEdit()}>Cancel</button>
                     </>
                     ) : (
+                      <>
                       <button onClick={() => handleEditClick(entry._id, entry.level, entry.date)}>
                         Edit
                       </button>
+                       
+                       <button onClick={() => handleDeleteClick(entry._id)}>
+                          Delete
+                     </button>
+                     </>
                     )}
                   </td>
                 </tr>

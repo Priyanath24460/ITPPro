@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import axios from "axios";
 import { useParams, Link } from 'react-router-dom';
 import './medicalCSS/Profile.css';
@@ -27,6 +27,14 @@ export default function AddHealthData() {
     const [lowPressure, setLowPressure] = useState("");
     const [pressurePdfFile, setPressurePdfFile] = useState(null);
     const [pressureDate, setPressureDate] = useState(new Date());
+
+
+
+    useEffect(() => {
+        // Set Cholesterol section visible when component mounts
+        setCholesterolVisible(true);
+    }, []);
+
 
     const handleCholesterolMedicineSubmit = (medicineData) => {
         // Add logic to submit cholesterol medicine data
@@ -221,11 +229,11 @@ export default function AddHealthData() {
                                 
                     </table>
 
-                                                <button type="submit" className="btn btn-primary custom-left-button3">
+                                                <button type="submit" className="addbutton_medical_pofile">
                                                 Add
                                                 </button>
 
-                                                <Link to={`/cholesterolmore/${nic}`} className="btn btn-primary custom-view-button3  ">
+                                                <Link to={`/cholesterolmore/${nic}`} className="viewbutton_medical_pofile">
                 <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cholesterol More
             </Link>                        
             </form> 
@@ -298,11 +306,11 @@ export default function AddHealthData() {
                                 
                     </table>
 
-                                                <button type="submit" className="btn btn-primary custom-left-button3">
+                                                <button type="submit" className="addbutton_medical_pofile">
                                                 Add
                                                 </button> 
 
-                                                <Link to={`/diabetesmore/${nic}`} className="btn btn-primary custom-view-button3">
+                                                <Link to={`/diabetesmore/${nic}`} className="viewbutton_medical_pofile">
                 <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View Diabetes More
             </Link>
             </form>
@@ -389,11 +397,11 @@ export default function AddHealthData() {
                         
              </table>
 
-                <button type="submit" className="btn btn-primary custom-left-button3">
+                <button type="submit" className="addbutton_medical_pofile">
                 Add
                 </button> 
 
-                <Link to={`/pressuremore/${nic}`} className="btn btn-primary custom-view-button3">
+                <Link to={`/pressuremore/${nic}`} className="viewbutton_medical_pofile">
                 <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View Pressure More
             </Link>
             </form>

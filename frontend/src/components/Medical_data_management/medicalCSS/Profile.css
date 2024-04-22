@@ -234,12 +234,12 @@
     margin-bottom: 10px;
 
 }
-.custom-left-button3 {
+.addbutton_medical_pofile{
     background-color: #10e133e1;
     color: #fff;
     padding: 10px 15px;
     border: none;
-    border-radius: 0px;
+    border-radius: 5px;
     cursor: pointer;
     width: 600px;
     position: absolute;
@@ -248,19 +248,29 @@
     height: 40px;
 }
 
-.custom-left-button3:hover {
+.addbutton_medical_pofile:hover {
     background-color: #05a91ec3; /* Change button background color on hover */
 }
 
-.custom-view-button3{
-    position: absolute;
+
+.viewbutton_medical_pofile {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Change cursor to pointer on hover */
     margin-top: 360px;
     margin-left: 350px;
     width: 600px;
-    
-    
-    border-radius: 0px;
-   
+    position: absolute;
+    text-align: center;
+}
+
+.viewbutton_medical_pofile:hover {
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 
