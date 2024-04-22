@@ -53,8 +53,8 @@ switch (role) {
   case 'Meal Manager':
     navigate('/financial-manager-dashboard');
     break;
-  case 'staff':
-    navigate('/staff-dashboard');
+  case 'Medical Manager':
+    navigate('/get');
     break;
   default:
     navigate('/default'); // Redirect to a default page if role is not recognized
