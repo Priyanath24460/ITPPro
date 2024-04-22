@@ -72,9 +72,10 @@ function App() {
         <Header />
         <Routes>
           <Route path="/get" element={<Medicalinterface />} />
-          <Route path="/addM" element={<AddPatient />} />
+          
           <Route path="/medicine" element={<AddPressureMedicine />} />
-          <Route path="/profile/:nic/:name/*" element={ProfileRoutes()} />
+          <Route path="/profile/:nic/:name/:age/:gender/*" element={ProfileRoutes()} />
+          <Route path="/DataAddForm/:nic/:name/:age/:gender/*" element={<AddPatient />} />
           <Route path="/pressuremore/:nic" element={<MorePressureData />} />
           <Route path="/diabetesmore/:nic" element={<MoreDiabetesData />} />
           <Route path="/cholesterolmore/:nic" element={<MoreCholesterolData />} />

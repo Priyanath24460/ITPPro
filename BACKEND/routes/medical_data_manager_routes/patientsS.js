@@ -5,6 +5,8 @@ router.route("/add").post((req,res) =>{
 
     const nic = req.body.nic;
     const name = req.body.name;
+    const age = req.body.age;
+    const gender = req.body.gender;
     const date = req.body.date;
     const diabetes = req.body.diabetes;
     const cholesterol = req.body.cholesterol;
@@ -18,6 +20,8 @@ router.route("/add").post((req,res) =>{
 
         nic,
         name,
+        age,
+        gender,
         date,
         diabetes,
         cholesterol,
@@ -56,11 +60,13 @@ router.route("/get").get((req,res)=>{
 router.route("/update").put(async(req,res) =>{
 
     
-    const{nic,name,date,diabetes,cholesterol,pressure}=req.body;
+    const{nic,name,age,gender,date,diabetes,cholesterol,pressure}=req.body;
 
     const updatePatient = {
         nic,
         name,
+        age,
+        gender,
         date,
         diabetes,
         cholesterol,

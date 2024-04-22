@@ -104,7 +104,7 @@ export default function HealthMedicineForm({ onSubmit, condition,nic,name }) {
         </tbody>
     </table>
 
-    <button type="submit" className="btn btn-primary custom-left-button1">
+    <button type="submit" className="medicine_add_button">
         Add
     </button>
 </form>

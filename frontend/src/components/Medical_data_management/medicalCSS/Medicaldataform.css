@@ -27,18 +27,19 @@
     margin-bottom: 10px;
 }
 
-.custom-left-button1 {
+.medicine_add_button{
     background-color: #10e133e1;
     color: #fff;
     padding: 10px 15px;
     border: none;
-    border-radius: 0px;
+    border-radius: 5px;
     cursor: pointer;
     width: 600px;
     margin-left: 350px;
+    margin-top: 5px;
     
 }
 
-.custom-left-button1:hover {
+.medicine_add_button:hover {
     background-color: #05a91ec3; /* Change button background color on hover */
 }

@@ -48,6 +48,8 @@ export default function View(){
               <th scope="col">#</th>
               <th scope="col">NIC</th>
               <th scope="col">Name</th>
+              <th scope="col">Age</th>
+
               <th scope="col">view</th>
              
             </tr>
@@ -60,8 +62,14 @@ export default function View(){
                 <td>{patient.name}</td>
                 <td>{patient.age}</td>
                 <td>
-                <Link to={`/profile/${patient.nic}/${patient.name}/${patient.name}`} className="btn btn-primary">
+                <Link to={`/DataAddForm/${patient.nic}/${patient.name}/${patient.age}/${patient.gender}`} className="btn btn-primary">
                   <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View
+                </Link>
+              </td>
+
+              <td>
+                <Link to={`/profile/${patient.nic}/${patient.name}/${patient.age}/${patient.gender}`} className="btn btn-primary">
+                  <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;profile
                 </Link>
               </td>
                

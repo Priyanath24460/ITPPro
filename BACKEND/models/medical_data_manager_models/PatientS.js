@@ -17,6 +17,17 @@ const patientSchema = new Schema({
         required:true
 
     },
+
+    age:{
+        type:Number,
+        require:true
+    },
+
+    gender : {
+        type : String,
+        required : true
+    },
+
     date: {
         type: Date,  // Assuming date is stored as a Date in MongoDB
         default: Date.now  // Default to the current date when creating a new record

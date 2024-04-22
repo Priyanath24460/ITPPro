@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 export default function Profile(){
 
-    const { nic, name } = useParams();
+    const { nic} = useParams();
     const [patient, setPatient] = useState({});
     const [editMode, setEditMode] = useState(false);
     const [editedData, setEditedData] = useState({});
@@ -81,8 +81,11 @@ export default function Profile(){
 
         <div >
             <div className="table1-wrapper">
-                <h1 className="NIC">NIC : {nic}</h1>
-                <h1 className="Name">Name: {name}</h1>
+                <h1 className="NIC">NIC : {patient?.patient?.nic}</h1>
+                <h1 className="Name">Name: {patient?.patient?.name}</h1>
+                <h1 className="Age">Age: {patient?.patient?.age}</h1>
+                <h1 className="Age">gender: {patient?.patient?.gender}</h1>
+
              </div>
 
       <div className="table2-wrapper">

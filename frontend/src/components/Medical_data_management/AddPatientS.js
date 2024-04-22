@@ -2,13 +2,15 @@ import React,{useState} from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { useParams, Link } from 'react-router-dom';
 
 
 export default function AddPatient(){
+    
+  const { nic, name,age,gender } = useParams();
 
-    const[nic,setNic] = useState("");
-    const[name,setName] = useState("");
+    //const[nic,setNic] = useState("");
+    //const[name,setName] = useState("");
     const[diabetes,setDiabetes] = useState("No");
     const[cholesterol,setCholesterol] = useState("No");
     const[pressure,setPressure] = useState("No");
@@ -20,6 +22,8 @@ export default function AddPatient(){
         const newPatient = {
             nic,
             name,
+            age,
+            gender,
             date: selectedDate,
             diabetes,
             cholesterol,
@@ -29,8 +33,8 @@ export default function AddPatient(){
 
         axios.post("http://localhost:8070/patients/add",newPatient).then(()=>{
             //alert("Student added")
-              setNic("");
-              setName("");
+              //setNic("");
+              //setName("");
               setDiabetes("");
               setCholesterol("");
               setPressure("");
@@ -55,9 +59,8 @@ export default function AddPatient(){
             className="form-control"
             id="nic"
             placeholder="Enter Patient NIC"
-            onChange={(e) => {
-              setNic(e.target.value);
-            }}
+            value={nic} // Set value of nic input
+            readOnly // Make the input read-only since it's coming from URL params
           />
         </div>
 
@@ -70,9 +73,37 @@ export default function AddPatient(){
             className="form-control"
             id="name"
             placeholder="Enter Patient name"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
+            value={name} // Set value of name input
+            readOnly // Make the input read-only since it's coming from URL params
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="age" className="form-label">
+            Age
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="age"
+            placeholder="Enter Patient name"
+            value={age} // Set value of name input
+            readOnly // Make the input read-only since it's coming from URL params
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="gender" className="form-label">
+            Age
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="gender"
+            placeholder="Enter Patient name"
+            value={gender} // Set value of name input
+            readOnly // Make the input read-only since it's coming from URL params
             required
           />
         </div>
