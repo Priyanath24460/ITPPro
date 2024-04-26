@@ -1,112 +1,123 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import './staffCss/allpayinfo.css';
 
 export default function AllPayInfo() {
-
-    const [payinfo, setPayInfo] = useState([]);
+    const [payInfoData, setPayInfoData] = useState([]);
 
     useEffect(() => {
-        function getPayInfo() {
-            axios.get("http://localhost:8070/payinfo/").then((res) => {
-                setPayInfo(res.data);
-            }).catch((err) => {
-                alert(err.message);
-            })
+        function getPayInfoData() {
+            axios.get("http://localhost:8070/payinfo/")
+                .then((res) => {
+                    setPayInfoData(res.data);
+                })
+                .catch((err) => {
+                    alert(`Failed to fetch pay information: ${err.message}`);
+                });
         }
-        getPayInfo();
-    }, [])
-    
+        getPayInfoData();
+    }, []);
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        navigate('/stafflogin');
+    };
 
     return (
-        <div style={{ ...containerStyle, textAlign: 'center' }}>
-            <h1 style={titleStyle}>Payment Information</h1>
-            <hr style={separatingLineStyle} />
-            <div>
-                {payinfo.map((payinfo) => (
-                    <div key={payinfo._id} style={payInfoStyle}>
-                        <div>
-                            <h3>Basic Salary</h3>
-                            <p>Admin Basic Salary: {payinfo.adminBasic}</p>
-                            <p>Manager Basic Salary: {payinfo.managerBasic}</p>
+        <div className="main-container">
+            {/* Sidebar */}
+            <nav className="sidebar">
+                <div className="sidebar-header">
+                    <h3 className="sidebar-title">Staff Financial Manager</h3>
+                    <button className="btn btn-profile">
+                        <Link to="/staffprofile" className="profile-link">View Profile</Link>
+                    </button>
+                </div>
+
+                <div className="sidebar-menu">
+                    <ul className="nav flex-column">
+                        <li className="nav-item">
+                            <Link to="/staff" className="nav-link-staffdb">
+                                Home
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/getallpayrolls" className="nav-link-staffdb">
+                                All Paysheets
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/getallstaff" className="nav-link-staffdb">
+                            Staff Directory
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/addPayInFo" className="nav-link-staffdb">
+                                Add Pay Details
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/AllPayInfo" className="nav-link-staffdb-currentpage">
+                                All Payment Information
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="sidebar-footer">
+                    <button className="btn btn-logout" onClick={handleLogout}>
+                        <Link to="/stafflogin" className="logout-link">Logout</Link>
+                    </button>
+                </div>
+            </nav>
+
+            {/* Main content area */}
+            <div className="content-container">
+            <div className="container-fluid">
+            <div className="content-wrapper">
+            <div className="top-right-text">
+                            <h2>Leisure Home</h2>
+                            {/* Paragraph "Human Care Center" below the top right text */}
+                            
+                            <p>Human Care Center</p>
                         </div>
-                        <hr style={dottedLineStyle} />
-                        <div>
-                            <h4>Bonus :  {payinfo.bonus}</h4>
-                        </div>
-                        <hr style={dottedLineStyle} />
-                        <div>
-                            <h4>OT Rate : {payinfo.OTrate}</h4>
-                        </div>
-                        <div>
-                            <Link to={`/update`} style={updateButtonStyle} className="btn btn-primary mr-2">Update</Link>
-                        </div>
-                    </div>
-                ))}
+                <hr className="separating-line-style" />
+                <p className='title-style'>All Payment Information</p>
+                {/* Table for payment information */}
+                <div className="table-container">
+                    <table className="table-style">
+                        
+                        <thead>
+                            <tr>
+                                <th className="table-header-style">Role</th>
+                                <th className="table-header-style">Basic Salary</th>
+                                <th className="table-header-style">Bonus</th>
+                                <th className="table-header-style">OT Rate</th>
+                                <th className="table-header-style">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {payInfoData.map((payInfo) => (
+                                <tr key={payInfo._id}>
+                                    <td className="table-data-style">{payInfo.role}</td>
+                                    <td className="table-data-style">{payInfo.basicSalary}</td>
+                                    <td className="table-data-style">{payInfo.bonus}</td>
+                                    <td className="table-data-style">{payInfo.OTrate}</td>
+                                    <td className="table-data-style">
+                                    <Link to={`/updatesalarayinfo/${payInfo._id}`} className="updatepayinfo-button-style">
+                                Update
+                            </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
             </div>
         </div>
     );
-    
-    
 }
-
-const containerStyle = {
-    margin: '20px auto',
-    padding: '20px',
-    maxWidth: '800px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#f8f9fa', // Light gray background
-};
-
-const titleStyle = {
-    textAlign: 'center',
-    color: '#28a745', // Green title color
-};
-
-const payInfoStyle = {
-    backgroundColor: '#fff', // White background for each pay info section
-    padding: '20px',
-    marginBottom: '20px',
-    borderRadius: '5px',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-};
-
-
-const buttonStyle = {
-    backgroundColor: '#dc3545',
-    color: '#fff',
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    textDecoration: 'none',
-  };
-  
-  const updateButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: '#218838', /* Green */
-    border: 'none',
-    color: 'white',
-    padding: '7px 20px',
-    textAlign: 'center',
-    textDecoration: 'none',
-    display: 'inline-block',
-    fontSize: '16px',
-    marginRight: '10px'
-  };
-
-
-const separatingLineStyle = {
-    borderTop: '2px solid #ccc',
-    marginBottom: '20px'
-};
-
-const dottedLineStyle = {
-    borderTop: '1px dotted #ccc',
-    marginBottom: '10px'
-};
-
-
-

@@ -1,0 +1,80 @@
+/* Main container style */
+.main-container {
+    display: flex; /* Use flexbox layout to position sidebar and content container side by side */
+    height: 100vh; /* Set the height of the main container to fill the viewport height */
+}
+
+/* Sidebar style */
+.sidebar {
+    background-color: #E2F8E0;
+    width: 250px; /* Fixed width for the sidebar */
+    background-color: #f8f9fa; /* Light gray background color */
+    padding: 20px; /* Padding inside the sidebar */
+    height: 100vh; /* Full height of the viewport */
+    box-sizing: border-box; /* Include padding and border in width and height calculations */
+}
+
+/* Content container style */
+.content-container {
+    flex-grow: 1;
+  padding: 20px;
+  width: calc(100% - 250px); /* Adjusting the width */
+  margin-left: 250px; /* Aligning with the sidebar */
+  box-sizing: border-box;/* Include padding and border in width and height calculations */
+}
+
+.title-style {
+    text-align: left;
+    font-size: 24px;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.separating-line-style {
+    border-top: 2px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    padding: 0 20px; /* Padding around the table */
+}
+
+.table-style {
+    width: 100%; /* Full width of the content container */
+    border-collapse: collapse; /* Collapse table borders */
+    margin-bottom: 20px;
+}
+
+.table-header-style {
+    padding: 10px;
+    color: black;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc; /* Add border below headers */
+}
+
+.table-data-style {
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Add border below rows */
+}
+
+.updatepayinfo-button-style {
+    background-color: #218838;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.nav-link-staffdb-currentpage{
+    background-color: #ffffff; /* Customize this color as needed */
+    font-weight: bold;
+    display: block;
+    padding: 15px; /* Increase padding for more space */
+    color: black !important; /* Force black text color */
+    text-decoration: none;
+    border: 2px solid #1F960B;
+    border-radius: 30px;
+}

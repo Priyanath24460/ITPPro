@@ -1,102 +1,145 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import './staffCss/salaryform.css';
 
-export default function SalaryForm() {
-    const [name, setName] = useState("");
-    const [nic, setNIC] = useState("");
-    const [position, setPosition] = useState("");
-    const [basicSalary, setBasicSalary] = useState("");
-    const [bonus, setBonus] = useState("");
-    const [OTHours, setOTHours] = useState("");
-    const [OTRate, setOTRate] = useState("");
-    const [totalSalary, setTotalSalary] = useState(0);
-
-    useEffect(() => {
-        // Fetch basic salary, bonus, and OT rate from the database
-        fetchPayInfo();
-    }, []);
-
-    const fetchPayInfo = async () => {
-        try {
-            const response = await axios.get("http://localhost:8070/payInfo");
-            const payInfo = response.data[0]; // Assuming there's only one record
-            setBasicSalary(payInfo.adminBasic); // Assuming adminBasic is the basic salary
-            setBonus(payInfo.bonus);
-            setOTRate(payInfo.OTrate);
-        } catch (error) {
-            console.error("Error fetching pay information:", error);
-        }
-    };
-
-    const calculateTotalSalary = () => {
-        // Assuming OT rate is provided per hour
-        const OTSalary = OTHours * OTRate;
-        const total = parseInt(basicSalary) + parseInt(bonus) + OTSalary;
-        setTotalSalary(total);
-    };
-
+const AddSalaryPage = () => {
+    const location = useLocation();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        calculateTotalSalary();
+    // Retrieve the staff member's data from location state
+    const { state: staff } = location;
 
-        const salaryDetails = {
-            name,
-            nic,
-            position,
-            basicSalary,
-            bonus,
-            OTHours,
-            OTRate,
-            salary: totalSalary // Include the salary field here
-        };
+    // Create a state variable to hold additional pay information data
+    const [payInfo, setPayInfo] = useState({
+        basicSalary: '',
+        otHours: '',
+        OTrate: '',
+        bonus: '',
+    });
 
-        try {
-            await axios.post("http://localhost:8070/payRoll/addPayRoll", salaryDetails);
-            alert("Salary details added successfully");
-            navigate('/PayRoll');
-        } catch (error) {
-            alert("Error adding salary details");
-            console.error("Error:", error);
+    // State variable to hold the user-inputted OT hours
+    const [inputOtHours, setInputOtHours] = useState('');
+
+    // Fetch additional pay information data based on the staff member's role
+    useEffect(() => {
+        if (staff && staff.role) {
+            const fetchPayInfo = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8070/payinfo/role/${staff.role}`);
+                    setPayInfo({
+                        basicSalary: response.data.basicSalary,
+                        otHours: response.data.otHours,
+                        OTrate: response.data.OTrate,
+                        bonus: response.data.bonus,
+                    });
+                } catch (err) {
+                    console.error(`Failed to fetch pay information for role ${staff.role}:`, err);
+                    alert(`Failed to fetch pay information for role ${staff.role}. Please try again.`);
+                }
+            };
+
+            fetchPayInfo();
         }
+    }, [staff]);
+
+    // Calculate total salary
+    const calculateTotalSalary = () => {
+        // Calculate total salary based on the user-inputted OT hours
+        return Number(payInfo.basicSalary) +
+            Number(inputOtHours || payInfo.otHours) * Number(payInfo.OTrate) +
+            Number(payInfo.bonus);
     };
 
+    // Function to handle form submission
+    const handleAddSalary = async () => {
+        // Calculate total salary
+        const totalSalary = calculateTotalSalary();
+    
+        try {
+            // Send a POST request to the server to save the data to the payRoll model
+            await axios.post(`http://localhost:8070/payroll/addpayroll`, {
+                nic: staff.nic,
+                name: staff.name,
+                role: staff.role,
+                salary: totalSalary,
+                otHours: inputOtHours, // Include the user-inputted OT hours in the request body
+            });
+    
+            // Alert the user of successful save and navigate back to the all payrolls page
+            alert('Total salary and OT hours saved successfully!');
+            navigate('/getallpayrolls');
+        } catch (err) {
+            console.error('Failed to save total salary and OT hours:', err);
+            alert('Failed to save total salary and OT hours. Please try again.');
+        }
+    };
+    // If no staff member data is available, return an error message
+    if (!staff) {
+        return <p>No staff member data available.</p>;
+    }
+
+    // Render the staff member's data and additional data
     return (
-        <div className="container">
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name" className="form-label">Name:</label>
-                    <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+        <div className="add-salary-page">
+            {/* Card container */}
+            <div className="card-container">
+                {/* Heading */}
+                <h2 className="heading">Add Salary for {staff.name}</h2>
+
+                {/* Display staff NIC */}
+                <p className="nic">NIC: {staff.nic}</p>
+
+                {/* White container for earnings and amount */}
+                <div className="details-container">
+                    {/* Headings */}
+                    <div className="headings">
+                        <span className="heading-earnings">Earnings</span>
+                        <span className="heading-amount">Amount (Rs.)</span>
+                    </div>
+
+                    {/* Horizontal line */}
+                    <hr className="separator" />
+
+                    {/* Earnings and amounts */}
+                    <div className="details">
+                        <div className="detail">
+                            <span className="detail-earning">Basic Salary</span>
+                            <span className="detail-amount">{payInfo.basicSalary}</span>
+                        </div>
+                        <div className="detail">
+                            <span className="detail-earning">OT</span>
+                            <span className="detail-amount">
+                                {/* Display OT rate and input field side by side */}
+                                <span className="ot-rate">{payInfo.OTrate}</span>
+                                <input
+                                    type="number"
+                                    value={inputOtHours}
+                                    onChange={(e) => setInputOtHours(e.target.value)}
+                                    min="0"
+                                    className="ot-input-field"
+                                    placeholder="OT Hours"
+                                />
+                            </span>
+                        </div>
+                        <div className="detail">
+                            <span className="detail-earning">Bonus</span>
+                            <span className="detail-amount">{payInfo.bonus}</span>
+                        </div>
+                    </div>
+
+                    {/* Horizontal line */}
+                    <hr className="separator" />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="nic" className="form-label">NIC:</label>
-                    <input type="text" className="form-control" id="nic" value={nic} onChange={(e) => setNIC(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="position" className="form-label">Position:</label>
-                    <input type="text" className="form-control" id="position" value={position} onChange={(e) => setPosition(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="basicSalary" className="form-label">Basic Salary:</label>
-                    <input type="text" className="form-control" id="basicSalary" value={basicSalary} disabled />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="bonus" className="form-label">Bonus:</label>
-                    <input type="text" className="form-control" id="bonus" value={bonus} disabled />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="OTHours" className="form-label">OT Hours:</label>
-                    <input type="number" className="form-control" id="OTHours" value={OTHours} onChange={(e) => setOTHours(e.target.value)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="OTRate" className="form-label">OT Rate:</label>
-                    <input type="text" className="form-control" id="OTRate" value={OTRate} disabled />
-                </div>
-                
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
+
+                {/* Total salary paragraph */}
+                <p className="total-salary">Total Salary: {calculateTotalSalary()}</p>
+
+                {/* Save total salary button */}
+                <button onClick={handleAddSalary} className="save-button">Save Total Salary</button>
+            </div>
         </div>
     );
-}
+};
+
+export default AddSalaryPage;

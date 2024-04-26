@@ -93,6 +93,9 @@ app.use("/payInfo", elderRouter);
 const payRollRouter = require("./routes/staff_management_routes/payRolls.js");
 app.use("/PayRoll", payRollRouter);
 
+const staffmanager = require("./routes/staff_management_routes/staffroute.js");
+app.use("/staffmanager", staffmanager);
+
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port no: ${PORT}`);
