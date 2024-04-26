@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
-import { useNavigate,Link} from 'react-router-dom';
+import React, { useState ,useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './user_management_CSS/Admindashboard.css';
 import { jwtDecode } from 'jwt-decode';
+import LoginPieChart from './Loginchart.js'; // Import the LoginPieChart component
 
 const Admindashboard = () => {
   const navigate = useNavigate();
+  const { email } = useParams(); // Extract 'email' parameter from URL
+  const { nic } = useParams();
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -21,7 +25,7 @@ const Admindashboard = () => {
       console.log('Role:', role); // Log the role extracted from the token
 
       // Make a request to the backend to check if the user is an admin
-      axios.get('http://localhost:8070/staff/admindashboard', {
+      axios.get('http://localhost:8070/staff/admin', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -44,6 +48,19 @@ const Admindashboard = () => {
       });
     }
   }, [navigate]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8070/admin/nic/${email}`)
+      .then(response => {
+        const adminNic = response.data.nic;
+        console.log('Admin NIC:', adminNic);
+        // Now you can use the admin NIC for further processing
+      })
+      .catch(error => {
+        console.error('Error fetching admin NIC:', error);
+      });
+  }, [email]); 
+
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -54,48 +71,48 @@ const Admindashboard = () => {
     <div className='Main'>
       {/* Sidebar */}
       <nav className="sidebar">
-        <div className="sidebar-brand">Admin Dashboard</div>
-        <div className="sidebar-sticky">
-          <ul className="nav flex-column">
-            <li className="nav-item">
-              <Link to="/" className="nav-link">
-                Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/users" className="nav-link">
-                Users
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <div className="sidebar-brand">Admin Dashboard</div>
+      <div className="sidebar-sticky">
+        <ul className="nav flex-column">
+          <li className="nav-item">
+            <Link to="/" className="nav-link">
+              Dashboard
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/" className="nav-link">
+              All Elders
+            </Link>
+          </li>
+          <li className="nav-item">
+          <Link to={`/staffprofile/${nic}`} className="nav-link">
+              Profile
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/stafflogin" className="nav-link" onClick={handleLogout}>
+              Logout
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/add-staff" className="nav-link">
+              Add Staff
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
       {/* Main content area */}
       <div className="main-content">
         <div className="container-fluid">
-          <div className="d-flex justify-content-between align-items-center">
-            <h1 className="mt-4">Dashboard</h1>
-            <div className="profile-button ml-auto">
-              <Link to="/admin/profile" className="btn btn-primary">
-                Profile
-              </Link>
-              <button className="btn btn-danger ml-2" onClick={handleLogout}>
-                Logout
-              </button>
-            </div>
-          </div>
           <div className="row">
-            <div className="col-md-6">
-              <div className="chart-placeholder">
-                <h2>Sales Chart</h2>
-                <div>Placeholder for Sales Chart</div>
-              </div>
-            </div>
-            <div className="col-md-6">
+            {/* Increase the size of Product Distribution chart */}
+            <div className="col-md-12"> {/* Modified the column size to take the full width */}
               <div className="chart-placeholder">
                 <h2>Product Distribution</h2>
-                <div>Placeholder for Product Distribution Chart</div>
+                {/* Display the LoginPieChart component here */}
+                <LoginPieChart />
               </div>
             </div>
           </div>

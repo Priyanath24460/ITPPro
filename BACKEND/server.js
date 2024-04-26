@@ -67,8 +67,11 @@ app.use("/guardian", guardianRouter);
 const staffRouter = require("./routes/user_mangement_routes/StaffRoutes.js");
 app.use("/staff", staffRouter);
 
+const loginEventRouter = require("./routes/user_mangement_routes/loginEventRoutes.js");
+app.use("/LoginEvent", loginEventRouter);
 
-
+const userpdfRouter = require("./routes/user_mangement_routes/userpdfRoutes.js")
+app.use("/userpdf", userpdfRouter);
 
 
 // room management

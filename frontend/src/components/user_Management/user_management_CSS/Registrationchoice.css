@@ -1,0 +1,57 @@
+/* Apply Bebas Neue to the h1 element */
+h1.text-center.my-4 {
+  font-family: 'Bebas Neue', sans-serif;
+  color: green;
+}
+
+/* Apply background image to the body */
+.page-wrapper {
+  background-image: url('../../../../public/userimages/registrationbg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 92.3vh; /* Ensures that the div covers the entire viewport height */
+}
+
+
+/* Style the container */
+.container-registrationchoice {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.5); /* Adjust the background color opacity */
+  padding: 5px;
+  border-radius: 10px;
+  
+}
+/* Style the horizontal separator */
+.separator {
+  border-top: 2px solid #333;
+  margin: 20px 0;
+}
+
+/* Center the cards */
+.card {
+  margin: 0 auto;
+  background-color: transparent;
+}
+
+/* Style the card titles */
+.card-title {
+  margin-bottom: 15px;
+  font-family: 'Jersey 25', sans-serif; /* Add the font family declaration */
+}
+
+/* Adjust button styles */
+.btn-lg {
+  font-size: 1.25rem;
+  padding: 10px 20px;
+}
+.green-button {
+  background-color: green;
+}
+.btn-custom {
+  background-color: green; /* Change to the desired color */
+  /* You can add additional styles here as needed */
+}

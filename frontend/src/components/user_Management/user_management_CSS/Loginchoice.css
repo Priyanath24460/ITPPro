@@ -1,0 +1,30 @@
+.page-wrapper {
+    background-image: url('../../../../public/userimages/registrationbg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 92.3vh; /* Ensures that the div covers the entire viewport height */
+  }
+  
+  .container-loginchoice {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the background color opacity */
+    padding: 20px; /* Increase padding for better spacing */
+    border-radius: 10px;
+    width: 60%; /* Adjust the width as needed */
+  }
+  
+  .btn-primary {
+    background-color: green;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    width: 50%; /* Set width to 100% to fill the container */
+  }
+  
+  /* Remove previous styling for .row .col-md-4 */
+  

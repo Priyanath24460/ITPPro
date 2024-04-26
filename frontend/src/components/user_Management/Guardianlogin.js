@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import './user_management_CSS/Guardianlogin.css';
 
 const Guardianlogin = () => {
   const [formData, setFormData] = useState({
@@ -54,49 +55,63 @@ const Guardianlogin = () => {
           </ul>
         </nav>
       </header>
-      <div className="container">
-        <h1>Guardian Login</h1>
-        <form onSubmit={handleLoginSubmit}>
-          <div className="mb-3">
-            <label htmlFor="inputEmail" className="form-label"> {/* Changed inputNIC to inputEmail */}
-              Email:
-            </label>
-            <input
-              type="email" // Changed input type to email
-              className="form-control"
-              id="inputEmail"
-              name="email" // Changed name to email
-              onChange={(e) => handleChange("email", e.target.value)} // Changed handleChange parameter from "nic" to "email"
-              required
-              disabled={loading} // Disable input during loading
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="inputPassword" className="form-label">
-              Password:
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="inputPassword"
-              name="password"
-              onChange={(e) => handleChange("password", e.target.value)}
-              required
-              disabled={loading} // Disable input during loading
-            />
-          </div>
-
-          {error && <p className="text-danger">{error}</p>}
-
-          <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-        <p>Don't have an account? <Link to="/guardiansignup">Sign Up Here</Link></p>
+      <div className="page-wrapper"></div>
+      <div className="container-login">
+        <div className="login-form">
+          <h1>Guardian Login</h1>
+          <form onSubmit={handleLoginSubmit}>
+            <div className="form-container">
+              <div className="mb-3">
+                <label htmlFor="inputEmail" className="form-label">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="inputEmail"
+                  name="email"
+                  onChange={(e) => handleChange("email", e.target.value)}
+                  required
+                  disabled={loading}
+                />
+              </div>
+  
+              <div className="mb-3">
+                <label htmlFor="inputPassword" className="form-label">
+                  Password:
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="inputPassword"
+                  name="password"
+                  onChange={(e) => handleChange("password", e.target.value)}
+                  required
+                  disabled={loading}
+                />
+              </div>
+  
+              {error && <p className="text-danger">{error}</p>}
+  
+              <button type="submit" className="btn btn-primary" disabled={loading}>
+                {loading ? "Logging in..." : "Login"}
+              </button>
+            </div>
+            
+          </form>
+          <div className="form-footer"></div>
+      <div className="vertical-line"></div>
+        </div>
+        <div></div>
+        <div className="dont-have-account">
+          <p>Don't have an account? </p>
+            
+          <Link to="/guardiansignup" className="signup-button">Sign Up Here</Link>
+        </div>
       </div>
     </div>
   );
+  
 };
 
 export default Guardianlogin;

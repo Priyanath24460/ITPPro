@@ -1,0 +1,57 @@
+.container-register{
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 500px;
+    background-color: #d1f7d3;
+  }
+  
+  .registration-form {
+    /* Light green background */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  .heading-container {
+    display: flex;
+    justify-content: center; /* Horizontally center content */
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .register-container {
+    display: flex;
+    justify-content: center; /* Horizontally center content */
+  }
+  
+  .register {
+    background-color: #047e3b; /* Green button color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register:hover {
+    background-color: #03562c; /* Darker green on hover */
+  }
+  
+  
+  .btn-primary:hover {
+    background-color: #03562c; /* Darker green on hover */
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  

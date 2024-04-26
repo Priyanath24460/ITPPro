@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import './user_management_CSS/Guardianlogin.css';
 
 const Stafflogin = () => {
   const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ const Stafflogin = () => {
       // Redirect based on role
 switch (role) {
   case 'Admin':
-    navigate('/admindashboard');
+    navigate('/admin');
     break;
   case 'Meal Manager':
     navigate('/financial-manager-dashboard');
@@ -70,60 +71,73 @@ switch (role) {
 
   return (
     <div className="login-page" id="login-section">
-       <header className="header">
+      <header className="header">
         <nav className="navbar">
           <div className="logo">Leisure Home</div>
           <ul className="nav-list">
-                <li className="nav-item">
-                <Link to="/home" className="nav-link"> Home</Link>
-                </li>
-                <li className="nav-item">Services</li>
-                <li className="nav-item">About Us</li>
-                <li className="nav-item">Contact</li>
+            <li className="nav-item">
+              <Link to="/home" className="nav-link"> Home</Link>
+            </li>
+            <li className="nav-item">Services</li>
+            <li className="nav-item">About Us</li>
+            <li className="nav-item">Contact</li>
           </ul>
         </nav>
       </header>
-    <div className="container">
-      <h1>Login</h1>
-      <form onSubmit={handleLoginSubmit}>
-        <div className="mb-3">
-          <label htmlFor="inputEmail" className="form-label">
-            Email:
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="inputEmail"
-            name="email"
-            onChange={(e) => handleChange("email", e.target.value)}
-            required
-            disabled={loading} // Disable input during loading
-          />
+      <div className="page-wrapper">
+        <div className="container-login">
+          <div className="login-form">
+            <h1>Staff Login</h1>
+            <form onSubmit={handleLoginSubmit}>
+              <div className="form-container">
+                <div className="mb-3">
+                  <label htmlFor="inputEmail" className="form-label">
+                    Email:
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="inputEmail"
+                    name="email"
+                    onChange={(e) => handleChange("email", e.target.value)}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+  
+                <div className="mb-3">
+                  <label htmlFor="inputPassword" className="form-label">
+                    Password:
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="inputPassword"
+                    name="password"
+                    onChange={(e) => handleChange("password", e.target.value)}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+  
+                {error && <p className="text-danger">{error}</p>}
+  
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                  {loading ? "Logging in..." : "Login"}
+                </button>
+              </div>
+            </form>
+
+            <div className="form-footer"></div>
+            <div className="vertical-line"></div>
+
+          </div>
+          <div className="dont-have-account">
+            <p>Don't have an account? </p>
+            <Link to="/staff-signup" className="signup-button">Sign Up Here</Link>
+          </div>
         </div>
-
-        <div className="mb-3">
-          <label htmlFor="inputPassword" className="form-label">
-            Password:
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="inputPassword"
-            name="password"
-            onChange={(e) => handleChange("password", e.target.value)}
-            required
-            disabled={loading} // Disable input during loading
-          />
-        </div>
-
-        {error && <p className="text-danger">{error}</p>}
-
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-      <p>Don't have an account? <Link to="/staff-signup">Sign Up Here</Link></p>
-    </div>
+      </div>
     </div>
   );
 };
