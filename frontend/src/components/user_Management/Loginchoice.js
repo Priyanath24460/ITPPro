@@ -1,27 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './user_management_CSS/Loginchoice.css';
 
 const Loginchoice = () => {
   return (
-    <div className="container">
+    <div className="page-wrapper"> 
+    <div className="container-loginchoice">
       <h1>Login</h1>
-      <div className="row">
-        <div className="col-md-4">
+      <div className="col-md-4">
           <Link to="/guardianlogin" className="btn btn-primary btn-lg btn-block">
-            Login as a Guardian
+            Guardian
           </Link>
         </div>
         <div className="col-md-4">
           <Link to="/login" className="btn btn-primary btn-lg btn-block">
-            Login as an Elder
+            Elder
           </Link>
         </div>
         <div className="col-md-4">
           <Link to="/stafflogin" className="btn btn-primary btn-lg btn-block">
-            Login as a Staff Member
+          Staff Member
           </Link>
         </div>
-      </div>
+      
+    </div>
     </div>
   );
 };

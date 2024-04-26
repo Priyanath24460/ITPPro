@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import './user_management_CSS/signup.css';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -68,8 +69,10 @@ export default function Signup() {
 
 
   return (
-    <div className="container">
-      <h1>Signup</h1>
+    <div className="container-register">
+      <div className="heading-container">
+        <h2>Sign Up</h2>
+        </div>
       {validationErrors.length > 0 && (
         <div className="alert alert-danger">
           <ul>
@@ -329,6 +332,7 @@ export default function Signup() {
     </button>
     </div>
   </div>
+  
   <Link to="/login">Already have an account? Login here</Link>
       </form>
     </div>

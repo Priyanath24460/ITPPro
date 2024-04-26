@@ -214,7 +214,7 @@ router.post("/addstaff", async (req, res) => {
       }
     });
   }
-  router.get('/admindashboard', authenticateAdminToken, (req, res) => {
+  router.get('/admin', authenticateAdminToken, (req, res) => {
     // This route handler will only be called if the token is valid
     // and the user is authenticated as an admin
     console.log('Role:', req.user.role); // Log the role

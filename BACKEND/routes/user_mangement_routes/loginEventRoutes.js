@@ -28,25 +28,77 @@ router.post('/loginevent', async (req, res) => {
   }
 });
 
-async function logLoginEvent(userId, userType) {
-    try {
-      // Create a new login event
-      const loginEvent = new LoginEvent({
-        userId,
-        userType
-      });
-  
-      // Save the login event to the database
-      await loginEvent.save();
-    } catch (error) {
-      // Handle errors
-      console.error('Error saving login event:', error);
-      throw error; // Re-throw the error to handle it in the calling route handler
-    }
-  }
-  
-  module.exports = {
-    router,
-    logLoginEvent // Export the logLoginEvent function
-  };
+router.get('/loginevents', async (req, res) => {
+  try {
+    // Extract start and end timestamps from query parameters
+    const { startTime, endTime } = req.query;
 
+    // Convert timestamps to Date objects
+    const startDate = new Date(parseInt(startTime));
+    const endDate = new Date(parseInt(endTime));
+
+    // Query MongoDB collection for login events within the specified time range
+    const loginEvents = await LoginEvent.find({
+      timestamp: { $gte: startDate, $lte: endDate }
+    });
+
+    // Calculate the count of login events for each user role
+    const loginCounts = {
+      elder: 0,
+      guardian: 0,
+      staff: 0
+    };
+
+    loginEvents.forEach(event => {
+      switch (event.userType) {
+        case 'Elder':
+          loginCounts.elder++;
+          break;
+        case 'Guardian':
+          loginCounts.guardian++;
+          break;
+        case 'Admin':
+        case 'Financial Manager':
+        case 'Meal Manager':
+        case 'Inventory Manager':
+        case 'Event Coordinator':
+        case 'Medical Manager':
+        case 'Staff Manager':
+          loginCounts.staff++;
+          break;
+        default:
+          // Do nothing for unknown user types
+          break;
+      }
+    });
+
+    // Return login counts data in JSON format
+    res.json(loginCounts);
+  } catch (error) {
+    // Handle errors
+    console.error('Error fetching login events:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/getloginevents', async (req, res) => {
+  try {
+    // Fetch all login events from the database
+    const loginEvents = await LoginEvent.find();
+
+    // Count login events by user type
+    const loginEventsData = loginEvents.reduce((acc, loginEvent) => {
+      acc[loginEvent.userType] = (acc[loginEvent.userType] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Send the login events data in JSON format
+    res.json(loginEventsData);
+  } catch (error) {
+    // Handle errors
+    console.error('Error fetching login events:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+module.exports = router; // Export the router only

@@ -22,7 +22,6 @@ import Login from './components/user_Management/Login'
 import Elderprofile from './components/user_Management/Elderprofile'
 import HomePage from './components/user_Management/HomePage';
 import Registrationchoice from './components/user_Management/Registrationchoice';
-
 import Loginchoice from './components/user_Management/Loginchoice';
 import Guardiansignup from './components/user_Management/GuardianSignup';
 import Guardianprofile from './components/user_Management/Guardianprofile';
@@ -81,8 +80,8 @@ function App() {
           <Route path="/cholesterolmore/:nic" element={<MoreCholesterolData />} />
          
          
-          <Route path="/loginevent" element={<LoginPieChart/>}/>
-          <Route path="/admindashboard" element={<Admindashboard/>}/>
+          <Route path="/getloginevent" element={<LoginPieChart/>}/>
+          <Route path="/admin" element={<Admindashboard/>}/>
           <Route path="/staffprofile/:nic" element={<Staffprofile/>} />
           <Route path="/allstaff" element= {<Allstaff/>} />
           <Route path="/stafflogin" element ={<Stafflogin/>} />
