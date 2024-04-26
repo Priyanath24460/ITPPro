@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
-
-
+import "./medicalCSS/Medicalinterface.css";
+import SideNavigation from "./SideNavigation";
 
 export default function View(){
 
     const [patients, setPatients] = useState([]);
+    
 
 
    /* function getallpatient() {
@@ -39,37 +40,39 @@ export default function View(){
 
 
     return(
-        <div className="container">
-        <h1>Medical view</h1>
+        <div >
+          <SideNavigation /> {/* Include SideNavigation component */}
+        <h1 className="title">Patients</h1>
         
-        <table className="table">
+        <table className="table_interface">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">NIC</th>
-              <th scope="col">Name</th>
-              <th scope="col">Age</th>
+              <th >#</th>
+              <th >NIC</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>gender</th>
 
-              <th scope="col">view</th>
+
+              <th >Acction</th>
              
             </tr>
           </thead>
           <tbody>
             {patients.map((patient, index) => (
               <tr key={index}>
-                <td scope="row">{index + 1}</td>
+                <td >{index + 1}</td>
                 <td>{patient.nic}</td>
                 <td>{patient.name}</td>
                 <td>{patient.age}</td>
+                <td>{patient.gender}</td>
                 <td>
-                <Link to={`/DataAddForm/${patient.nic}/${patient.name}/${patient.age}/${patient.gender}`} className="btn btn-primary">
-                  <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View
+                <Link to={`/DataAddForm/${patient.nic}/${patient.name}/${patient.age}/${patient.gender}`} className="interface_table_Add">
+                  <i className="fa-solid fa-user-plus" aria-hidden="true"></i>&nbsp;Add
                 </Link>
-              </td>
-
-              <td>
-                <Link to={`/profile/${patient.nic}/${patient.name}/${patient.age}/${patient.gender}`} className="btn btn-primary">
-                  <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;profile
+             
+                <Link to={`/profile/${patient.nic}/${patient.name}/${patient.age}/${patient.gender}`} className="interface_table_profile">
+                  <i className="fa-solid fa-circle-user" aria-hidden="true"></i>&nbsp;profile
                 </Link>
               </td>
                

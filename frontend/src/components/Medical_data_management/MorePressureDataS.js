@@ -21,7 +21,20 @@ const PressureData = () => {
   const [pressureMedicineData, setpressureMedicineData] = useState([]);
   const [medicinestatus, setmedicineStatus] = useState("");
 
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('');
 
+  
+
+ // Function to handle filtering by year and month
+ const filteredData = pressureData ?pressureData.filter(entry => {
+  if (!selectedYear && !selectedMonth) return true;
+  const entryDate = new Date(entry.date);
+  return (
+    (!selectedYear || entryDate.getFullYear() === parseInt(selectedYear, 10)) &&
+    (!selectedMonth || entryDate.getMonth() === parseInt(selectedMonth, 10))
+  );
+}):[];
 
 
    const fetchData = async () => {
@@ -170,6 +183,32 @@ const PressureData = () => {
     setPdfFile(null);
   };
 
+  // Function to delete pressure data by ID
+const handleDeleteClick = async (entryId) => {
+  try {
+    // Ask for confirmation before deleting
+    const confirmDelete = window.confirm("Are you sure you want to delete this data?");
+    
+    // If user confirms deletion, proceed with the delete request
+    if (confirmDelete) {
+      const response = await axios.delete(`http://localhost:8070/pressure/delete/${entryId}`);
+      if (response.status === 200) {
+        // If deletion is successful, refetch the cholesterol data
+        fetchData();
+        console.log("pressure data deleted successfully");
+      } else {
+        console.error("Failed to delete pressure data");
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting pressure data:", error);
+  }
+};
+
+
+
+
+
  //////////////////////////////////////////pressureMedicine ////////////////////////////////////////////////
 
  const fetchDataMedicine = async () => {
@@ -201,7 +240,7 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
           
           
       
-          // Make an API call to update the cholesterol medicine data
+          // Make an API call to update the pressure medicine data
           await axios.put(`http://localhost:8070/pressureMedicine/update_pressure_Medicine/${entryId}`, updatedData);
       
           // Reset editing state
@@ -219,6 +258,29 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
         }
   };
 
+// Function to handle delete operation for pressure medicine data
+const handleDeleteMedicine = async (entryId) => {
+  try {
+    // Ask for confirmation before deleting
+    const confirmDelete = window.confirm("Are you sure you want to delete this medicine data?");
+    
+    // If user confirms deletion, proceed with the delete request
+    if (confirmDelete) {
+      const response = await axios.delete(`http://localhost:8070/pressureMedicine/delete_pressure_Medicine/${entryId}`);
+      if (response.status === 200) {
+        // If deletion is successful, refetch the pressure medicine data
+        fetchDataMedicine();
+        console.log("pressure medicine data deleted successfully");
+      } else {
+        console.error("Failed to delete pressure medicine data");
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting pressure medicine data:", error);
+  }
+};
+
+
 
 
   return (
@@ -227,6 +289,34 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
          {pressureData ?(
            <div>
                <PressureLineGraph pressureData={pressureData}/>
+               <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+                      <option value="">All Year</option>
+                      {/* You can populate the years dynamically based on your data */}
+                      
+                      <option value="2024">2024</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                      {/* Add more years as needed */}
+                    </select>
+
+                    <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+                      <option value="">All Month</option>
+                      {/* You can populate the months dynamically based on your data */}
+                      <option value="0">January</option>
+                      <option value="1">February</option>
+                      <option value="2">March</option>
+                      <option value="3">April</option>
+                      <option value="4">May</option>
+                      <option value="5">June</option>
+                      <option value="6">July</option>
+                      <option value="7">August</option>
+                      <option value="8">September</option>
+                      <option value="9">October</option>
+                      <option value="10">November</option>
+                      <option value="11">December</option>
+                      
+                      {/* Add more months as needed */}
+                    </select>
                  <table className="pressure-table">
                   <thead>
                     <tr>
@@ -240,7 +330,7 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
                   </thead>
 
                   <tbody>
-                    {pressureData.map((entry)=>(
+                    {filteredData.map((entry)=>(
                       <tr key={entry._id}>
 
                         <td>{entry.name}</td>
@@ -309,9 +399,15 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
                               <button onClick={() => handleCancelEdit()}>Cancel</button>
                             </>
                             ) : (
-                              <button onClick={() => handleEditClick(entry._id, entry.high, entry.low,entry.date)}>
+                              <>
+                              <button onClick={() => handleEditClick(entry._id, entry.level, entry.date)}>
                                 Edit
                               </button>
+                               
+                               <button onClick={() => handleDeleteClick(entry._id)}>
+                                  Delete
+                             </button>
+                             </>
                             )}
                           </td>
                       </tr>
@@ -321,6 +417,7 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
                    </table>
 
                    <MedicineDataShowingTable
+                   MedicineDelete={handleDeleteMedicine}
                       MedicineData={pressureMedicineData}
                       status={medicinestatus}
                       fetchDataMedicine={fetchDataMedicine}

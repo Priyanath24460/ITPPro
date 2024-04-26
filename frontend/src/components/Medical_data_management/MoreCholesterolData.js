@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import "./medicalCSS/MorePressureCSS.css";
 import CholesterolLineGraph from './CholesterolLineGraph'; 
 import MedicineDataShowingTable from './MedicineDataShowingTable';
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+
 
 export default function CholesterolData() {
   const { nic } = useParams();
@@ -13,9 +15,64 @@ export default function CholesterolData() {
   const [editedLevel, setEditedLevel] = useState("");
   const [editedDate, setEditedDate] = useState("");
   const [pdfFile1, setPdfFile] = useState(null);
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('');
 
+
+
+  const MyDocument = ({ cholesterolData, cholesterolMedicineData }) => (
+    <Document>
+      <Page>
+        <View style={styles.section}>
+          <Text>Cholesterol Data:</Text>
+          <View>
+            {cholesterolData.map(entry => (
+              <Text key={entry._id}>
+                Name: {entry.name}, Level: {entry.level}, Date: {entry.date}
+              </Text>
+            ))}
+          </View>
+        </View>
+        <View style={styles.section}>
+          <Text>Cholesterol Medicine Data:</Text>
+          <View>
+            {cholesterolMedicineData.map(entry => (
+              <Text key={entry._id}>
+                Morning Medicine: {entry.morningMedicine}, 
+                
+                Night Medicine: {entry.nightMedicine}, 
+                Date: {entry.date}
+              </Text>
+            ))}
+          </View>
+        </View>
+      </Page>
+    </Document>
+  );
+  
+  const styles = StyleSheet.create({
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1
+    }
+  });
 
   
+
+ // Function to handle filtering by year and month
+ const filteredData = cholesterolData ?cholesterolData.filter(entry => {
+  if (!selectedYear && !selectedMonth) return true;
+  const entryDate = new Date(entry.date);
+  return (
+    (!selectedYear || entryDate.getFullYear() === parseInt(selectedYear, 10)) &&
+    (!selectedMonth || entryDate.getMonth() === parseInt(selectedMonth, 10))
+  );
+}):[];
+
+
+
+
 
   // State variables related to cholesterol medicine data
   const [cholesterolMedicineData, setCholesterolMedicineData] = useState([]);
@@ -55,6 +112,7 @@ export default function CholesterolData() {
   }, [nic]);
 
 
+ 
 
 
   const handleEditClick = (entryId, level, date) => {
@@ -289,18 +347,69 @@ const handleDeleteClick = async (entryId) => {
               //setStatus("Error updating cholesterol medicine data");
             }
       };
+
+    // Function to handle delete operation for cholesterol medicine data
+const handleDeleteMedicine = async (entryId) => {
+  try {
+    // Ask for confirmation before deleting
+    const confirmDelete = window.confirm("Are you sure you want to delete this medicine data?");
+    
+    // If user confirms deletion, proceed with the delete request
+    if (confirmDelete) {
+      const response = await axios.delete(`http://localhost:8070/cholesterolMedicine/delete_cholesterol_Medicine/${entryId}`);
+      if (response.status === 200) {
+        // If deletion is successful, refetch the cholesterol medicine data
+        fetchDataMedicine();
+        console.log("Cholesterol medicine data deleted successfully");
+      } else {
+        console.error("Failed to delete cholesterol medicine data");
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting cholesterol medicine data:", error);
+  }
+};
+
   
   
 
   return (
     <div >
-     
+   
 
 
     <h3>Diabetes Data for NIC: {nic}</h3>
       {cholesterolData ? (
         <div>
            <CholesterolLineGraph cholesterolData={cholesterolData}/>
+                <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+                      <option value="">All Year</option>
+                      {/* You can populate the years dynamically based on your data */}
+                      <option value="2024">2024</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                      {/* Add more years as needed */}
+                    </select>
+
+                    <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+                      <option value="">All Month</option>
+                      {/* You can populate the months dynamically based on your data */}
+                      <option value="0">January</option>
+                      <option value="1">February</option>
+                      <option value="2">March</option>
+                      <option value="3">April</option>
+                      <option value="4">May</option>
+                      <option value="5">June</option>
+                      <option value="6">July</option>
+                      <option value="7">August</option>
+                      <option value="8">September</option>
+                      <option value="9">October</option>
+                      <option value="10">November</option>
+                      <option value="11">December</option>
+                      
+                      {/* Add more months as needed */}
+                    </select>
+
           <table className="pressure-table">
             <thead>
               <tr>
@@ -312,7 +421,7 @@ const handleDeleteClick = async (entryId) => {
               </tr>
             </thead>
             <tbody>
-              {cholesterolData.map((entry) => (
+              {filteredData.map((entry) => (
                 <tr key={entry._id}>
                   <td>{entry.name}</td>
                   <td>
@@ -378,6 +487,7 @@ const handleDeleteClick = async (entryId) => {
           </table>
 
           <MedicineDataShowingTable
+                MedicineDelete={handleDeleteMedicine}
                 MedicineData={cholesterolMedicineData}
                 status={medicinestatus}
                 fetchDataMedicine={fetchDataMedicine}
@@ -386,6 +496,10 @@ const handleDeleteClick = async (entryId) => {
                 reset={resetEditingState}
                 //handleCancelEdit={handleCancelEditMedicine}
       />
+
+<PDFDownloadLink document={<MyDocument cholesterolData={cholesterolData} cholesterolMedicineData={cholesterolMedicineData} />} fileName="cholesterol_report.pdf">
+        {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
+      </PDFDownloadLink>
         </div>
        ) : (
         <p>{status}</p>

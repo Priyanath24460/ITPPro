@@ -81,10 +81,10 @@ export default function Profile(){
 
         <div >
             <div className="table1-wrapper">
-                <h1 className="NIC">NIC : {patient?.patient?.nic}</h1>
-                <h1 className="Name">Name: {patient?.patient?.name}</h1>
-                <h1 className="Age">Age: {patient?.patient?.age}</h1>
-                <h1 className="Age">gender: {patient?.patient?.gender}</h1>
+                <h1 className="NIC">NIC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {patient?.patient?.nic}</h1>
+                <h1 className="Name">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {patient?.patient?.name}</h1>
+                <h1 className="Age">Age &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {patient?.patient?.age}</h1>
+                <h1 className="gender">gender&nbsp;&nbsp;&nbsp;: {patient?.patient?.gender}</h1>
 
              </div>
 

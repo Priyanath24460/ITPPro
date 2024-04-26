@@ -14,12 +14,30 @@ export default function DiabetesData() {
   const [editedDate, setEditedDate] = useState("");
   const [pdfFileDiabetes, setPdfFileDiabetes] = useState(null);
 
-
-
-
-    // State variables related to cholesterol medicine data
+      // State variables related to cholesterol medicine data
     const [DiabetesMedicineData, setDiabetesMedicineData] = useState([]);
     const [medicinestatus, setmedicineStatus] = useState("");
+   
+
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('');
+
+  
+
+ // Function to handle filtering by year and month
+ const filteredData = diabetesData ? diabetesData.filter(entry => {
+  if (!selectedYear && !selectedMonth) return true;
+  const entryDate = new Date(entry.date);
+  return (
+    (!selectedYear || entryDate.getFullYear() === parseInt(selectedYear, 10)) &&
+    (!selectedMonth || entryDate.getMonth() === parseInt(selectedMonth, 10))
+  );
+}):[];
+
+
+
+
+
 
 
 
@@ -182,8 +200,32 @@ const resetEditingState = () => {
   setPdfFileDiabetes(null);
 };
 
+// Function to delete diabetes data by ID
+const handleDeleteClick = async (entryId) => {
+  try {
+    // Ask for confirmation before deleting
+    const confirmDelete = window.confirm("Are you sure you want to delete this data?");
+    
+    // If user confirms deletion, proceed with the delete request
+    if (confirmDelete) {
+      const response = await axios.delete(`http://localhost:8070/diabetes/delete/${entryId}`);
+      if (response.status === 200) {
+        // If deletion is successful, refetch the diabetes data
+        fetchData();
+        console.log("diabetes data deleted successfully");
+      } else {
+        console.error("Failed to delete diabetes data");
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting diabetes data:", error);
+  }
+};
 
- //////////////////////////////////////////pressureMedicine ////////////////////////////////////////////////
+
+
+
+ //////////////////////////////////////////diabetes Medicine ////////////////////////////////////////////////
 
  const fetchDataMedicine = async () => {
   try {
@@ -214,23 +256,46 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
           
           
       
-          // Make an API call to update the cholesterol medicine data
+          // Make an API call to update the diabetes medicine data
           await axios.put(`http://localhost:8070/diabetesMedicine//update_diabetes_Medicine/${entryId}`, updatedData);
       
           // Reset editing state
           resetEditingState();
       
-         // Refetch cholesterol medicine data after saving changes
+         // Refetch diabetes medicine data after saving changes
          fetchDataMedicine();
             
       
           // Update status
-          //setStatus("Cholesterol medicine data updated successfully");
+          //setStatus("diabetes medicine data updated successfully");
         } catch (error) {
-          console.error("Error updating cholesterol medicine data:", error);
-          //setStatus("Error updating cholesterol medicine data");
+          console.error("Error updating diabetes medicine data:", error);
+          //setStatus("Error updating diabetes medicine data");
         }
   };
+
+
+  // Function to handle delete operation for diabetes medicine data
+const handleDeleteMedicine = async (entryId) => {
+  try {
+    // Ask for confirmation before deleting
+    const confirmDelete = window.confirm("Are you sure you want to delete this medicine data?");
+    
+    // If user confirms deletion, proceed with the delete request
+    if (confirmDelete) {
+      const response = await axios.delete(`http://localhost:8070/diabetesMedicine/delete_diabetes_Medicine/${entryId}`);
+      if (response.status === 200) {
+        // If deletion is successful, refetch the cholesterol medicine data
+        fetchDataMedicine();
+        console.log("diabetes medicine data deleted successfully");
+      } else {
+        console.error("Failed to delete diabetes medicine data");
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting diabetes medicine data:", error);
+  }
+};
 
   
   
@@ -242,6 +307,34 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
         <div>
          
           <DiabetesLineGraph diabetesData={diabetesData} />
+
+          <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+                      <option value="">All Year</option>
+                      {/* You can populate the years dynamically based on your data */}
+                      <option value="2024">2024</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                      {/* Add more years as needed */}
+                    </select>
+
+                    <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+                      <option value="">All Month</option>
+                      {/* You can populate the months dynamically based on your data */}
+                      <option value="0">January</option>
+                      <option value="1">February</option>
+                      <option value="2">March</option>
+                      <option value="3">April</option>
+                      <option value="4">May</option>
+                      <option value="5">June</option>
+                      <option value="6">July</option>
+                      <option value="7">August</option>
+                      <option value="8">September</option>
+                      <option value="9">October</option>
+                      <option value="10">November</option>
+                      <option value="11">December</option>
+                      
+                      {/* Add more months as needed */}
+                    </select>
        <div className="pressure-data-container">  
           <table className="pressure-table">
             <thead>
@@ -254,7 +347,7 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
               </tr>
             </thead>
             <tbody>
-              {diabetesData.map((entry) => (
+              {filteredData.map((entry) => (
                 <tr key={entry._id}>
                   <td>{entry.name}</td>
                   <td>
@@ -303,9 +396,15 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
                       <button onClick={() => handleCancelEdit()}>Cancel</button>
                     </>
                     ) : (
+                      <>
                       <button onClick={() => handleEditClick(entry._id, entry.level, entry.date)}>
                         Edit
                       </button>
+                       
+                       <button onClick={() => handleDeleteClick(entry._id)}>
+                          Delete
+                     </button>
+                     </>
                     )}
                   </td>
                 </tr>
@@ -315,6 +414,7 @@ const handleSaveEditMedicine = async (entryId,updatedData) => {
           </table>
         </div>  
           <MedicineDataShowingTable
+                MedicineDelete={handleDeleteMedicine}
                 MedicineData={DiabetesMedicineData}
                 status={medicinestatus}
                 fetchDataMedicine={fetchDataMedicine}

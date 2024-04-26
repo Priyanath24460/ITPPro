@@ -83,7 +83,7 @@ router.route("/update/:id").put(upload.single("pdfFile"), async (req, res) => {
     const { high,low, date } = req.body;
     const pdfFile = req.file;
 
-    // Find the diabetes entry by ID
+    // Find the pressure entry by ID
     const pressureEntry = await Pressure.findById(PressureID);
 
     if (!pressureEntry) {
@@ -101,13 +101,32 @@ router.route("/update/:id").put(upload.single("pdfFile"), async (req, res) => {
       pressureEntry.pdf.contentType = pdfFile.mimetype;
     }
 
-    // Save the updated diabetes entry
+    // Save the updated pressure entry
     await pressureEntry.save();
 
     res.status(200).send({ status: "pressure data updated", data: pressureEntry });
   } catch (err) {
     console.error(err.message);
     res.status(500).send({ status: "Error updating pressure data", error: err.message });
+  }
+});
+
+//  delete route for pressure data
+router.route("/delete/:id").delete(async (req, res) => {
+  try {
+    const pressureId = req.params.id;
+
+    // Find the cholesterol entry by ID and delete it
+    const deletedpressure = await Pressure.findByIdAndDelete(pressureId);
+
+    if (!deletedpressure) {
+      return res.status(404).send({ status: "pressure data not found" });
+    }
+
+    res.status(200).send({ status: "pressure data deleted", data: deletedpressure });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ status: "Error deleting pressure data", error: err.message });
   }
 });
 
