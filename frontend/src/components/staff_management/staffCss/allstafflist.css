@@ -1,0 +1,84 @@
+/* Dark green container style */
+.grey-container {
+    background-color: #E2E2E2;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Table container style */
+.table-container {
+    margin: 20px 0;
+}
+
+/* Table style */
+.table-style {
+    width: 100%;
+    border-collapse: collapse; /* Collapse table borders */
+    margin-bottom: 20px;
+    border: none; /* Remove all borders */
+}
+
+/* Table header style */
+.table-header-style {
+    padding: 10px;
+    font-weight: bold;
+    color: rgb(2, 0, 0);
+    border: none;
+    background-color: transparent;
+}
+
+/* Table data style */
+.table-data-style {
+    padding: 10px;
+    border: none; /* Remove borders from data cells */
+}
+
+/* Actions container style */
+.actions {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Update button style */
+.updatestaff-button, .delete-button, .add-salary-button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: white;
+}
+
+/* Update button color */
+.updatestaff-button {
+    background-color: #218838; /* Green color */
+}
+
+/* Delete button color */
+.delete-button {
+    background-color: #C80C0C; /* Red color */
+}
+
+.generatepaysheet-button{
+    background-color: #000000;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: rgb(18, 220, 11);
+}
+
+/* Add Salary button color */
+.add-salary-button {
+    background-color: #0E98B7; /* Blue color */
+}
+
+.nav-link-staffdb-currentpage{
+    background-color: #ffffff; /* Customize this color as needed */
+    font-weight: bold;
+    display: block;
+    padding: 15px; /* Increase padding for more space */
+    color: black !important; /* Force black text color */
+    text-decoration: none;
+    border: 2px solid #1F960B;
+    border-radius: 30px;
+}

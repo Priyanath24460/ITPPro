@@ -1,0 +1,113 @@
+/* Main container */
+.main-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar styles */
+.sidebar {
+  background-color: #E2F8E0; /* Light green color */
+  width: 250px;
+  height: 100vh;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.sidebar-title {
+  color: green; /* Dark green color for title */
+  margin-bottom: 10px;
+}
+
+.btn-profile {
+  width: 100%; /* Full width button */
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  margin-bottom: 15px;
+  border-radius: 20px; /* Curve the corners */
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.profile-link {
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar-menu {
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.nav-link-staffdb{
+  display: block;
+  padding: 15px; /* Increase padding for more space */
+  color: black !important; /* Force black text color */
+  text-decoration: none;
+  border-radius: 10px; /* Curve the corners */
+}
+
+
+.nav-link-staffdb:hover {
+  background-color: rgba(0, 128, 0, 0.2); /* Slight green background on hover */
+}
+
+.sidebar-footer {
+  /* Footer for logout button at the bottom */
+  margin-top: auto;
+  text-align: center;
+}
+
+.btn-logout {
+  width: 100%; /* Full width button */
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  border-radius: 20px; /* Curve the corners */
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logout-link {
+  color: white;
+  text-decoration: none;
+}
+
+/* Main content area styles */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  width: calc(100% - 250px); /* Adjusting the width */
+  margin-left: 250px; /* Aligning with the sidebar */
+  box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+
+/* Styles for top-right text */
+.top-right-text {
+  text-align: right; /* Aligns text to the right */
+  width: 100%; /* Ensure the div takes up the full width of the main content */
+  margin-bottom: 20px; /* Add margin below for separation from other content */
+}
+
+.top-right-text h2 {
+  margin: 0; /* Remove any margin around the heading */
+}
+
+.top-right-text p {
+  margin: 0; /* Remove any margin around the paragraph */
+  padding-top: 10px; 
+  text-align: right; /* Add padding on top of the paragraph for spacing */
+}
+
+

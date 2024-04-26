@@ -60,6 +60,10 @@ import UpdatePayInfo from './components/staff_management/UpdatePayInfo';
 import SalaryForm from './components/staff_management/SalaryForm';
 import AllPayRolls from './components/staff_management/AllPayRolls';
 import Register from './components/staff_management/Register';
+import StaffDashboard from "./components/staff_management/Staffdashboard";
+import AllStaffList from "./components/staff_management/Allstafflist";
+import AddSalaryPage from "./components/staff_management/SalaryForm";
+import UpdatePayInformation from "./components/staff_management/Update";
 
 
 
@@ -68,7 +72,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Header />
+       
         <Routes>
           <Route path="/get" element={<Medicalinterface />} />
           
@@ -116,11 +120,13 @@ function App() {
 
           <Route path="/AllPayInfo" element={<AllPayInfo />} />
           <Route path="/addPayInFo" element={<Register />} />
-          
-          <Route path="/delete/:nic" element={<Delete/>}/>
+           <Route path="/delete/:nic" element={<Delete/>}/>
           <Route path="/addPayRoll" element={<SalaryForm/>}/>
-          <Route path="/upDate" element={<UpdatePayInfo/>}/>
-          <Route path="/PayRoll" element={<AllPayRolls/>}/>
+          <Route path="/updatesalarayinfo/:id" element={<UpdatePayInformation/>}/>
+          <Route path="/getallpayrolls" element={<AllPayRolls/>}/>
+          <Route path="/staffdashboard" element={<StaffDashboard/>}/>
+          <Route path="/getallstaff" element={<AllStaffList/>}/>
+          <Route path="/addsalary" element={<AddSalaryPage/>}/>
 
 
 

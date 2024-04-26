@@ -1,42 +1,45 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const Update = () => {
-    const { nic } = useParams();
+const UpdatePayInformation = () => {
+    const { id } = useParams(); // Get the ID from the URL
+    const navigate = useNavigate(); // Use navigate hook to navigate after update
 
     const [formData, setFormData] = useState({
-        adminBasic: "",
-        managerBasic:"",
+        basicSalary: "",
+        role: "",
         bonus: "",
-        OTrate: ""
+        OTrate: "",
     });
 
+    // Fetch pay information data based on the ID from the backend
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchPayInfoData = async () => {
             try {
-                if (nic) {
-                    // Fetch user data based on the NIC from the backend
-                    const response = await axios.get(
-                        `http://localhost:8070/user/get`
-                    );
-                    const userData = response.data.user;
+                const response = await axios.get(`http://localhost:8070/payinfo/${id}`);
+                const payInfoData = response.data;
 
-                    // Update the form data with the fetched user data
-                    setFormData({
-                        adminBasic: userData.adminBasic,
-                        managerBasic: userData.managerBasic,
-                        bonus: userData.bonus,
-                        OTrate: userData.OTrate
-                    });
-                }
+                setFormData({
+                    basicSalary: payInfoData.basicSalary,
+                    role: payInfoData.role,
+                    bonus: payInfoData.bonus,
+                    OTrate: payInfoData.OTrate,
+                });
             } catch (error) {
-                console.error("Error fetching user data:", error);
+                console.error("Error fetching pay information data:", error);
+                alert("Error fetching pay information data.");
             }
         };
 
-        fetchUserData();
-    });
+        fetchPayInfoData();
+    }, [id]);
+
+    // Validate input as a number
+    function validateNumber(input) {
+        const regex = /^[0-9]+$/; // Only numbers allowed
+        return regex.test(input);
+    }
 
     const handleChange = (e) => {
         setFormData({
@@ -45,103 +48,124 @@ const Update = () => {
         });
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            // Update user data using PUT request to the backend
-            const response = await axios.put(
-                `http://localhost:8070/user/update`,formData );
-                 console.log("User updated successfully:", response.data);
-                 alert("User Updated Successfully!");
-                 window.location.href = `/AllPayInfo`;
+        // Validate basic salary input
+        if (!validateNumber(formData.basicSalary)) {
+            alert("Basic salary can only be a number.");
+            return;
+        }
 
+        // Validate OT rate input
+        if (formData.OTrate < 0 || formData.OTrate >= 100) {
+            alert("OT rate must be between 0 and 99 and cannot be negative.");
+            return;
+        }
+
+        try {
+            // Send a PUT request to the backend to update the pay information data
+            await axios.put(`http://localhost:8070/payinfo/updatesalarayinfo/${id}`, formData);
+
+            // Alert the user and navigate back to the AllPayInfo page
+            alert("Payment information updated successfully!");
+            navigate('/AllPayInfo'); // Redirect to the AllPayInfo page
         } catch (error) {
-            console.error("Error updating user:", error.response.data);
-            alert("Error updating customer. Please try again.");
+            console.error("Error updating pay information:", error);
+            alert("Failed to update payment information. Please try again.");
         }
     };
 
+    // Handle keydown event to prevent typing a negative sign
+    const preventNegativeInput = (e) => {
+        // If the key pressed is the minus sign, prevent the default action
+        if (e.key === '-') {
+            e.preventDefault();
+        }
+    };
 
-    const formContainerStyle = {
-        maxWidth: '400px',
-        margin: '0 auto',
-        padding: '20px',
-        border: '1px solid #ccc',
-        borderRadius: '5px',
-        backgroundColor: '#f9f9f9',
-        
-      };
-      
-      const labelStyle = {
-        marginBottom: '5px',
-        color: 'green', // Green label color
-      };
-      
-      const inputStyle = {
-        padding: '8px',
-        width: '100%',
-        marginBottom: '10px',
-        borderRadius: '5px',
-        border: '1px solid #ccc',
-      };
-      
-      const buttonStyle = {
-        backgroundColor: '#007bff',
-        color: '#fff',
-        padding: '10px 20px',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-      };
-
-      
     return (
-        <div style={formContainerStyle}>
+        <div style={{ padding: '20px', maxWidth: '500px', margin: '0 auto' }}>
             <h2>Update Payment Information</h2>
             <form onSubmit={handleSubmit}>
-                <label style={labelStyle}>Admin basic salary:</label>
-                <input
-                    type="text"
-                    name="adminBasic"
-                    value={formData.adminBasic}
-                    onChange={handleChange}
-                    style={inputStyle}
-                /><br />
+                <div style={{ marginBottom: '10px' }}>
+                    <label>Basic Salary:</label>
+                    <input
+                        type="number"
+                        name="basicSalary"
+                        value={formData.basicSalary}
+                        onChange={handleChange}
+                        onKeyDown={preventNegativeInput} // Prevent negative input
+                        min="0" // Minimum value is 0
+                        style={{ width: '100%', padding: '8px' }}
+                        required
+                    />
+                    {!validateNumber(formData.basicSalary) && (
+                        <p className="error-message">Basic salary can only be a number.</p>
+                    )}
+                </div>
 
-                <label style={labelStyle}>Manager Basic Salary:</label>
-                <input
-                    type="text"
-                    name="managerBasic"
-                    value={formData.managerBasic}
-                    onChange={handleChange}
-                    style={inputStyle}
-                /><br />
+                <div style={{ marginBottom: '10px' }}>
+                    <label>Role:</label>
+                    <input
+                        type="text"
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                        style={{ width: '100%', padding: '8px' }}
+                        required
+                    />
+                </div>
 
-                <label style={labelStyle}>Bonus:</label>
-                <input
-                    type="text"
-                    name="bonus"
-                    value={formData.bonus}
-                    onChange={handleChange}
-                    style={inputStyle}
-                /><br />
+                <div style={{ marginBottom: '10px' }}>
+                    <label>Bonus:</label>
+                    <input
+                        type="number"
+                        name="bonus"
+                        value={formData.bonus}
+                        onChange={handleChange}
+                        onKeyDown={preventNegativeInput} // Prevent negative input
+                        min="0" // Minimum value is 0
+                        style={{ width: '100%', padding: '8px' }}
+                        required
+                    />
+                    {!validateNumber(formData.bonus) && (
+                        <p className="error-message">Bonus can only be a number.</p>
+                    )}
+                </div>
 
-                <label style={labelStyle}>OT Rate:</label>
-                <input
-                    type="text"
-                    name="OTrate"
-                    value={formData.OTrate}
-                    onChange={handleChange}
-                    style={inputStyle}
-                /><br />
+                <div style={{ marginBottom: '10px' }}>
+                    <label>OT Rate:</label>
+                    <input
+                        type="number"
+                        name="OTrate"
+                        value={formData.OTrate}
+                        onChange={handleChange}
+                        onKeyDown={preventNegativeInput} // Prevent negative input
+                        min="0" // Minimum value is 0
+                        style={{ width: '100%', padding: '8px' }}
+                        required
+                    />
+                    {formData.OTrate < 0 || formData.OTrate >= 100 && (
+                        <p className="error-message">OT rate must be between 0 and 99.</p>
+                    )}
+                </div>
 
-                
-
-                <button type="submit" style={buttonStyle}>Save</button>
+                <button
+                    type="submit"
+                    style={{
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        padding: '10px 20px',
+                        borderRadius: '5px'
+                    }}
+                >
+                    Update
+                </button>
             </form>
         </div>
     );
 };
 
-export default Update;
+export default UpdatePayInformation;

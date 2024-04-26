@@ -1,0 +1,102 @@
+/* Add salary page styles */
+.add-salary-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Card container styles */
+.card-container {
+    background-color: #E2E2E2; /* Grey color */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    width: 80%; /* Adjust width as needed */
+}
+
+/* Heading styles */
+.heading {
+    color: #054E26; /* Color for heading */
+    margin-bottom: 10px;
+}
+
+/* NIC paragraph styles */
+.nic {
+    margin-bottom: 10px;
+}
+
+/* Details container (white container) styles */
+.details-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 20px;
+}
+
+/* Headings inside details container */
+.headings {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+/* Headings styles */
+.heading-earnings,
+.heading-amount {
+    flex: 1; /* Evenly space headings */
+}
+
+/* Horizontal line */
+.separator {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+/* Details rows */
+.details {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Individual detail row styles */
+.detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+/* Detail text styles */
+.detail-earning,
+.detail-amount {
+    flex: 1; /* Evenly space text */
+}
+/* OT rate and input field side by side */
+.ot-rate {
+    margin-right: 10px; /* Space between OT rate and input field */
+}
+
+/* Total salary paragraph styles */
+.total-salary {
+    margin-bottom: 250px;
+    font-weight: bold;
+}
+
+/* Save button styles */
+.save-button {
+    padding: 10px 20px;
+    background-color: #218838; /* Green color */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+}
+
+/* OT input field styles */
+.ot-input-field {
+    width: 150px; /* Adjust width as needed */
+    padding: 5px; /* Padding for comfortable input */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border color */
+    text-align: center;
+}
