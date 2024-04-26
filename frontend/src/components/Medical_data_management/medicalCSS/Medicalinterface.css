@@ -1,0 +1,64 @@
+/* Add your custom CSS styles here */
+
+.container {
+    margin: 20px;
+    width: 100%
+}
+
+.table_interface {
+    width: 900px;
+    border-collapse: collapse;
+    margin-left: 800px;
+}
+
+.table_interface th,
+.table_interface td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align:center;
+}
+
+.table_interface th {
+    background-color: #4d7af7;
+    text-align:center;
+    color: #ffffff;
+}
+
+.interface_table_Add {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    background-color: #3bec58;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.interface_table_profile {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    background-color: #f7e245;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+}
+
+.interface_table_Add:hover,
+.interface_table_profile:hover {
+    background-color: #e5e5e5;
+}
+
+.title{
+    margin-left: 1100px;
+    font-weight:bold;
+    
+}
+
+

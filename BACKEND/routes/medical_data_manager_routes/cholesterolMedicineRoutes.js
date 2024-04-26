@@ -88,7 +88,24 @@ router.route("/get_cholesterol_Medicine/:nic").get(async (req, res) => {
   });
 
 
+// Route to delete cholesterol medicine data by ID
+router.route("/delete_cholesterol_Medicine/:id").delete(async (req, res) => {
+  try {
+      const cholesterolMedicineId = req.params.id;
 
+      // Find the cholesterol medicine entry by ID and delete it
+      const deletedCholesterolMedicine = await cholesterolMedicine.findByIdAndDelete(cholesterolMedicineId);
+
+      if (!deletedCholesterolMedicine) {
+          return res.status(404).send({ status: "Cholesterol medicine data not found" });
+      }
+
+      res.status(200).send({ status: "Cholesterol medicine data deleted", data: deletedCholesterolMedicine });
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).send({ status: "Error deleting cholesterol medicine data", error: err.message });
+  }
+});
 
 
 module.exports = router;

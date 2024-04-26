@@ -189,13 +189,13 @@ router.route("/delete/:id").delete(async (req, res) => {
     const diabetesId = req.params.id;
 
     // Find the cholesterol entry by ID and delete it
-    const deleteddiabetes = await Cholesterol.findByIdAndDelete(diabetesId);
+    const deleteddiabetes = await Diabetes.findByIdAndDelete(diabetesId);
 
     if (!deleteddiabetes) {
       return res.status(404).send({ status: "diabetes data not found" });
     }
 
-    res.status(200).send({ status: "diabetes data deleted", data: deletedCholesterol });
+    res.status(200).send({ status: "diabetes data deleted", data: deleteddiabetes });
   } catch (err) {
     console.error(err.message);
     res.status(500).send({ status: "Error deleting diabetes data", error: err.message });

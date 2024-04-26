@@ -184,7 +184,7 @@
 
     position: absolute;
     width: 1000px;
-    height: 700px;
+    height: 750px;
     left: 450px;
     top: 300px;
     bottom: 10px;
@@ -193,7 +193,7 @@
     background: #FFFFFF;
     border: 2px solid #276CBD;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
+    border-radius: 5px;
     
 
 }
@@ -383,7 +383,7 @@ position: absolute;
 width: 200px;
 height: 55px;
 left: 40px;
-top: 50px;
+top: 100px;
 
 
 background: #FFFFFF;
@@ -403,7 +403,7 @@ position: absolute;
 width: 200px;
 height: 55px;
 left: 40px;
-top: 200px;
+top: 300px;
 
 
 background: #FFFFFF;
@@ -423,7 +423,7 @@ position: absolute;
 width: 200px;
 height: 55px;
 left: 40px;
-top: 350px;
+top: 500px;
 
 
 background: #FFFFFF;
@@ -446,3 +446,15 @@ border-radius: 10px;
    
     border-color: #06b00b;
 }
+
+
+
+
+.cholesterol_select.active,
+.diabetes_select.active,
+.pressure_select.active {
+    background-color: #ffffff; /* Change background color for active button */
+    border-color: #06b00b;
+    left: 80px;
+}
+

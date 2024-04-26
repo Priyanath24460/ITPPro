@@ -87,6 +87,27 @@ router.route("/get_diabetes_Medicine/:nic").get(async (req, res) => {
     }
   });
 
+// Route to delete diabetes medicine data by ID
+router.route("/delete_diabetes_Medicine/:id").delete(async (req, res) => {
+  try {
+      const diabetesMedicineId = req.params.id;
+
+      // Find the diabetes medicine entry by ID and delete it
+      const deletedDiabetesMedicine = await diabetesMedicine.findByIdAndDelete(diabetesMedicineId);
+
+      if (!deletedDiabetesMedicine) {
+          return res.status(404).send({ status: "Diabetes medicine data not found" });
+      }
+
+      res.status(200).send({ status: "Diabetes medicine data deleted", data: deletedDiabetesMedicine });
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).send({ status: "Error deleting diabetes medicine data", error: err.message });
+  }
+});
+
+
+
 
 
 module.exports = router;

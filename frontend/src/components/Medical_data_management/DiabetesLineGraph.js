@@ -1,16 +1,25 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState  } from 'react';
 import { Chart } from 'chart.js/auto';
 import * as Luxon from 'luxon';
 import 'chartjs-adapter-luxon';
+import './medicalCSS/LineGraph.css'; // Import the CSS file
 
 const LineGraph = ({ diabetesData }) => {
   const chartRef = useRef(null);
+  const [selectedYear, setSelectedYear] = useState(null);
 
   useEffect(() => {
     if (!diabetesData) return;
+
+     // Filter data based on the selected year
+     const filtered = diabetesData.filter(entry => {
+      const year = Luxon.DateTime.fromISO(entry.date).year;
+      return year === selectedYear;
+    });
   
-    const dates = diabetesData.map((entry) => Luxon.DateTime.fromISO(entry.date).toMillis());
-    const levels = diabetesData.map((entry) => entry.level);
+    const dates = filtered.map((entry) => Luxon.DateTime.fromISO(entry.date).toMillis());
+    const levels = filtered.map((entry) => entry.level);
+
   
     const ctx = chartRef.current.getContext('2d');
 
@@ -60,11 +69,24 @@ const LineGraph = ({ diabetesData }) => {
   
     // Save the chart instance in the ref for future reference
     chartRef.current.chart = newChart;
-  }, [diabetesData]);
+  }, [diabetesData,selectedYear]);
+
+  const handleYearChange = (event) => {
+    setSelectedYear(parseInt(event.target.value));
+  };
   
 
   return (
-    <div>
+    <div className="chart-container">
+       <div className="year-dropdown">
+        <label htmlFor="year-select">Select Year : </label>
+        <select id="year-select" value={selectedYear || ''} onChange={handleYearChange}>
+          <option value="">-- Select Year --</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
+      </div>
       <h3>Diabetes Level Over Time</h3>
       <canvas ref={chartRef} width="400" height="200" />
     </div>

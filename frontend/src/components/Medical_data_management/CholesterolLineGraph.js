@@ -71,16 +71,20 @@ const LineGraph = ({ cholesterolData }) => {
     chartRef.current.chart = newChart;
   }, [cholesterolData, selectedYear]);
 
-  const handleYearButtonClick = (year) => {
-    setSelectedYear(year);
+  const handleYearChange = (event) => {
+    setSelectedYear(parseInt(event.target.value));
   };
 
   return (
     <div className="chart-container">
-      <div className="year-buttons">
-        <button onClick={() => handleYearButtonClick(2024)}>2024</button>
-        <button onClick={() => handleYearButtonClick(2023)}>2023</button>
-        <button onClick={() => handleYearButtonClick(2022)}>2022</button>
+      <div className="year-dropdown">
+        <label htmlFor="year-select">Select Year : </label>
+        <select id="year-select" value={selectedYear || ''} onChange={handleYearChange}>
+          <option value="">-- Select Year --</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
       </div>
       <h3>Cholesterol Level Over Time</h3>
       <canvas ref={chartRef} />

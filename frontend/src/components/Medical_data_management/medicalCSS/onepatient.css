@@ -20,16 +20,16 @@
 }
 
 
-.NIC{
+.NIC,.Name,.Age,.gender{
   color: #276CBD;
-  margin-left: 10px;
-  font-size: 30px;
+  margin-left: 50px;
+  font-size: 25px;
+  margin-top: 10px;
 }
-.Name{
-  color: #276CBD;
-  margin-left: 10px;
-  font-size: 30px;
-}
+
+
+
+
   
 /* Define table styles */
 .tablevalue {
@@ -117,7 +117,7 @@
   background: #FFFFFF;
   border: 2px solid #276CBD;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
-  border-radius: 15px;
+  border-radius: 5px;
   
 
 }
@@ -132,7 +132,7 @@
   background: #FFFFFF;
   border: 2px solid #276CBD;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
-  border-radius: 15px;
+  border-radius: 5px;
   
 
 }
