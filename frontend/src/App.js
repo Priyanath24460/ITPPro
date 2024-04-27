@@ -65,6 +65,18 @@ import AllStaffList from "./components/staff_management/Allstafflist";
 import AddSalaryPage from "./components/staff_management/SalaryForm";
 import UpdatePayInformation from "./components/staff_management/Update";
 
+// inventory management
+//import Header from './components/header';
+import AddItem from './components/Inventory_Management/additem';
+import AllmediItems from './components/Inventory_Management/AllmedicalInventory';
+import IndividualItem from './components/Inventory_Management/MedicalIndividual';
+import UpdateItem from './components/Inventory_Management/updateMedical';
+import AddItemForm from './components/Inventory_Management/addEventItem';
+import EventInventoryList from './components/Inventory_Management/allEventInventory';
+import EventIndividual from './components/Inventory_Management/eventindividualfetch'; // Import EventIndividual component
+import UpdateEventItem from './components/Inventory_Management/updateEventInventory';
+
+
 
 
 
@@ -127,6 +139,20 @@ function App() {
           <Route path="/staffdashboard" element={<StaffDashboard/>}/>
           <Route path="/getallstaff" element={<AllStaffList/>}/>
           <Route path="/addsalary" element={<AddSalaryPage/>}/>
+
+
+          {/* Define your routes */}
+          <Route path="/inventory/" element={<AllmediItems />} />
+          <Route path="/inventory/add" element={<AddItem />} />
+          <Route path="/inventory/:itemCode" element={<IndividualItem />} />
+          <Route path="/inventory/update/:itemCode" element={<UpdateItem />} />
+          {/* Add the routes for event inventory */}
+          <Route path="/eventinventory/add" element={<AddItemForm />} />
+          <Route path="/eventinventory" element={<EventInventoryList />} />
+          {/* Route for individual event inventory item */}
+          <Route path="/eventinventory/:itemCode" element={<EventIndividual />} />
+          {/* Route for updating individual event inventory item */}
+          <Route path="/eventinventory/update/:itemCode" element={<UpdateEventItem />} />
 
 
 

@@ -26,18 +26,8 @@ const inventorySchema = new Schema({
     },
     supplierName: {
         type: String,
-        required: true
-    },
-    expireDate: {
-        type: Date,
         required: true,
-        validate: {
-            validator: function(value) {
-                // Ensure the expiration date is in the future
-                return value > new Date();
-            },
-            message: "Expiration date must be in the future"
-        }
+        enum: ["MedSupp Enterprises", "CureTech Solutions", "HealthLink Suppliers"]
     }
 });
 
