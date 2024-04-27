@@ -97,6 +97,14 @@ const staffmanager = require("./routes/staff_management_routes/staffroute.js");
 app.use("/staffmanager", staffmanager);
 
 
+// inventry management Routes
+const inventoryRouter = require("./routes/inventory_management_routes/Inventories.js");
+const eventInventoryRouter = require("./routes/inventory_management_routes/EventInventories.js");
+
+app.use("/inventory", inventoryRouter); // Use "/inventory" as the base path
+app.use("/eventinventory", eventInventoryRouter); // Use "/eventinventory" as the base path for event inventory
+
+
 app.listen(PORT, () => {
   console.log(`Server is up and running on port no: ${PORT}`);
 

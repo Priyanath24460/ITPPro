@@ -1,10 +1,9 @@
 const router = require("express").Router();
-const Inventory = require("../Models/Inventory");
-
+const Inventory = require("../../models/inventory_management_models/Inventory");
 
 // Create a new inventory item
 router.post("/add", (req, res) => {
-    const { itemCode, itemName, amount, pricePerItem, brandName, supplierName, expireDate } = req.body;
+    const { itemCode, itemName, amount, pricePerItem, brandName, supplierName } = req.body;
     
     const newItem = new Inventory({
         itemCode,
@@ -12,8 +11,7 @@ router.post("/add", (req, res) => {
         amount,
         pricePerItem,
         brandName,
-        supplierName,
-        expireDate // Include expireDate in the new item
+        supplierName
     });
 
     newItem.save()
@@ -40,9 +38,9 @@ router.get("/", (req, res) => {
 // Update an inventory item
 router.put("/update/:itemCode", (req, res) => {
     const { itemCode } = req.params;
-    const { itemName, amount, pricePerItem, brandName, supplierName, expireDate } = req.body;
+    const { itemName, amount, pricePerItem, brandName, supplierName } = req.body;
     
-    Inventory.findOneAndUpdate({ itemCode }, { itemName, amount, pricePerItem, brandName, supplierName, expireDate }, { new: true })
+    Inventory.findOneAndUpdate({ itemCode }, { itemName, amount, pricePerItem, brandName, supplierName }, { new: true })
         .then(updatedItem => {
             if (!updatedItem) {
                 return res.status(404).json({ error: "Item not found" });
@@ -54,14 +52,10 @@ router.put("/update/:itemCode", (req, res) => {
         });
 });
 
-
-
 // Delete an inventory item
 router.delete("/delete/:itemCode", (req, res) => {
     const { itemCode } = req.params;
 
-    // Implement logic to delete the item with the specified itemCode from the database
-    // Example:
     Inventory.findOneAndDelete({ itemCode })
         .then(deletedItem => {
             if (!deletedItem) {
@@ -78,45 +72,20 @@ router.route("/:itemCode").get(async (req, res) => {
     const itemCode = req.params.itemCode;
     console.log("Fetching item with code:", itemCode); // Logging for debugging
     try {
-      // Attempt to find the item in the inventory based on its item code
-      const item = await Inventory.findOne({ itemCode: itemCode });
+        const item = await Inventory.findOne({ itemCode: itemCode });
   
-      if (!item) {
-        // If the item is not found, log a message and return a 404 status with a corresponding JSON response
-        console.log("Item not found");
-        return res.status(404).json({ status: "Item not found" });
-      }
-  
-      // If the item is found, log a message and return a 200 status with the item details as a JSON response
-      console.log("Item found:", item);
-      res.status(200).json({ status: "Item Fetched", item: item });
-    } catch (error) {
-      // If an error occurs during the process, log the error and return a 500 status with an error message
-      console.error("Error fetching item:", error.message);
-      res.status(500).json({ status: "Error with getting item", error: error.message });
-    }
-});
-
-router.get('/searchByName', async (req, res) => {
-    const { itemName } = req.query;
-
-    try {
-        // Perform a case-insensitive search for items by name
-        const items = await Inventory.find({ itemName: { $regex: new RegExp(itemName, 'i') } });
-
-        if (items.length === 0) {
-            return res.status(404).json({ message: 'No items found' });
+        if (!item) {
+            console.log("Item not found");
+            return res.status(404).json({ status: "Item not found" });
         }
-
-        res.json(items);
+  
+        console.log("Item found:", item);
+        res.status(200).json({ status: "Item Fetched", item: item });
     } catch (error) {
-        console.error("Error searching items:", error);
-        res.status(500).json({ error: "Failed to search items", message: error.message });
+        console.error("Error fetching item:", error.message);
+        res.status(500).json({ status: "Error with getting item", error: error.message });
     }
 });
 
 
-
-module.exports = router; // Export the router1 module
-
-
+module.exports = router;
