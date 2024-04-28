@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './AddItemForm.css'; // Import CSS for styling
 
 function AddItemForm() {
     const [itemCode, setItemCode] = useState('');
@@ -42,30 +43,38 @@ function AddItemForm() {
     };
 
     return (
-        <div>
-            <h1>Add Event Inventory Item</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="itemCode">Item Code:</label><br />
-                <input type="text" id="itemCode" value={itemCode} onChange={(e) => setItemCode(e.target.value)} required /><br />
+        <div className="addItemFormContainer">
+            <h3 className="addItemFormTitle">Add Event Inventory Item</h3>
+            <form onSubmit={handleSubmit} className="addItemForm">
+                <div className="formGroup">
+                    <label htmlFor="itemCode">Item Code:</label>
+                    <input type="text" id="itemCode" value={itemCode} onChange={(e) => setItemCode(e.target.value)} required />
+                </div>
 
-                <label htmlFor="itemName">Item Name:</label><br />
-                <input type="text" id="itemName" value={itemName} onChange={(e) => setItemName(e.target.value)} required /><br />
+                <div className="formGroup">
+                    <label htmlFor="itemName">Item Name:</label>
+                    <input type="text" id="itemName" value={itemName} onChange={(e) => setItemName(e.target.value)} required />
+                </div>
 
-                <label htmlFor="amount">Amount:</label><br />
-                <input type="number" id="amount" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} required /><br />
+                <div className="formGroup">
+                    <label htmlFor="amount">Amount:</label>
+                    <input type="number" id="amount" value={amount} onChange={(e) => setAmount(parseInt(e.target.value))} required />
+                </div>
 
-                <label htmlFor="condition">Condition:</label><br />
-                <select id="condition" value={condition} onChange={(e) => setCondition(e.target.value)} required>
-                    <option value="">Select Condition</option>
-                    <option value="New">New</option>
-                    <option value="Very Good">Very Good</option>
-                    <option value="Good">Good</option>
-                    <option value="Fair">Fair</option>
-                    <option value="Poor">Poor</option>
-                    <option value="Not Working">Not Working</option>
-                </select><br />
+                <div className="formGroup">
+                    <label htmlFor="condition">Condition:</label>
+                    <select id="condition" value={condition} onChange={(e) => setCondition(e.target.value)} required>
+                        <option value="">Select Condition</option>
+                        <option value="New">New</option>
+                        <option value="Very Good">Very Good</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Poor">Poor</option>
+                        <option value="Not Working">Not Working</option>
+                    </select>
+                </div>
 
-                <button type="submit">Add Item</button>
+                <button type="submit" className="addItemButton">Add Item</button>
             </form>
         </div>
     );

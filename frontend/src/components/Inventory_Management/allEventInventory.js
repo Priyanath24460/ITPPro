@@ -65,11 +65,11 @@ function EventInventoryList() {
 
     return (
         <div className="container">
-            <h1 className="mb-4">Event Inventory List</h1>
+            <h1 className="mb-4">Event  Item Catalog</h1>
             <div className="row align-items-center mb-3">
                 <div className="col">
                     <input 
-                        className="form-control" 
+                        className="form-control mb-2" 
                         type="search" 
                         placeholder="Search by Item Name" 
                         aria-label="Search"
@@ -101,7 +101,7 @@ function EventInventoryList() {
                     ))}
                 </div>
             </div>
-            <table className="table">
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>Item Code</th>

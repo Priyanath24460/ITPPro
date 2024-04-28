@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useReactToPrint } from 'react-to-print';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import './RetrieveItems.css'; // Import CSS file for additional styling
 
 const RetrieveItems = () => {
     const [items, setItems] = useState([]);
@@ -90,7 +90,7 @@ const RetrieveItems = () => {
         // Add total values and counts inside the rectangle
         doc.setFontSize(12); // Set font size
         doc.setFont("helvetica", "bold"); // Set font and style
-        doc.text(`Total Inventory Value: ${(totalInventoryValue * 75).toFixed(2)}`, xStart + 5, yStart + 20);
+        doc.text(`Total Inventory Value:RS. ${totalInventoryValue.toFixed(2)}`, xStart + 5, yStart + 20);
         doc.text(`Total Items: ${totalItemCount}`, xStart + 5, yStart + 32);
         doc.text(`In Stock: ${inStockItems.length}`, xStart + 5, yStart + 44);
         doc.text(`Out of Stock: ${outOfStockItems.length}`, xStart + 5, yStart + 56);
@@ -100,10 +100,10 @@ const RetrieveItems = () => {
     };
 
     return (
-        <div className="container" style={{ fontFamily: 'Arial, sans-serif', marginTop: '20px' }}>
-            <h1 className="mb-4" style={{ textAlign: 'center' }}>Medical Item Catalog</h1>
-            <div className="total-info mb-3" style={{ display: 'flex', justifyContent: 'center' }}>
-                <span className="badge bg-primary me-2">Total Inventory Value: {(totalInventoryValue * 75).toFixed(2)}</span>
+        <div className="container">
+            <h1 className="mb-4">Medical Item Catalog</h1>
+            <div className="total-info mb-3">
+                <span className="badge bg-primary me-2">Total Inventory Value: {totalInventoryValue.toFixed(2)}</span>
                 <span className="badge bg-success me-2">Total Items: {totalItemCount}</span>
                 <span className="badge bg-info me-2">In Stock: {inStockItems.length}</span>
                 <span className="badge bg-danger">Out of Stock: {outOfStockItems.length}</span>
@@ -130,8 +130,8 @@ const RetrieveItems = () => {
                 </form>
                 <button className="btn btn-primary" onClick={handlePrint}>Print Inventory</button>
             </div>
-            <div ref={componentRef} style={{ overflowX: 'auto' }}>
-                <table className="table" style={{ minWidth: '600px' }}>
+            <div ref={componentRef} className="table-wrapper">
+                <table className="table">
                     <thead>
                         <tr>
                             <th>Item Code</th>
