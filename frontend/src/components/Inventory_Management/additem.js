@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export default function AddItem() {
     const [itemCode, setItemCode] = useState("");
@@ -56,34 +57,35 @@ export default function AddItem() {
     };
 
     return (
-        <div className="container">
-            <form onSubmit={sendData}>
-                <div className="form-group">
+        <div className="addItemFormContainer">
+            <form onSubmit={sendData} className="addItemForm">
+                <h5 className="addItemFormTitle">Add Item</h5>
+                <div className="formGroup">
                     <label htmlFor="itemCode">Item Code</label>
                     <input type="text" className="form-control" id="itemCode" placeholder="Enter item code" 
                         value={itemCode} onChange={(e) => setItemCode(e.target.value)} />
                 </div>
-                <div className="form-group">
+                <div className="formGroup">
                     <label htmlFor="itemName">Item Name</label>
                     <input type="text" className="form-control" id="itemName" placeholder="Enter item name" 
                         value={itemName} onChange={(e) => setItemName(e.target.value)} />
                 </div>
-                <div className="form-group">
+                <div className="formGroup">
                     <label htmlFor="amount">Amount</label>
                     <input type="text" className="form-control" id="amount" placeholder="Enter amount" 
                         value={amount} onChange={(e) => setAmount(e.target.value)} />
                 </div>
-                <div className="form-group">
+                <div className="formGroup">
                     <label htmlFor="pricePerItem">Price Per Item</label>
                     <input type="text" className="form-control" id="pricePerItem" placeholder="Enter price per item"
                         value={pricePerItem} onChange={(e) => setPricePerItem(e.target.value)} />
                 </div>
-                <div className="form-group">
+                <div className="formGroup">
                     <label htmlFor="brandName">Brand Name</label>
                     <input type="text" className="form-control" id="brandName" placeholder="Enter brand name"
                         value={brandName} onChange={(e) => setBrandName(e.target.value)} />
                 </div>
-                <div className="form-group">
+                <div className="formGroup">
                     <label htmlFor="supplierName">Supplier Name</label>
                     <select className="form-control" id="supplierName" value={supplierName} onChange={(e) => setSupplierName(e.target.value)}>
                         <option value="">Select Supplier</option>
@@ -92,7 +94,7 @@ export default function AddItem() {
                         ))}
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="addItemButton">Submit</button>
             </form>
         </div>
     );
