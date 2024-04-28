@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './RetrieveItems.css'; // Import CSS file for additional styling
 
 const RetrieveItems = () => {
