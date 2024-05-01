@@ -1,8 +1,8 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, } from 'react-router-dom';
 
 
 export default function AddPatient(){
@@ -14,10 +14,31 @@ export default function AddPatient(){
     const[diabetes,setDiabetes] = useState("No");
     const[cholesterol,setCholesterol] = useState("No");
     const[pressure,setPressure] = useState("No");
+    const[otherdisease,setotherdisease] = useState("No");
+
    // const [otherDiseases, setOtherDiseases] = useState("No");
     const [selectedDate, setSelectedDate] = useState(new Date()); // Add state for date
+    const [submittedNics, setSubmittedNics] = useState([]);
 
-    function sendDate(){
+    useEffect(() => {
+      // Fetch the list of submitted NICs when the component mounts
+      axios.get("http://localhost:8070/patients/get").then((response) => {
+        const existingNics = response.data.map((patient) => patient.nic);
+        setSubmittedNics(existingNics);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }, []);
+
+
+    function sendDate(event){
+
+      
+
+      if (submittedNics.includes(nic)) {
+        alert("Patient with this NIC already exists.");
+        return;
+      }
 
         const newPatient = {
             nic,
@@ -28,17 +49,18 @@ export default function AddPatient(){
             diabetes,
             cholesterol,
             pressure,
-           // otherDiseases,
+            otherdisease,
         }
 
         axios.post("http://localhost:8070/patients/add",newPatient).then(()=>{
-            //alert("Student added")
-              //setNic("");
-              //setName("");
+          alert("Patient added successfully.");
               setDiabetes("");
               setCholesterol("");
               setPressure("");
               setSelectedDate(new Date()); // Reset the date after submission
+
+              
+              
   
           }).catch((err)=>{
             alert(err)
@@ -48,9 +70,9 @@ export default function AddPatient(){
     }
 
     return(
-        <div className="container border p-4">
-      <form onSubmit={sendDate} >
-        <div className="mb-3">
+        <div className="container border p-4" style={{ marginLeft: '500px',width: '650px' }}>
+          <form onSubmit={sendDate} >
+          <div className="mb-3">
           <label htmlFor="nic" className="form-label">
             Patient NIC
           </label>
@@ -62,9 +84,9 @@ export default function AddPatient(){
             value={nic} // Set value of nic input
             readOnly // Make the input read-only since it's coming from URL params
           />
-        </div>
+          </div>
 
-        <div className="mb-3">
+          <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Name
           </label>
@@ -77,9 +99,9 @@ export default function AddPatient(){
             readOnly // Make the input read-only since it's coming from URL params
             required
           />
-        </div>
+         </div>
 
-        <div className="mb-3">
+         <div className="mb-3">
           <label htmlFor="age" className="form-label">
             Age
           </label>
@@ -184,6 +206,7 @@ export default function AddPatient(){
             </label>
           </div>
           
+          
         </div>
 
         <div className="mb-3">
@@ -219,6 +242,39 @@ export default function AddPatient(){
           </div>
         </div>
 
+        <div className="mb-3">
+          <label className="form-label">Other Disease</label>
+          <div className="form-check">
+            <input
+              type="radio"
+              id="otherdiseaseYes"
+              name="otherdisease"
+              className="form-check-input"
+              value="Yes"
+              checked={otherdisease === "Yes"}
+              onChange={() => setotherdisease("Yes")}
+            />
+            <label className="form-check-label" htmlFor="otherdiseaseYes">
+              Yes
+            </label>
+            
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              id="otherdiseaseNo"
+              name="otherdisease"
+              className="form-check-input"
+              value="No"
+              checked={otherdisease === "No"}
+              onChange={() => setotherdisease("No")}
+            />
+            <label className="form-check-label" htmlFor="otherdiseaseNo">
+              No
+            </label>
+          </div>
+        </div>
+
        {/* <div className="mb-3">
           <label htmlFor="otherDiseases" className="form-label">
             Other Diseases
@@ -234,7 +290,8 @@ export default function AddPatient(){
 
         {/* Similar radio button structure for cholesterol and pressure */}
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary"
+        style={{ backgroundColor: 'blue',width: '450px',color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }} >
           Submit
         </button>
       </form>

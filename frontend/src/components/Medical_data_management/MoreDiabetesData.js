@@ -6,7 +6,7 @@ import "./medicalCSS/MorePressureCSS.css";
 import MedicineDataShowingTable from './MedicineDataShowingTable';
 
 export default function DiabetesData() {
-  const { nic } = useParams();
+  const { nic,name,age,gender } = useParams();
   const [diabetesData, setDiabetesData] = useState(null);
   const [status, setStatus] = useState("");
   const [editingEntry, setEditingEntry] = useState(null);
@@ -47,6 +47,7 @@ export default function DiabetesData() {
       const data = response.data.data;
 
       if (data) {
+        data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setDiabetesData(data);
         setStatus("Diabetes data fetched successfully");
       } else {
@@ -232,6 +233,7 @@ const handleDeleteClick = async (entryId) => {
     const response = await axios.get(`http://localhost:8070/diabetesMedicine/get_diabetes_Medicine/${nic}`);
     const data = response.data.data;
     if (data) {
+      data.sort((a, b) => new Date(b.date) - new Date(a.date));
       setDiabetesMedicineData(data);
       setStatus("diabetes data fetched successfully");
     } else {
@@ -302,39 +304,51 @@ const handleDeleteMedicine = async (entryId) => {
 
   return (
     <div>
-      <h3>Diabetes Data for NIC: {nic}</h3>
+      <div className="container">
+  <h3>NIC:{nic}</h3>
+  <h3>Name: {name}</h3>
+  <h3>Age: {age}</h3>
+  <h3>Gender: {gender}</h3>
+</div>
       {diabetesData ? (
         <div>
          
           <DiabetesLineGraph diabetesData={diabetesData} />
 
-          <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-                      <option value="">All Year</option>
-                      {/* You can populate the years dynamically based on your data */}
-                      <option value="2024">2024</option>
-                      <option value="2025">2025</option>
-                      <option value="2026">2026</option>
-                      {/* Add more years as needed */}
-                    </select>
-
-                    <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
-                      <option value="">All Month</option>
-                      {/* You can populate the months dynamically based on your data */}
-                      <option value="0">January</option>
-                      <option value="1">February</option>
-                      <option value="2">March</option>
-                      <option value="3">April</option>
-                      <option value="4">May</option>
-                      <option value="5">June</option>
-                      <option value="6">July</option>
-                      <option value="7">August</option>
-                      <option value="8">September</option>
-                      <option value="9">October</option>
-                      <option value="10">November</option>
-                      <option value="11">December</option>
-                      
-                      {/* Add more months as needed */}
-                    </select>
+          <div className="row">
+  <div className="col-sm-3">
+    <input
+      type="text"
+      className="form-control mb-2 mr-sm-2"
+      placeholder="Search by Year"
+      value={selectedYear}
+      onChange={(e) => setSelectedYear(e.target.value)}
+      style={{ width: '90%',marginTop:'20px',marginLeft:'15px' }}
+    />
+  </div>
+  <div className="col-sm-3">
+    <select
+      className="form-control mb-2 mr-sm-2"
+      value={selectedMonth}
+      onChange={(e) => setSelectedMonth(e.target.value)}
+      style={{ width: '70%',marginLeft:'0px' , marginTop:'20px'}}
+    >
+      <option value="">All Month</option>
+      <option value="0">January</option>
+      <option value="1">February</option>
+      <option value="2">March</option>
+      <option value="3">April</option>
+      <option value="4">May</option>
+      <option value="5">June</option>
+      <option value="6">July</option>
+      <option value="7">August</option>
+      <option value="8">September</option>
+      <option value="9">October</option>
+      <option value="10">November</option>
+      <option value="11">December</option>
+    </select>
+  </div>
+</div>
        <div className="pressure-data-container">  
           <table className="pressure-table">
             <thead>
@@ -353,7 +367,7 @@ const handleDeleteMedicine = async (entryId) => {
                   <td>
                     {editingEntry === entry._id ? (
                       <input
-                        type="text"
+                        type="number"
                         value={editedLevel}
                         onChange={(e) => setEditedLevel(e.target.value)}
                       />
@@ -421,6 +435,12 @@ const handleDeleteMedicine = async (entryId) => {
                 //handleEdit={handleEditMedicine}
                 handleSaveEdit={handleSaveEditMedicine}
                 reset={resetEditingState}
+                filteredData={filteredData}
+                MedicalDataType={"Diabetes"}
+                nic={nic}
+                name={name}
+                age={age}
+                gender={gender}
                 //handleCancelEdit={handleCancelEditMedicine}
       />
 

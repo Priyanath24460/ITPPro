@@ -1,4 +1,19 @@
 /* styles.css */
+.container {
+  border: 2px solid #ccc; /* Add border to create a box */
+  padding: 10px; /* Add padding for better spacing */
+  margin: 20px; /* Add margin to create space around the box */
+  border-radius: 10px; /* Add border radius for rounded corners */
+  left: 5px;
+  position: absolute;
+  width: 300px;
+  
+}
+
+.container h3 {
+  font-size: 18px; /* Adjust the font size as needed */
+}
+
 
 .pressure-data-container {
     margin: 20px;

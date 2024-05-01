@@ -8,7 +8,7 @@ import HealthMedicineForm from "./HealtMedicineForm";
 
 
 export default function AddHealthData() {
-    const { nic, name } = useParams();
+    const { nic, name,age,gender } = useParams();
     const [activeButton, setActiveButton] = useState("cholesterol"); // Track active button
     
 
@@ -79,7 +79,14 @@ export default function AddHealthData() {
    
 
     // Function to handle submission of cholesterol data
-    const sendCholesterolData = () => {
+    const sendCholesterolData = (event) => {
+        
+        if (!cholesterolLevel) {
+            alert("Please enter cholesterol level.");
+            return;
+        }
+
+        
         
         const isDataExists = isDataForSameMonthYearExists(cholesterolDate);
         if (isDataExists) {
@@ -95,17 +102,18 @@ export default function AddHealthData() {
             formData.append("date", cholesterolDate);
             formData.append("pdfFile", cholesterolPdfFile);
 
-            axios.post("http://localhost:8070/cholesterol/addcholesteroldata", formData)
-                .then(() => {
-                    alert("Cholesterol data added successfully");
+            axios.post("http://localhost:8070/cholesterol/addcholesteroldata", formData);
+                
+                    
                     // Clear input fields and reset state
                     setCholesterolLevel("");
                     setCholesterolPdfFile(null);
                     setCholesterolDate(new Date());
-                })
-                .catch((err) => {
-                    alert("Error adding cholesterol data: " + err.message);
-                });
+                    
+
+                
+                alert("Cholesterol data added successfully");
+                
         } catch (error) {
             alert("An unexpected error occurred while adding cholesterol data: " + error.message);
         }
@@ -114,37 +122,41 @@ export default function AddHealthData() {
     // Function to handle submission of diabetes data
     const sendDiabetesData = () => {
 
-        const isDataExists = isDataForSameMonthYearExists(diabetesDate);
-        if (isDataExists) {
-            alert("Data for the same month and year already exists. Please choose a different date.");
-            return; // Prevent further execution
+        if (!diabetesLevel) {
+            alert("Please enter diabetes level.");
+            return;
         }
-        try {
-            const formData = new FormData();
-            formData.append("nic", nic);
-            formData.append("name", name);
-            formData.append("level", diabetesLevel);
-            formData.append("date", diabetesDate);
-            formData.append("pdfFile", diabetesPdfFile);
+    const isDataExists = isDataForSameMonthYearExists(diabetesDate);
+    if (isDataExists) {
+        alert("Data for the same month and year already exists. Please choose a different date.");
+        return; // Prevent further execution
+    }
+    
+    const formData = new FormData();
+    formData.append("nic", nic);
+    formData.append("name", name);
+    formData.append("level", diabetesLevel);
+    formData.append("date", diabetesDate);
+    formData.append("pdfFile", diabetesPdfFile);
 
-            axios.post("http://localhost:8070/diabetes/adddiabetesdata", formData)
-                .then(() => {
-                    alert("Diabetes data added successfully");
-                    // Clear input fields and reset state
-                    setDiabetesLevel("");
-                    setDiabetesPdfFile(null);
-                    setDiabetesDate(new Date());
-                })
-                .catch((err) => {
-                    alert("Error adding diabetes data: " + err.message);
-                });
-        } catch (error) {
-            alert("An unexpected error occurred while adding diabetes data: " + error.message);
-        }
-    };
+    axios.post("http://localhost:8070/diabetes/adddiabetesdata", formData);
+        
+            alert("Diabetes data added successfully");
+            // Clear input fields and reset state
+            setDiabetesLevel("");
+            setDiabetesPdfFile(null);
+            setDiabetesDate(new Date());
+        
+        
+};
 
     // Function to handle submission of pressure data
     const sendPressureData = () => {
+
+        if (!highPressure || !lowPressure) {
+            alert("Please enter both high and low pressure.");
+            return;
+        }
         
         const isDataExists = isDataForSameMonthYearExists(pressureDate);
         if (isDataExists) {
@@ -160,18 +172,16 @@ export default function AddHealthData() {
             formData.append("date", pressureDate);
             formData.append("pdfFile", pressurePdfFile);
 
-            axios.post("http://localhost:8070/pressure/addpd", formData)
-                .then(() => {
+            axios.post("http://localhost:8070/pressure/addpd", formData);
+                
                     alert("Pressure data added successfully");
                     // Clear input fields and reset state
                     setHighPressure("");
                     setLowPressure("");
                     setPressurePdfFile(null);
                     setPressureDate(new Date());
-                })
-                .catch((err) => {
-                    alert("Error adding pressure data: " + err.message);
-                });
+                
+                
         } catch (error) {
             alert("An unexpected error occurred while adding pressure data: " + error.message);
         }
@@ -271,16 +281,21 @@ export default function AddHealthData() {
                                         <tr>
                                             <td>Level</td>
                                             <td>
-                                                <input
-                                                    type="number"
-                                                    className="form-control"
-                                                    id="cholesterol level"
-                                                    placeholder="cholesterol level"
-                                                    onChange={(e) => {
-                                                    setCholesterolLevel(e.target.value);
-                                                    }}
-                                                />
-                                          </td>
+                                             <input
+                                                type="number"
+                                                className="form-control"
+                                                id="cholesterol level"
+                                                placeholder="cholesterol level"
+                                                onChange={(e) => {
+                                                    const value = parseInt(e.target.value); // Parse the input value as an integer
+                                                    if (!isNaN(value) && value >= 0) { // Check if it's a valid number and positive
+                                                        setCholesterolLevel(value); // Set the state only if it's a positive number
+                                                    }
+
+                                                    
+                                                }}
+                                            />
+                                                                                    </td>
                                         </tr>
                                        
                                         <tr>
@@ -317,8 +332,8 @@ export default function AddHealthData() {
                                                 Add
                                                 </button>
 
-                                                <Link to={`/cholesterolmore/${nic}`} className="viewbutton_medical_pofile">
-                <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View Cholesterol More
+                                                <Link to={`/cholesterolmore/${nic}/${name}/${age}/${gender}`} className="viewbutton_medical_pofile">
+                <i className="fa fa-eye" aria-hidden="true"></i>&nbsp; Cholesterol History
             </Link>                        
             </form> 
                      <HealthMedicineForm
@@ -354,7 +369,10 @@ export default function AddHealthData() {
                                                     id="diabetes level"
                                                     placeholder="diabetes level"
                                                     onChange={(e) => {
-                                                    setDiabetesLevel(e.target.value);
+                                                        const value = parseInt(e.target.value); // Parse the input value as an integer
+                                                        if (!isNaN(value) && value >= 0) { // Check if it's a valid number and positive
+                                                            setDiabetesLevel(value); // Set the state only if it's a positive number
+                                                        }
                                                     }}
                                                 />
                                           </td>
@@ -395,8 +413,8 @@ export default function AddHealthData() {
                                                 Add
                                                 </button> 
 
-                                                <Link to={`/diabetesmore/${nic}`} className="viewbutton_medical_pofile">
-                <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View Diabetes More
+                                                <Link to={`/diabetesmore/${nic}/${name}/${age}/${gender}`} className="viewbutton_medical_pofile">
+                <i className="fa fa-eye" aria-hidden="true"></i>&nbsp; Diabetes History
             </Link>
             </form>
                
@@ -434,7 +452,10 @@ export default function AddHealthData() {
                                             id="high pressure"
                                             placeholder="Enter high level"
                                             onChange={(e) => {
-                                            setHighPressure(e.target.value);
+                                                const value = parseInt(e.target.value); // Parse the input value as an integer
+                                                if (!isNaN(value) && value >= 0) { // Check if it's a valid number and positive
+                                                    setHighPressure(value); // Set the state only if it's a positive number
+                                                }
                                             }}
                                         />
                                   </td>
@@ -448,7 +469,10 @@ export default function AddHealthData() {
                                                 id="low pressure"
                                                 placeholder="Enter low level"
                                                 onChange={(e) => {
-                                                setLowPressure(e.target.value);
+                                                    const value = parseInt(e.target.value); // Parse the input value as an integer
+                                                    if (!isNaN(value) && value >= 0) { // Check if it's a valid number and positive
+                                                        setLowPressure(value); // Set the state only if it's a positive number
+                                                    }
                                                 }}
                                             />
                                         </td>
@@ -487,8 +511,8 @@ export default function AddHealthData() {
                 Add
                 </button> 
 
-                <Link to={`/pressuremore/${nic}`} className="viewbutton_medical_pofile">
-                <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View Pressure More
+                <Link to={`/pressuremore/${nic}/${name}/${age}/${gender}`} className="viewbutton_medical_pofile">
+                <i className="fa fa-eye" aria-hidden="true"></i>&nbsp; Pressure History
             </Link>
             </form>
                         <HealthMedicineForm
