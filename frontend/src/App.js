@@ -75,7 +75,7 @@ import AddItemForm from './components/Inventory_Management/addEventItem';
 import EventInventoryList from './components/Inventory_Management/allEventInventory';
 import EventIndividual from './components/Inventory_Management/eventindividualfetch'; // Import EventIndividual component
 import UpdateEventItem from './components/Inventory_Management/updateEventInventory';
-
+import HistorySummary from './components/Inventory_Management/HistorySummary';
 
 
 
@@ -153,7 +153,7 @@ function App() {
           <Route path="/eventinventory/:itemCode" element={<EventIndividual />} />
           {/* Route for updating individual event inventory item */}
           <Route path="/eventinventory/update/:itemCode" element={<UpdateEventItem />} />
-
+          <Route path="/history/" element={<HistorySummary />} />
 
 
         </Routes>

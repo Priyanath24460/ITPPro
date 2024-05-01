@@ -9,10 +9,10 @@ export default function AddItem() {
     const [pricePerItem, setPricePerItem] = useState("");
     const [brandName, setBrandName] = useState("");
     const [supplierName, setSupplierName] = useState("");
+    const [itemDate, setItemDate] = useState(""); // New state for itemDate
     const [supplierList] = useState([
-        "MedSupp Enterprises",
-        "CureTech Solutions",
-        "HealthLink Suppliers"
+        "MedSupp Enterprises"
+        
     ]); 
 
     const validateItemCode = (value) => {
@@ -22,6 +22,11 @@ export default function AddItem() {
 
     const validateItemName = (value) => {
         const regex = /^[^\d]+$/; // Regex pattern: doesn't contain numbers
+        return regex.test(value);
+    };
+
+    const validateNumberInput = (value) => {
+        const regex = /^\d*\.?\d*$/; // Regex pattern: allow digits and optional decimal point
         return regex.test(value);
     };
 
@@ -38,13 +43,24 @@ export default function AddItem() {
             return;
         }
 
+        if (!validateNumberInput(amount)) {
+            alert("Amount must be a valid number.");
+            return;
+        }
+
+        if (!validateNumberInput(pricePerItem)) {
+            alert("Price per item must be a valid number.");
+            return;
+        }
+
         const newItem = {
             itemCode,
             itemName,
             amount,
             pricePerItem,
             brandName,
-            supplierName
+            supplierName,
+            itemDate 
         };
 
         axios.post("http://localhost:8070/Inventory/add", newItem)
@@ -93,6 +109,11 @@ export default function AddItem() {
                             <option key={index} value={supplier}>{supplier}</option>
                         ))}
                     </select>
+                </div>
+                <div className="formGroup">
+                    <label htmlFor="itemDate">Item Date</label>
+                    <input type="date" className="form-control" id="itemDate" 
+                        value={itemDate} onChange={(e) => setItemDate(e.target.value)} />
                 </div>
                 <button type="submit" className="addItemButton">Submit</button>
             </form>

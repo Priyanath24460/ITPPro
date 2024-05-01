@@ -3,13 +3,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './RetrieveItems.css'; // Import CSS file for additional styling
+import HistorySummary from "./HistorySummary";
 
 const RetrieveItems = () => {
     const [items, setItems] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filterType, setFilterType] = useState("all");
+
+    const [selectedItem, setSelectedItem] = useState(null);
+   
     const componentRef = useRef();
 
     useEffect(() => {
@@ -56,14 +59,21 @@ const RetrieveItems = () => {
     );
 
     const handlePrint = () => {
+        // Create a new instance of jsPDF
         const doc = new jsPDF();
-
-        // Set title
-        doc.setFontSize(20);
-        doc.text("Medical Item Catalog", 10, 10);
-
-        // Add table headers
-        const headers = ["Item Code", "Item Name", "Amount", "Price Per Item", "Total Amount", "Brand Name", "Supplier Name", "Status"];
+    
+        // Define the position and margins for the table
+        const startX = 10;
+        const startY = 10;
+        const margin = 10;
+    
+        // Define the width of each column
+        const columnWidth = (doc.internal.pageSize.width - 2 * margin) / 10;
+    
+        // Set up table columns
+        const columns = ["Item Code", "Item Name", "Amount", "Price Per Item", "Total Value", "Brand Name", "Supplier Name", "Item Date", "Status"];
+    
+        // Define the row data
         const rows = filteredItems.map(item => [
             item.itemCode,
             item.itemName,
@@ -72,32 +82,25 @@ const RetrieveItems = () => {
             calculateItemValue(item.amount, item.pricePerItem),
             item.brandName,
             item.supplierName,
+            formatDate(item.itemDate),
             item.amount === 0 ? "Out of Stock" : "In Stock"
         ]);
+    
+        // Set the content of the table
         doc.autoTable({
-            startY: 20,
-            head: [headers],
+            startY,
+            head: [columns],
             body: rows,
+            startY: startY + 10 // Add padding below the table
         });
-
-        // Draw a rectangle for better readability
-        const rectWidth = 130;
-        const rectHeight = 65;
-        const xStart = 10;
-        const yStart = doc.autoTable.previous.finalY + 10;
-        doc.setFillColor(240, 240, 240);
-        doc.rect(xStart, yStart, rectWidth, rectHeight, "F");
-
-        // Add total values and counts inside the rectangle
-        doc.setFontSize(12); // Set font size
-        doc.setFont("helvetica", "bold"); // Set font and style
-        doc.text(`Total Inventory Value:RS. ${totalInventoryValue.toFixed(2)}`, xStart + 5, yStart + 20);
-        doc.text(`Total Items: ${totalItemCount}`, xStart + 5, yStart + 32);
-        doc.text(`In Stock: ${inStockItems.length}`, xStart + 5, yStart + 44);
-        doc.text(`Out of Stock: ${outOfStockItems.length}`, xStart + 5, yStart + 56);
-
-        // Save the PDF
+    
+        // Save the PDF or open in a new tab
         doc.save("inventory.pdf");
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString(); // Adjust formatting as needed
     };
 
     return (
@@ -130,6 +133,8 @@ const RetrieveItems = () => {
                     <button className="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 <button className="btn btn-primary" onClick={handlePrint}>Print Inventory</button>
+                {/* Use Link component for internal navigation */}
+                <Link to="/history" className="btn btn-info">View History</Link>
             </div>
             <div ref={componentRef} className="table-wrapper">
                 <table className="table">
@@ -142,6 +147,7 @@ const RetrieveItems = () => {
                             <th>Total Value</th>
                             <th>Brand Name</th>
                             <th>Supplier Name</th>
+                            <th>Item Date</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -156,6 +162,7 @@ const RetrieveItems = () => {
                                 <td>{calculateItemValue(item.amount, item.pricePerItem)}</td>
                                 <td>{item.brandName}</td>
                                 <td>{item.supplierName}</td>
+                                <td>{formatDate(item.itemDate)}</td> 
                                 <td>
                                     {item.amount === 0 ? (
                                         <span className="badge bg-danger">Out of Stock</span>
@@ -164,7 +171,13 @@ const RetrieveItems = () => {
                                     )}
                                 </td>
                                 <td>
-                                    <Link to={`/inventory/${item.itemCode}`} className="btn btn-primary me-1">View</Link>
+                                    <Link 
+                                        to={`/inventory/${item.itemCode}`} 
+                                        className="btn btn-primary me-1"
+                                        onClick={() => setSelectedItem(item)}
+                                    >
+                                        View
+                                    </Link>
                                     <Link to={`/inventory/update/${item.itemCode}`} className="btn btn-warning me-1">Edit</Link>
                                     <button onClick={() => handleDelete(item.itemCode)} className="btn btn-danger me-1">Delete</button>
                                 </td>
@@ -173,6 +186,7 @@ const RetrieveItems = () => {
                     </tbody>
                 </table>
             </div>
+            
         </div>
     );
 };
