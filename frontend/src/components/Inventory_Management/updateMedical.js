@@ -6,6 +6,7 @@ const UpdateItem = () => {
   const { itemCode } = useParams();
 
   const [formData, setFormData] = useState({
+    itemCode: "",
     itemName: "",
     amount: "",
     pricePerItem: "",
@@ -14,10 +15,10 @@ const UpdateItem = () => {
   });
 
   const [countToAdd, setCountToAdd] = useState(0);
+  const [operation, setOperation] = useState("add"); // default to add
   const [supplierList] = useState([
     "MedSupp Enterprises",
-    "CureTech Solutions",
-    "HealthLink Suppliers"
+   
   ]);
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const UpdateItem = () => {
         const response = await axios.get(`http://localhost:8070/inventory/${itemCode}`);
         const itemData = response.data.item;
         setFormData({
+          itemCode: itemData.itemCode,
           itemName: itemData.itemName,
           amount: itemData.amount,
           pricePerItem: itemData.pricePerItem,
@@ -53,7 +55,7 @@ const UpdateItem = () => {
     // Check if any field is empty
     if (
       !formData.itemName ||
-      !formData.amount ||
+      formData.amount === "" ||
       !formData.pricePerItem ||
       !formData.brandName ||
       !formData.supplierName
@@ -63,13 +65,50 @@ const UpdateItem = () => {
     }
 
     try {
-      const updatedAmount = parseInt(formData.amount) + countToAdd;
+      // Calculate updated amount based on operation
+      let updatedAmount = parseInt(formData.amount);
+      if (operation === "add") {
+        updatedAmount += countToAdd;
+      } else {
+        updatedAmount -= countToAdd;
+      }
+
+      // Ensure amount is not negative
+      updatedAmount = Math.max(updatedAmount, 0);
+
       const updatedFormData = { ...formData, amount: updatedAmount };
-      
+
+      // Update the item
       await axios.put(`http://localhost:8070/Inventory/update/${itemCode}`, updatedFormData);
       alert("Item Updated Successfully!");
+
+      // Add history entry
+      const historyData = {
+        itemCode: formData.itemCode,
+        operation,
+        count: Math.abs(countToAdd),
+        pricePerItem: formData.pricePerItem, // Include pricePerItem from the form
+        updateDate: new Date().toISOString() // Use current date as update date
+      };
+
+      await axios.post("http://localhost:8070/history/add", historyData);
+
+      // Check if operation is "remove" and updated amount is 0
+      if (operation === "remove" && updatedAmount === 0) {
+        sendEmail("trendssmart3@gmail.com", itemCode);
+      }
     } catch (error) {
       console.error("Error updating item:", error);
+      alert("Failed to update item. Please try again.");
+    }
+  };
+
+  const sendEmail = async (recipientEmail, itemCode) => {
+    try {
+      await axios.post("http://localhost:8070/send-email", { recipientEmail, itemCode });
+      console.log("Email sent successfully");
+    } catch (error) {
+      console.error("Error sending email:", error);
     }
   };
 
@@ -81,6 +120,10 @@ const UpdateItem = () => {
             <div className="card-header bg-primary text-white">Update Item</div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label className="form-label">Item Code:</label>
+                  <input type="text" name="itemCode" value={formData.itemCode} readOnly className="form-control" />
+                </div>
                 <div className="mb-3">
                   <label className="form-label">Item Name:</label>
                   <input type="text" name="itemName" value={formData.itemName} onChange={handleChange} className="form-control" />
@@ -106,7 +149,8 @@ const UpdateItem = () => {
                             name="operation" 
                             id="add" 
                             value="add" 
-                            onChange={() => setCountToAdd(Math.abs(countToAdd))} 
+                            checked={operation === "add"} 
+                            onChange={() => setOperation("add")} 
                             className="form-check-input" 
                           />
                           <label htmlFor="add" className="form-check-label">Add</label>
@@ -117,7 +161,8 @@ const UpdateItem = () => {
                             name="operation" 
                             id="remove" 
                             value="remove" 
-                            onChange={() => setCountToAdd(-Math.abs(countToAdd))} 
+                            checked={operation === "remove"} 
+                            onChange={() => setOperation("remove")} 
                             className="form-check-input" 
                           />
                           <label htmlFor="remove" className="form-check-label">Remove</label>

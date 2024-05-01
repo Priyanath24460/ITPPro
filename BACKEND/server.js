@@ -5,6 +5,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const app = express();
 require("dotenv").config();
+const nodemailer = require("nodemailer");
 
 
 const PORT = process.env.PORT || 8070;
@@ -97,12 +98,52 @@ const staffmanager = require("./routes/staff_management_routes/staffroute.js");
 app.use("/staffmanager", staffmanager);
 
 
-// inventry management Routes
+// inventry management Routes----------------------------------------------------------------------------------------------------
+// Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: "chamindudenuwan246@gmail.com",
+    pass: "ypvq blsc czyp uwmd",
+  },
+});
+
+// Routes
 const inventoryRouter = require("./routes/inventory_management_routes/Inventories.js");
 const eventInventoryRouter = require("./routes/inventory_management_routes/EventInventories.js");
+const IhistoryRouter = require("./routes/inventory_management_routes/Ihistories.js");
 
-app.use("/inventory", inventoryRouter); // Use "/inventory" as the base path
-app.use("/eventinventory", eventInventoryRouter); // Use "/eventinventory" as the base path for event inventory
+app.use("/history", IhistoryRouter); 
+app.use("/inventory", inventoryRouter); 
+app.use("/eventinventory", eventInventoryRouter);
+
+// Endpoint to send email
+app.post("/send-email", async (req, res) => {
+  const { recipientEmail, itemCode } = req.body;
+
+  try {
+    await transporter.sendMail({
+      from: '"Chamindu Denuwan" <chamindudenuwan246@gmail.com>',
+      to: recipientEmail,
+      subject: "Item Out of Stock Notification",
+      html: `<p>The item ${itemCode} is now out of stock.</p>`,
+    });
+
+    console.log("Email sent successfully");
+    res.status(200).json({ message: "Email sent successfully" });
+  } catch (error) {
+    console.error("Error sending email:", error);
+    res.status(500).json({ error: "Error sending email" });
+  }
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong!");
+});
 
 
 app.listen(PORT, () => {
