@@ -2,40 +2,29 @@
 
 .container {
     margin: 20px;
-    width: 100%
+    width: 100%;
 }
 
 .table_interface {
-    width: 900px;
+    width: 1000px;
     border-collapse: collapse;
-    margin-left: 800px;
+    margin-left: 400px;
 }
 
 .table_interface th,
 .table_interface td {
     padding: 8px;
     border: 1px solid #ddd;
-    text-align:center;
+    text-align: center;
 }
 
 .table_interface th {
     background-color: #4d7af7;
-    text-align:center;
+    text-align: center;
     color: #ffffff;
 }
 
-.interface_table_Add {
-    display: inline-block;
-    padding: 6px 12px;
-    margin: 3px;
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-    background-color: #3bec58;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+.interface_table_Add,
 .interface_table_profile {
     display: inline-block;
     padding: 6px 12px;
@@ -44,10 +33,16 @@
     font-weight: bold;
     text-decoration: none;
     color: #333;
-    background-color: #f7e245;
     border: 1px solid #ccc;
     border-radius: 4px;
-    
+}
+
+.interface_table_Add {
+    background-color: #3bec58;
+}
+
+.interface_table_profile {
+    background-color: #f7e245;
 }
 
 .interface_table_Add:hover,
@@ -55,10 +50,41 @@
     background-color: #e5e5e5;
 }
 
-.title{
-    margin-left: 1100px;
-    font-weight:bold;
-    
+.title {
+    margin-left: 800px;
+    font-weight: bold;
 }
 
+.green-rectangle {
+    width: 15px;
+    height: 15px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
 
+.red-rectangle {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .green {
+    background-color: rgb(34, 223, 34);
+  }
+  
+  .red {
+    background-color: red;
+  }
+  .grey{
+    background-color: grey;
+  }

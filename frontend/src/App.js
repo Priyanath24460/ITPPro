@@ -10,7 +10,7 @@ import MoreCholesterolData from "./components/Medical_data_management/MoreCholes
 
 import AddPressureMedicine from "./components/Medical_data_management/AddPressureMedicine";
 import PatientProfile from "./components/Medical_data_management/PatientProfile"
-
+import Medicalsidenav from "./components/Medical_data_management/medicalsidenav";
 
 // user management
 
@@ -86,14 +86,14 @@ function App() {
       <div>
        
         <Routes>
-          <Route path="/get" element={<Medicalinterface />} />
+        <Route path="/get" element={MedicalinterfaceRoutes()} />
           
           <Route path="/medicine" element={<AddPressureMedicine />} />
           <Route path="/profile/:nic/:name/:age/:gender/*" element={ProfileRoutes()} />
-          <Route path="/DataAddForm/:nic/:name/:age/:gender/*" element={<AddPatient />} />
-          <Route path="/pressuremore/:nic" element={<MorePressureData />} />
-          <Route path="/diabetesmore/:nic" element={<MoreDiabetesData />} />
-          <Route path="/cholesterolmore/:nic" element={<MoreCholesterolData />} />
+          <Route path="/DataAddForm/:nic/:name/:age/:gender/*" element={AddPatientRoutes()} />
+          <Route path="/pressuremore/:nic/:name/:age/:gender/*" element={<MorePressureData />} />
+          <Route path="/diabetesmore/:nic/:name/:age/:gender/*" element={<MoreDiabetesData />} />
+          <Route path="/cholesterolmore/:nic/:name/:age/:gender/*" element={<MoreCholesterolData />} />
          
          
           <Route path="/getloginevent" element={<LoginPieChart/>}/>
@@ -168,6 +168,25 @@ function ProfileRoutes() {
     <>
       <OnePatient />
       <PatientProfile />
+      <Medicalsidenav/>
+     
+    </>
+  );
+}
+function MedicalinterfaceRoutes() {
+  return (
+    <>
+      <Medicalinterface />
+      <Medicalsidenav/>
+     
+    </>
+  );
+}
+function AddPatientRoutes() {
+  return (
+    <>
+      <AddPatient />
+      <Medicalsidenav/>
      
     </>
   );

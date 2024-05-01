@@ -12,6 +12,7 @@ router.route("/add").post((req,res) =>{
     const cholesterol = req.body.cholesterol;
     const pressure = req.body.pressure;
     
+    
 
 
 
@@ -71,6 +72,7 @@ router.route("/update").put(async(req,res) =>{
         diabetes,
         cholesterol,
         pressure,
+       
         
     };
     

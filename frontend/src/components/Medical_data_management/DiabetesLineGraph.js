@@ -78,18 +78,19 @@ const LineGraph = ({ diabetesData }) => {
 
   return (
     <div className="chart-container">
-       <div className="year-dropdown">
-        <label htmlFor="year-select">Select Year : </label>
-        <select id="year-select" value={selectedYear || ''} onChange={handleYearChange}>
-          <option value="">-- Select Year --</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
-        </select>
-      </div>
-      <h3>Diabetes Level Over Time</h3>
-      <canvas ref={chartRef} width="400" height="200" />
+    <div className="year-input">
+      <label htmlFor="year-input">Enter Year : </label>
+      <input 
+        id="year-input" 
+        type="number" 
+        value={selectedYear} 
+        onChange={handleYearChange} 
+        placeholder="Enter Year"
+      />
     </div>
+    <h3>Cholesterol Level Over Time</h3>
+    <canvas ref={chartRef} />
+  </div>
   );
 };
 

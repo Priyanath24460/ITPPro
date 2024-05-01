@@ -1,0 +1,27 @@
+/* Sidebar styles */
+.sidebar {
+    background-color: #E2F8E0; /* Light green color */
+    width: 250px;
+    height: 100vh;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-header {
+    text-align: center;
+    padding-bottom: 15px;
+  }
+  
+  .sidebar-title {
+    color: green; /* Dark green color for title */
+    margin-bottom: 10px;
+  }
+  .sidebar-menu {
+    flex-grow: 1;
+    margin-bottom: 20px;
+  }
+  .sidebar-footer {
+    /* Footer for logout button at the bottom */
+    margin-top: auto;
+    text-align: center;
+  }

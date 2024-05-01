@@ -15,6 +15,7 @@ export default function Profile(){
     const [patient, setPatient] = useState({});
     const [editMode, setEditMode] = useState(false);
     const [editedData, setEditedData] = useState({});
+
   
 
 
@@ -43,6 +44,7 @@ export default function Profile(){
             diabetes: patient?.patient?.diabetes,
             cholesterol: patient?.patient?.cholesterol,
             pressure: patient?.patient?.pressure,
+           
            
         });
     }
@@ -73,7 +75,9 @@ export default function Profile(){
 
 
 
-
+    const diabetesOptions = ["Yes", "No"];
+    const cholesterolOptions = ["Yes", "No"];
+    const pressureOptions = ["Yes", "No"];
     
 
     return (
@@ -95,30 +99,47 @@ export default function Profile(){
                 <table >
                    
               <tbody className="tableedit">
-                  <tr>
-                      <td>Diabetes</td>
-                      <td><input
-                        type="text"
-                        value={editedData.diabetes}
-                        onChange={(e) => setEditedData({ ...editedData, diabetes: e.target.value })}
-                    /></td>
-                  </tr>
-                  <tr>
-                      <td>Cholesterol</td>
-                      <td> <input
-                        type="text"
-                        value={editedData.cholesterol}
-                        onChange={(e) => setEditedData({ ...editedData, cholesterol: e.target.value })}
-                    /></td>
-                  </tr>
-                  <tr>
-                      <td>Pressure</td>
-                      <td> <input
-                        type="text"
-                        value={editedData.pressure}
-                        onChange={(e) => setEditedData({ ...editedData, pressure: e.target.value })}
-                    /></td>
-                  </tr>
+              <tr>
+    <td>Diabetes</td>
+    <td>
+        <select
+            value={editedData.diabetes}
+            onChange={(e) => setEditedData({ ...editedData, diabetes: e.target.value })}
+        >
+            {diabetesOptions.map(option => (
+                <option key={option} value={option}>{option}</option>
+            ))}
+        </select>
+    </td>
+</tr>
+<tr>
+    <td>Cholesterol</td>
+    <td>
+        <select
+            value={editedData.cholesterol}
+            onChange={(e) => setEditedData({ ...editedData, cholesterol: e.target.value })}
+        >
+            {cholesterolOptions.map(option => (
+                <option key={option} value={option}>{option}</option>
+            ))}
+        </select>
+    </td>
+</tr>
+<tr>
+    <td>Pressure</td>
+    <td>
+        <select
+            value={editedData.pressure}
+            onChange={(e) => setEditedData({ ...editedData, pressure: e.target.value })}
+        >
+            {pressureOptions.map(option => (
+                <option key={option} value={option}>{option}</option>
+            ))}
+        </select>
+    </td>
+</tr>
+
+
                  
               </tbody>
                     </table>
@@ -145,23 +166,24 @@ export default function Profile(){
                   <tr>
                       <td>Diabetes</td>
                       <td>
-                        <span className={patient?.patient?.diabetes === "No" ? "redText" : "greenText"}>
+                        <span className={patient?.patient?.diabetes === "No" ? "greenText" : "redText"}>
                            {patient?.patient?.diabetes}
                      </span>
                      </td>
                   </tr>
                   <tr>
                       <td>Cholesterol</td>
-                      <td><span className={patient?.patient?.cholesterol === "No" ? "redText" : "greenText"}>
+                      <td><span className={patient?.patient?.cholesterol === "No" ?"greenText" : "redText"}>
                            {patient?.patient?.cholesterol}
                      </span></td>
                   </tr>
                   <tr>
                       <td>Pressure</td>
-                      <td><span className={patient?.patient?.pressure === "No" ? "redText" : "greenText"}>
+                      <td><span className={patient?.patient?.pressure === "No" ? "greenText" : "redText"}>
                            {patient?.patient?.pressure}
                      </span></td>
                   </tr>
+                 
                   
               </tbody>
                     </table>
