@@ -37,4 +37,115 @@
   }
 }
 
+/* App.css */
+
+/* Apply general styles to the entire application */
+.App {
+  display: flex; /* Use flexbox to arrange components */
+  justify-content: flex-start; /* Start content from the left */
+  align-items: flex-start; /* Align items to the top */
+  min-height: 100vh; /* Ensure the entire viewport height is covered */
+  font-family: Arial, sans-serif; /* Set a default font */
+}
+
+/* Style the InventoryDashboard component */
+.inventory-dashboard {
+  width: 20%; /* Set the width of the dashboard */
+  min-height: 100vh; /* Ensure the dashboard takes up full height */
+  background-color: #f0f0f0; /* Set a background color */
+  padding: 20px; /* Add padding to the dashboard */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Style the main content area */
+.content-container {
+  flex: 1; /* Allow main content to grow and fill remaining space */
+  padding: 20px; /* Add padding to the main content */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Apply specific styles to the RetrieveItems component */
+.container {
+  background-color: #fff; /* Set a white background */
+  border-radius: 8px; /* Add some border radius for a softer look */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  padding: 20px; /* Add padding to the container */
+}
+
+.total-info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.total-info .badge {
+  margin-right: 10px;
+}
+
+.btn-group {
+  margin-right: 10px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+/*Inventory -------------------------------------------------------------------------------------------------------------------------------------*/
+/* App.css */
+
+/* Apply general styles to the entire application */
+.App {
+  display: flex; /* Use flexbox to arrange components */
+  justify-content: flex-start; /* Start content from the left */
+  align-items: flex-start; /* Align items to the top */
+  min-height: 100vh; /* Ensure the entire viewport height is covered */
+  font-family: Arial, sans-serif; /* Set a default font */
+}
+
+/* Style the InventoryDashboard component */
+.inventory-dashboard {
+  width: 20%; /* Set the width of the dashboard */
+  min-height: 100vh; /* Ensure the dashboard takes up full height */
+  background-color: #f0f0f0; /* Set a background color */
+  padding: 20px; /* Add padding to the dashboard */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Style the main content area */
+.content-container {
+  flex: 1; /* Allow main content to grow and fill remaining space */
+  padding: 20px; /* Add padding to the main content */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Apply specific styles to the RetrieveItems component */
+.container {
+  background-color: #fff; /* Set a white background */
+  border-radius: 8px; /* Add some border radius for a softer look */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  padding: 20px; /* Add padding to the container */
+}
+
+.total-info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.total-info .badge {
+  margin-right: 10px;
+}
+
+.btn-group {
+  margin-right: 10px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+/* Add any additional styles as needed */
+
 

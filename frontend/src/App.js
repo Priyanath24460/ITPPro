@@ -1,4 +1,5 @@
 import React from "react";
+import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import OnePatient from "./components/Medical_data_management/OnePatient";
 import AddPatient from "./components/Medical_data_management/AddPatientS";
@@ -76,6 +77,7 @@ import EventInventoryList from './components/Inventory_Management/allEventInvent
 import EventIndividual from './components/Inventory_Management/eventindividualfetch'; // Import EventIndividual component
 import UpdateEventItem from './components/Inventory_Management/updateEventInventory';
 import HistorySummary from './components/Inventory_Management/HistorySummary';
+import InventoryDashboard from "./components/Inventory_Management/inventorydashboard";
 
 
 
@@ -141,19 +143,22 @@ function App() {
           <Route path="/addsalary" element={<AddSalaryPage/>}/>
 
 
-          {/* Define your routes */}
-          <Route path="/inventory/" element={<AllmediItems />} />
-          <Route path="/inventory/add" element={<AddItem />} />
-          <Route path="/inventory/:itemCode" element={<IndividualItem />} />
-          <Route path="/inventory/update/:itemCode" element={<UpdateItem />} />
-          {/* Add the routes for event inventory */}
-          <Route path="/eventinventory/add" element={<AddItemForm />} />
-          <Route path="/eventinventory" element={<EventInventoryList />} />
-          {/* Route for individual event inventory item */}
-          <Route path="/eventinventory/:itemCode" element={<EventIndividual />} />
-          {/* Route for updating individual event inventory item */}
-          <Route path="/eventinventory/update/:itemCode" element={<UpdateEventItem />} />
-          <Route path="/history/" element={<HistorySummary />} />
+      {/*inventory call---------------------------------*/}
+          
+        
+            {/* Define your routes */}
+            <Route path="/inventory/" element={allmedical()} />
+            <Route path="/inventory/add" element={<AddItem />} />
+            <Route path="/inventory/:itemCode" element={<IndividualItem />} />
+            <Route path="/inventory/update/:itemCode" element={<UpdateItem />} />
+            {/* Add the routes for event inventory */}
+            <Route path="/eventinventory/add" element={<AddItemForm />} />
+            <Route path="/eventinventory" element={allevent() } />
+            {/* Route for individual event inventory item */}
+            <Route path="/eventinventory/:itemCode" element={<EventIndividual />} />
+            {/* Route for updating individual event inventory item */}
+            <Route path="/eventinventory/update/:itemCode" element={<UpdateEventItem />} />
+            <Route path="/history/" element={<HistorySummary />} />
 
 
         </Routes>
@@ -187,6 +192,37 @@ function AddPatientRoutes() {
     <>
       <AddPatient />
       <Medicalsidenav/>
+     
+    </>
+  );
+}
+
+//inventory functions-----------------------------------------------------------------------------------------------------
+function allmedical() {
+  return (
+    <>
+    <div className="App">
+       <InventoryDashboard />
+       <div className="content-container">
+       <AllmediItems />
+       </div>
+       </div>
+      
+     
+    </>
+  );
+}
+
+function allevent() {
+  return (
+    <>
+    <div className="App">
+       <InventoryDashboard />
+       <div className="content-container">
+       <EventInventoryList />
+       </div>
+       </div>
+      
      
     </>
   );

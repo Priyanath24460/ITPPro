@@ -1,18 +1,18 @@
-.table-wrapper {
+.table-wrapper1 {
     overflow-x: auto;
     margin-bottom: 20px;
 }
 
-.total-info {
+.total-info1 {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
 }
 
-.total-info .badge {
+.total-info .badge1 {
     margin-right: 10px;
 }
 
-.btn-group {
+.btn-group1 {
     margin-right: 10px;
 }

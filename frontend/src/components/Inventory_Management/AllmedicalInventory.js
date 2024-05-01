@@ -104,7 +104,7 @@ const RetrieveItems = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container1">
             <h1 className="mb-4">Medical Item Catalog</h1>
             <div className="total-info mb-3">
                 <span className="badge bg-primary me-2">Total Inventory Value: {totalInventoryValue.toFixed(2)}</span>
@@ -136,8 +136,8 @@ const RetrieveItems = () => {
                 {/* Use Link component for internal navigation */}
                 <Link to="/history" className="btn btn-info">View History</Link>
             </div>
-            <div ref={componentRef} className="table-wrapper">
-                <table className="table">
+            <div ref={componentRef} className="table-wrapper1">
+                <table className="table1">
                     <thead>
                         <tr>
                             <th>Item Code</th>
