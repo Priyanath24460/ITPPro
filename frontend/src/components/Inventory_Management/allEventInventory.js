@@ -64,7 +64,7 @@ function EventInventoryList() {
     };
 
     return (
-        <div className="container">
+        <div className="container1">
             <h1 className="mb-4">Event  Item Catalog</h1>
             <div className="row align-items-center mb-3">
                 <div className="col">
@@ -101,7 +101,7 @@ function EventInventoryList() {
                     ))}
                 </div>
             </div>
-            <table className="table table-striped">
+            <table className="table table-striped1">
                 <thead>
                     <tr>
                         <th>Item Code</th>
