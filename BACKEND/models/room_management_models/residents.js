@@ -9,7 +9,9 @@ const residentsSchema = new Schema({
     },
     NIC:{
         type: String,
-        required:true
+        required:true,
+        unique: true
+        
     },
     roomID:{
         type:String,
