@@ -94,6 +94,12 @@ const generatePDF = (filteredData, filteredMedicineData,type,nic,name,age,gender
   // Create a new jsPDF instance
   const doc = new jsPDF();
 
+  // Specify the path to your logo image file relative to your code file
+  const logoPath = "../../logo.jpg";
+
+  // Add your logo image to the PDF
+  doc.addImage(logoPath, 'JPEG', 20, 5, 500, 500);
+
   doc.text(type+" Medical History", 80, 10,{ fontSize: 28, fontWeight: 'bold' });
 
   doc.text(" Nic    : "+nic, 10, 30);
@@ -181,7 +187,7 @@ const generatePDF = (filteredData, filteredMedicineData,type,nic,name,age,gender
   return (
     <div >
       
-      <div className="row">
+      <div className="row" style={{ marginTop: '300px' }}>
   <div className="col-sm-3">
     <input
       type="text"
@@ -189,7 +195,7 @@ const generatePDF = (filteredData, filteredMedicineData,type,nic,name,age,gender
       placeholder="Search by Year"
       value={selectedYear}
       onChange={(e) => setSelectedYear(e.target.value)}
-      style={{ width: '90%',marginTop:'50px',marginLeft:'15px' }}
+      style={{ width: '90%',marginTop:'50px',marginLeft:'55px' }}
     />
   </div>
   <div className="col-sm-3">
@@ -216,7 +222,7 @@ const generatePDF = (filteredData, filteredMedicineData,type,nic,name,age,gender
   </div>
 </div>
 
-        
+<div class="table-wrappermedicine">
       {MedicineData ? (
 
         <table className="medicine-table">
@@ -298,13 +304,19 @@ const generatePDF = (filteredData, filteredMedicineData,type,nic,name,age,gender
                 <td>
                   {editingEntry === entry._id ? (
                     <>
-                      <button onClick={() => handleSaveEdit(entry._id,updatedData1,resetEditingState())}>Save</button>
-                      <button onClick={() => handleCancelEditMedicine()}>Cancel</button>
+                      <button   className="SaveButton" onClick={() => handleSaveEdit(entry._id,updatedData1,resetEditingState())}>
+                        <i className="fa fa-save" aria-hidden="true"></i>&nbsp; Save</button>
+
+                      <button className="CancelButton" onClick={() => handleCancelEditMedicine()}>
+                        <i className="fa fa-times" aria-hidden="true"></i>&nbsp; Cancel</button>
                     </>
                   ) : (
                     <>
-                    <button onClick={() => handleEditMedicine(entry)}>Edit</button>
-                    <button onClick={() => MedicineDelete(entry._id)}>Delete</button>
+                    <button className="EditButton" onClick={() => handleEditMedicine(entry)}>
+                       <i className="fa fa-pencil" aria-hidden="true"></i>&nbsp; Edit</button>
+
+                    <button className="deleteButton"  onClick={() => MedicineDelete(entry._id)}>
+                      <i className="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</button>
                   </>
                 )}
                 </td>
@@ -312,16 +324,16 @@ const generatePDF = (filteredData, filteredMedicineData,type,nic,name,age,gender
             ))}
           </tbody>
         </table>
-        
+       
       ) : (
         <p>{status}</p>
       )}
+</div> 
 
-<div className="row">
-      <div className="col-sm-3" style={{ marginTop: '20px' }}>
-        <button onClick={() => generatePDF(filteredData, filteredDataMedicine, MedicalDataType, nic, name, age, gender)}>Download PDF</button>
+      <div >
+        <button className="DownloadPDF"onClick={() => generatePDF(filteredData, filteredDataMedicine, MedicalDataType, nic, name, age, gender)}>Download PDF</button>
       </div>
-    </div>
+    
     </div>
   );
 }

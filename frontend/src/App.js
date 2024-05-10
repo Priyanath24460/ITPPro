@@ -12,6 +12,7 @@ import MoreCholesterolData from "./components/Medical_data_management/MoreCholes
 import AddPressureMedicine from "./components/Medical_data_management/AddPressureMedicine";
 import PatientProfile from "./components/Medical_data_management/PatientProfile"
 import Medicalsidenav from "./components/Medical_data_management/medicalsidenav";
+import AllCustomersViewGuardian from "./components/Medical_data_management/GuardianView";
 
 // user management
 
@@ -100,7 +101,7 @@ function App() {
           <Route path="/pressuremore/:nic/:name/:age/:gender/*" element={<MorePressureData />} />
           <Route path="/diabetesmore/:nic/:name/:age/:gender/*" element={<MoreDiabetesData />} />
           <Route path="/cholesterolmore/:nic/:name/:age/:gender/*" element={<MoreCholesterolData />} />
-         
+          <Route path="/gurdianView" element={<AllCustomersViewGuardian />} />
          
           <Route path="/getloginevent" element={<LoginPieChart/>}/>
           <Route path="/admin" element={<Admindashboard/>}/>

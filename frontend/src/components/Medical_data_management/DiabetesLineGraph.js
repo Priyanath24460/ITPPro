@@ -88,7 +88,7 @@ const LineGraph = ({ diabetesData }) => {
         placeholder="Enter Year"
       />
     </div>
-    <h3>Cholesterol Level Over Time</h3>
+    <h3>Diabetes Level Over Time</h3>
     <canvas ref={chartRef} />
   </div>
   );

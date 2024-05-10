@@ -24,8 +24,9 @@
   
   .pressure-table {
     width: 100%;
+
+    margin-top: 10px;
     
-    margin-top: 20px;
     
   }
   
@@ -44,4 +45,106 @@
 .pressure-table tbody tr:hover {
   background-color: #67ea8c;
 }
+
+.table-wrapper12 {
+  box-sizing: border-box;
+  position: absolute;
+  width: 1400px;
+  height: 300px;
+  margin-left: 50px;
+  margin-top: 10px;
+  margin-bottom: -100px;
+  background: #fcfbfb;
+  border: 2px solid #276CBD;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: auto; /* or overflow: scroll; */
+}
+ .viewPDF{
+
+  box-sizing: border-box;
+width: 120px;
+height: 32px;
+
+background: #FFFFFF;
+border-width: 2px 2px 10px 2px;
+border-style: solid;
+border-color: #0EFC34;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
   
+ }
+
+ .SaveButton{
+
+  box-sizing: border-box;
+width: 120px;
+height: 32px;
+
+background: #FFFFFF;
+border-width: 2px 2px 10px 2px;
+border-style: solid;
+border-color: #0EFC34;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+
+ }
+ .EditButton{
+  box-sizing: border-box;
+  width: 120px;
+  height: 32px;
+  
+  background: #FFFFFF;
+  border-width: 2px 2px 10px 2px;
+  border-style: solid;
+  border-color: #edf850;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+ }
+ .deleteButton{
+  box-sizing: border-box;
+  width: 120px;
+  height: 32px;
+  margin-left: 10px;
+  background: #FFFFFF;
+  border-width: 2px 2px 10px 2px;
+  border-style: solid;
+  border-color: #e2482d;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+
+
+ }
+ .CancelButton{
+  box-sizing: border-box;
+  width: 120px;
+  height: 32px;
+  margin-left: 10px;
+  background: #FFFFFF;
+  border-width: 2px 2px 10px 2px;
+  border-style: solid;
+  border-color: #e2482d;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+ }
+ .containerName {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(38, 17, 157, 0.1);
+  position:absolute;
+  left: 50px;
+  top: 50px;
+}
+
+.containerName h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.containerName h3 span {
+  font-weight: bold;
+  color: #1c24c5; /* You can adjust the color as needed */
+}

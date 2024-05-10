@@ -323,7 +323,7 @@ const handleDeleteMedicine = async (entryId) => {
       placeholder="Search by Year"
       value={selectedYear}
       onChange={(e) => setSelectedYear(e.target.value)}
-      style={{ width: '90%',marginTop:'20px',marginLeft:'15px' }}
+      style={{ width: '90%',marginTop:'20px',marginLeft:'55px' }}
     />
   </div>
   <div className="col-sm-3">
@@ -349,7 +349,8 @@ const handleDeleteMedicine = async (entryId) => {
     </select>
   </div>
 </div>
-       <div className="pressure-data-container">  
+<div class="table-wrapper12">
+       
           <table className="pressure-table">
             <thead>
               <tr>
@@ -398,25 +399,25 @@ const handleDeleteMedicine = async (entryId) => {
                         onChange={(e) => setPdfFileDiabetes(e.target.files[0])}
                       />
                     ) : (
-                      <button onClick={() => handleViewPDF(entry._id, entry.name, entry.date)}>
-                        View PDF
+                      <button className="viewPDF" onClick={() => handleViewPDF(entry._id, entry.name, entry.date)}>
+                         <i className="fa fa-eye" aria-hidden="true"></i>&nbsp;View 
                       </button>
                     )}
                   </td>
                   <td>
                     {editingEntry === entry._id ? (
                       <>
-                      <button onClick={() => handleSaveEdit(entry._id)}>Save</button>
-                      <button onClick={() => handleCancelEdit()}>Cancel</button>
+                      <button className="SaveButton" onClick={() => handleSaveEdit(entry._id)}><i className="fa fa-save" aria-hidden="true"></i>&nbsp; Save</button>
+                      <button className="CancelButton" onClick={() => handleCancelEdit()}><i className="fa fa-times" aria-hidden="true"></i>&nbsp; Cancel</button>
                     </>
                     ) : (
                       <>
-                      <button onClick={() => handleEditClick(entry._id, entry.level, entry.date)}>
-                        Edit
+                      <button className="EditButton" onClick={() => handleEditClick(entry._id, entry.level, entry.date)}>
+                      <i className="fa fa-pencil" aria-hidden="true"></i>&nbsp; Edit
                       </button>
                        
-                       <button onClick={() => handleDeleteClick(entry._id)}>
-                          Delete
+                       <button className="deleteButton" onClick={() => handleDeleteClick(entry._id)}>
+                       <i className="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete
                      </button>
                      </>
                     )}
@@ -426,7 +427,8 @@ const handleDeleteMedicine = async (entryId) => {
             </tbody>
          
           </table>
-        </div>  
+        
+     </div>    
           <MedicineDataShowingTable
                 MedicineDelete={handleDeleteMedicine}
                 MedicineData={DiabetesMedicineData}

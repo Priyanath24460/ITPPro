@@ -3,12 +3,14 @@
 .pressure-data-container {
     margin: 20px;
     
+    
   }
   
   .medicine-table {
     width: 100%;
     
     margin-top: 20px;
+    margin-top: 10px;
     
   }
   
@@ -27,3 +29,85 @@
 .medicine-table tbody tr:hover {
   background-color: #67ea8c;
 }
+
+.table-wrappermedicine {
+  box-sizing: border-box;
+  position: absolute;
+  width: 1400px;
+  height: 300px;
+  margin-left: 50px;
+  margin-top: 10px;
+  margin-bottom: -100px;
+  background: #fcfbfb;
+  border: 2px solid #276CBD;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: auto; /* or overflow: scroll; */
+}
+
+.SaveButton{
+
+  box-sizing: border-box;
+width: 120px;
+height: 32px;
+
+background: #FFFFFF;
+border-width: 2px 2px 10px 2px;
+border-style: solid;
+border-color: #0EFC34;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+
+ }
+ .EditButton{
+  box-sizing: border-box;
+  width: 120px;
+  height: 32px;
+  
+  background: #FFFFFF;
+  border-width: 2px 2px 10px 2px;
+  border-style: solid;
+  border-color: #edf850;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+ }
+ .deleteButton{
+  box-sizing: border-box;
+  width: 120px;
+  height: 32px;
+  margin-left: 10px;
+  background: #FFFFFF;
+  border-width: 2px 2px 10px 2px;
+  border-style: solid;
+  border-color: #e2482d;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+
+
+ }
+ .CancelButton{
+  box-sizing: border-box;
+  width: 120px;
+  height: 32px;
+  margin-left: 10px;
+  background: #FFFFFF;
+  border-width: 2px 2px 10px 2px;
+  border-style: solid;
+  border-color: #e2482d;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+ }
+ .DownloadPDF{
+
+  box-sizing: border-box;
+  width: 220px;
+  height: 42px;
+  margin-left: 1230px;
+  margin-top: 320px;
+  background: #FFFFFF;
+  border-width: 2px 2px 10px 2px;
+  border-style: solid;
+  border-color: #3c8bda;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+ }
