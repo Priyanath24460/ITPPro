@@ -48,6 +48,7 @@ import AllResidents from './components/room_management/AllResidents';
 import ResidentDetails from './components/room_management/ResidentDetails';
 import AddResident from './components/room_management/AddResident';
 import EditResident from './components/room_management/EditResident';
+import RoomDashboard from "./components/room_management/RoomDashboard";
 
 
 // staff management
@@ -78,6 +79,9 @@ import EventIndividual from './components/Inventory_Management/eventindividualfe
 import UpdateEventItem from './components/Inventory_Management/updateEventInventory';
 import HistorySummary from './components/Inventory_Management/HistorySummary';
 import InventoryDashboard from "./components/Inventory_Management/inventorydashboard";
+
+
+
 
 
 
@@ -120,14 +124,14 @@ function App() {
           <Route path="/elderprofile/:nic" element={<Elderprofile />} />
          
            
-          <Route path="/roomHome" element={<Home />} />
-            <Route path="/addRoom" element={<AddRoom />} />
-            <Route path="/updateRoom/:roomID" element={<EditRoom />} />
+          <Route path="/roomHome" element={Homeadd()} />
+            <Route path="/addRoom" element={AddRoom1() } />
+            <Route path="/updateRoom/:roomID" element={EditRoom1() } />
             <Route path="/getRoom/:roomID" element={<RoomDetails />} />
-            <Route path="/allAssignments" element={<AllResidents />} />
+            <Route path="/allAssignments" element={AllResidents1()} />
             <Route path="/getResident/:NIC" element={<ResidentDetails />} />
-            <Route path="/addResident" element={<AddResident />} />
-            <Route path="/updateResident/:NIC" element={<EditResident />} />
+            <Route path="/addResident" element={AddResident1()} />
+            <Route path="/updateResident/:NIC" element={EditResident1()} />
            
             
 
@@ -223,6 +227,74 @@ function allevent() {
        </div>
        </div>
       
+     
+    </>
+  );
+}
+
+//room management functions
+
+function Homeadd(){
+  return (
+    <>
+    
+      <Home/>
+      <RoomDashboard/>
+     
+    </>
+  );
+}
+function AddRoom1(){
+  return (
+    <>
+    
+      <AddRoom/>
+      <RoomDashboard/>
+     
+    </>
+  );
+}
+
+function EditRoom1(){
+  return (
+    <>
+    
+      <EditRoom/>
+      <RoomDashboard/>
+     
+    </>
+  );
+}
+
+function AddResident1(){
+  return (
+    <>
+    
+      <AddResident/>
+      <RoomDashboard/>
+     
+    </>
+  );
+}
+
+
+function AllResidents1(){
+  return (
+    <>
+    
+      <AllResidents/>
+      <RoomDashboard/>
+     
+    </>
+  );
+}
+
+function EditResident1(){
+  return (
+    <>
+    
+      <EditResident/>
+      <RoomDashboard/>
      
     </>
   );
