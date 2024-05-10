@@ -198,8 +198,8 @@ const EditResidentForm = () => {
 
   return (
     <div className="col-md-8 mt-4 mx-auto">
-      <h1 className="h3 mb-3 font-weight-normal">Edit Resident Assignment Details</h1>
-      <form className="needs-validation" noValidate onSubmit={handleSubmit}>
+      <h1 className="h3 mb-3 font-weight-normal" style={{ marginLeft:'200px' }}>Edit Resident Assignment Details</h1>
+      <form className="needs-validation" noValidate onSubmit={handleSubmit} style={{ marginLeft:'200px' }}>
         <div className="form-group" style={{ marginBottom: '15px' }}>
           <label style={{ marginBottom: '5px' }}>Resident NIC</label>
           <input type="text"

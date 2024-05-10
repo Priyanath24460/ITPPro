@@ -44,7 +44,9 @@ router.route("/addResident").post(async(req,res)=>{
 
     }catch(error){
         console.error(error);
+        console.log("add no");
         return res.status(500).json({message:"Internal serever error"});
+        
     }
     
     

@@ -1,35 +1,38 @@
 const router = require("express").Router();
 let Rooms = require("../../models/room_management_models/rooms");
+router.route("/addRoom").post(async (req, res) => {
+    try {
+        const roomID = req.body.roomID;
 
+        // Check if roomID already exists
+        const existingRoom = await Rooms.findOne({ roomID });
 
-router.route("/addRoom").post((req,res)=>{
+        if (existingRoom) {
+            // Room with this ID already exists
+            return res.status(400).json({ error: "Room with this ID already exists" });
+        }
 
-    const roomID = req.body.roomID;
-    const numOfBeds = Number(req.body.numOfBeds);
-    const bathroomType = req.body.bathroomType;
-    const image = req.body.image;
-    const assignedBeds = Number(req.body.assignedBeds);
-    const availabilityStatus = req.body.availabilityStatus;
-    
+        // If roomID doesn't exist, proceed to add the room
+        const { numOfBeds, bathroomType, description, assignedBeds, availabilityStatus, additionalItem } = req.body;
 
-    const newRooms = new Rooms({
-        roomID,
-        numOfBeds,
-        bathroomType,
-        image,
-        assignedBeds,
-        availabilityStatus,
-       
+        const newRoom = new Rooms({
+            roomID,
+            numOfBeds,
+            bathroomType,
+            description,
+            assignedBeds,
+            availabilityStatus,
+            additionalItem
+        });
 
-    })
+        await newRoom.save();
+        res.json("Room Added");
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
-    newRooms.save().then(()=>{
-        res.json("Room Added")
-    }).catch((err)=>{
-        console.log(err);
-    })
-
-})
 
 router.route("/getRooms").get((req,res)=>{
     Rooms.find().then((rooms)=>{
@@ -46,7 +49,7 @@ router.route("/updateRoom/:roomID").put(async(req,res)=>{
     const {roomID,
         numOfBeds,
         bathroomType,
-        image,
+        description,
         assignedBeds,
         availabilityStatus} = req.body;
 
@@ -54,7 +57,7 @@ router.route("/updateRoom/:roomID").put(async(req,res)=>{
         roomID,
         numOfBeds,
         bathroomType,
-        image,
+        description,
         assignedBeds,
         availabilityStatus
     }
@@ -101,4 +104,5 @@ router.route("/getRoom/:roomID").get(async(req,res)=>{
 })
 
 module.exports = router;
+
 

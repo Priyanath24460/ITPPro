@@ -356,7 +356,7 @@ const EditRoomForm = () => {
     roomID: '',
     numOfBeds: '',
     bathroomType: '',
-    image: '',
+    description: '',
     assignedBeds: 0,
     availabilityStatus: ''
   });
@@ -419,8 +419,8 @@ const EditRoomForm = () => {
   return (
   
       <div className="col-md-8 mt-4 mx-auto">
-      <h1 className="h3 mb-3 font-weight-normal">Edit Room Details</h1>
-      <form className="needs-validation" noValidate onSubmit={handleSubmit}>
+      <h1 className="h3 mb-3 font-weight-normal" style={{ marginLeft:'200px' }}>Edit Room Details</h1>
+      <form className="needs-validation" noValidate onSubmit={handleSubmit} style={{ marginLeft:'200px' }}>
         <div className="form-group" style={{ marginBottom: '15px' }}>
           <label style={{ marginBottom: '5px' }}>Room ID</label>
           <input type="text"
@@ -457,15 +457,17 @@ const EditRoomForm = () => {
         </div>
 
         <div className="form-group" style={{ marginBottom: '15px' }}>
-          <label style={{ marginBottom: '5px' }}>Image</label>
-          <input type="text"
+          <label style={{ marginBottom: '5px' }}>Description</label>
+          <textarea
             className="form-control"
-            name="image"
-            placeholder="Enter image url"
-            value={roomData.image}
+            name="description"
+            placeholder="Enter room description"
+            value={roomData.description}
             onChange={handleChange}
+            rows={5} // Adjust the number of rows as needed
           />
         </div>
+
 
         <div className="form-group" style={{ marginBottom: '15px' }}>
           <label style={{ marginBottom: '5px' }}>Assigned Beds</label>
