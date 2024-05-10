@@ -82,6 +82,19 @@ import HistorySummary from './components/Inventory_Management/HistorySummary';
 import InventoryDashboard from "./components/Inventory_Management/inventorydashboard";
 
 
+//payment management
+
+import AccountDetails from './components/payment_management/AccountDetails';
+import viewDetails from './components/payment_management/viewDetails';
+import HolderDetails from './components/payment_management/HolderDetails';
+import viewPaymentDetails from './components/payment_management/viewPaymentDetails';
+import AddMonthlyCost from './components/payment_management/AddMonthlyCost';
+import PaymentSuccess from './components/payment_management/paymentSuccess';
+import PaymentHistory from './components/payment_management/PaymentHistory';
+
+
+
+
 
 
 
@@ -165,6 +178,16 @@ function App() {
             <Route path="/eventinventory/update/:itemCode" element={<UpdateEventItem />} />
             <Route path="/history/" element={<HistorySummary />} />
 
+
+      
+      {/*Payment---------------------------------*/}
+      <Route path='/viewDetails/' exact Component={viewDetails}/>
+      <Route path = '/addCardDetaiils' exact Component={AccountDetails}/>
+      <Route path='/addn' exact Component={HolderDetails}/>
+      <Route path='/n' exact Component={viewPaymentDetails}/>
+      <Route path='/addcost' exact Component={AddMonthlyCost}/>
+      <Route path="/paymentSuccess" element={<PaymentSuccess />} />
+      <Route path='checkpage' exact Component={PaymentHistory}/>
 
         </Routes>
       </div>

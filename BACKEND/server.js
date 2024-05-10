@@ -98,6 +98,20 @@ const staffmanager = require("./routes/staff_management_routes/staffroute.js");
 app.use("/staffmanager", staffmanager);
 
 
+//payment Management
+// card details
+const paymentRouter = require("./routes/payment_management_route/paymentDetails.js");
+app.use("/paymentDetails",paymentRouter);
+// payment details
+const paymentHolder = require("./routes/payment_management_route/paymentHolderDetails.js");
+app.use("/paymentHolderDetails",paymentHolder);
+
+// Monthly cost details
+const monthlyCost = require("./routes/payment_management_route/monthlyCostAddDetails.js");
+app.use("/monthlyCostAddDetails",monthlyCost);
+
+
+
 // inventry management Routes----------------------------------------------------------------------------------------------------
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({
