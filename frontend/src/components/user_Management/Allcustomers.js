@@ -21,15 +21,47 @@ export default function AllCustomers() {
     fetchCustomers();
   }, []);
 
+ // const handleDelete = async (nic) => {
+    //try {
+      //await axios.delete(`http://localhost:8070/customerA/delete/${nic}`);
+      //setCustomersA(customersA.filter((customer) => customer.nic !== nic));
+    //} catch (err) {
+      //console.error("Error deleting customer:", err);
+      //alert("An error occurred while deleting customer");
+    //}
+  //};
+  
   const handleDelete = async (nic) => {
     try {
+      // Delete customer
       await axios.delete(`http://localhost:8070/customerA/delete/${nic}`);
+  
+      // Delete patient
+      await deletePatient(nic);
+  
+      // Update state
       setCustomersA(customersA.filter((customer) => customer.nic !== nic));
     } catch (err) {
-      console.error("Error deleting customer:", err);
-      alert("An error occurred while deleting customer");
+      console.error("Error deleting customer and patient:", err);
+      alert("An error occurred while deleting customer and patient");
     }
   };
+  
+  
+  // medical data patient delete
+  const deletePatient = async (nic) => {
+    try {
+      await axios.delete(`http://localhost:8070/patient/delete`, { data: { nic: nic } });
+    } catch (err) {
+      console.error("Error deleting patient:", err);
+      
+    }
+  };
+  
+  
+  
+  
+
 
   const handleSearchChange = (event) => {
     setSearchInput(event.target.value);

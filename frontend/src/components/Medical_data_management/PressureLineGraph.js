@@ -95,7 +95,7 @@ const LineGraph = ({ pressureData }) => {
         placeholder="Enter Year"
       />
     </div>
-    <h3>Cholesterol Level Over Time</h3>
+    <h3>Pressure Level Over Time</h3>
     <canvas ref={chartRef} />
   </div>
   );

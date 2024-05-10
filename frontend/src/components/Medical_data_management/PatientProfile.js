@@ -10,6 +10,8 @@ import HealthMedicineForm from "./HealtMedicineForm";
 export default function AddHealthData() {
     const { nic, name,age,gender } = useParams();
     const [activeButton, setActiveButton] = useState("cholesterol"); // Track active button
+    const [LastCholesteroldata, setLastCholesteroldata] = useState('');
+    const [status, setStatus] = useState("");
     
 
     // State variables for cholesterol
@@ -36,6 +38,7 @@ export default function AddHealthData() {
     useEffect(() => {
         // Set Cholesterol section visible when component mounts
         setCholesterolVisible(true);
+        getlastmonthdata();
     }, []);
 
 
@@ -237,6 +240,31 @@ export default function AddHealthData() {
         });
     };
 
+    const getlastmonthdata = async()=>{
+
+        try {
+          const cholesterolDataResponse = await axios.get(`http://localhost:8070/cholesterol/getonecholesteroldata/${nic}`);
+          const cholesterolData = cholesterolDataResponse.data.data;
+          cholesterolData.sort((a, b) => new Date(b.date) - new Date(a.date));
+          
+    
+          if (cholesterolData) {
+                  // Sort the cholesterol data by date in descending order
+                  const lastcholesteroldata = cholesterolData[0]
+                  setLastCholesteroldata(lastcholesteroldata);
+            setStatus("cholesterol data fetched successfully");
+          } else {
+            setLastCholesteroldata([]);
+            setStatus("last cholesterol data not found");
+          }
+        } catch (error) {
+          console.error("Error fetching last cholesterol data:", error);
+          setStatus("Error fetching  last cholesterol data");
+        }
+    
+    
+      }
+
 
 
 
@@ -244,7 +272,16 @@ export default function AddHealthData() {
 
 
     return (
+
+   
+
+
+
+        
         <div class="table-wrapper">
+
+            
+      
             <button className={`cholesterol_select ${activeButton === 'cholesterol' ? 'active' : ''}`} onClick={() => {
                 setActiveButton('cholesterol');
                 setCholesterolVisible(true);
@@ -269,6 +306,8 @@ export default function AddHealthData() {
             {cholesterolVisible&&(
           
             <div >
+
+               
             <form onSubmit={sendCholesterolData}>
             <table className="table3">
                             <thead>
@@ -530,4 +569,5 @@ export default function AddHealthData() {
         </div>
      
     );
+  
 }

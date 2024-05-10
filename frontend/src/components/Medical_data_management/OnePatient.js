@@ -187,7 +187,7 @@ export default function Profile(){
                   
               </tbody>
                     </table>
-                    <button  className="editbutton" onClick={handleEditClick}><i className="fas fa-edit"></i>&nbsp;Edit</button>
+                    <button  className="editbutton" onClick={handleEditClick}><i className="fa fa-pencil" aria-hidden="true"></i>&nbsp; Edit</button>
                 </div>
             </div>
             )}

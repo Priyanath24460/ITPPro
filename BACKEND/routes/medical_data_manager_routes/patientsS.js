@@ -92,25 +92,65 @@ router.route("/update").put(async(req,res) =>{
 
 })
 
-router.route("/delete").delete(async(req,res) =>{
 
-    const usernic = req.body.nic;
+router.route("/updateP").put(async (req, res) => {
+  const { nic, name, age, gender } = req.body; // Only extract the fields that can be updated
+  
+  const updatePatient = {
+    name,
+    age,
+    gender,
+  };
+
+  try {
+    const updatedPatient = await Patient.findOneAndUpdate({ nic: nic }, updatePatient, { new: true });
+
+    if (!updatedPatient) {
+      return res.status(404).send({ status: "Patient not found" });
+    }
+
+    res.status(200).send({ status: "Patient updated" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ status: "Error with updating data" });
+  }
+});
+
+
+//router.route("/delete").delete(async (req, res) => {
+ // const usernic = req.body.nic;
+  
+  //try {
+      //await Patient.findOneAndDelete({ nic: usernic });
+      //res.status(200).send({ status: "Patient deleted" });
+ // } catch (err) {
+    // console.log(err.message);
+   //  res.status(500).send({ status: "Error with deleting patient" });
+ // }
+//});
+
+router.route("/delete").delete(async (req, res) => {
+  const usernic = req.body.nic;
+
+  try {
+    // Check if a patient with the provided NIC exists
+    const existingPatient = await Patient.findOne({ nic: usernic });
     
-    
-     await Patient.findOneAndDelete({nic:usernic}).
-    then(()=>{
-    
-        res.status(200).send({status:"Patient deleted"})  ; 
-    }).catch((err)=>{
+    // If a patient exists, proceed with deletion
+    if (existingPatient) {
+      await Patient.findOneAndDelete({ nic: usernic });
+      res.status(200).send({ status: "Patient deleted" });
+    } else {
+      // No patient found, do nothing (no response sent)
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send({ status: "Error with deleting patient" });
+  }
+});
 
-       console.log(err.message);
-       res.status(500).send({status:"Error with delete user"});
-   
 
-    })
-   
 
-})
 
 router.route("/getone/:nic").get(async (req, res) => {
     try {

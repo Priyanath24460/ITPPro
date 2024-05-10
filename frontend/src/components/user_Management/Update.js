@@ -71,10 +71,31 @@ const Update = () => {
     }
   };
 
+  const handleSubmitP = async (e) => {
+    e.preventDefault();
+
+    // Modify formData to include only name, age, and gender
+    const updatedData = {
+        name: formData.name,
+        age: formData.age,
+        gender: formData.gender
+    };
+    
+    try {
+        await axios.put(`http://localhost:8070/patients/updateP/${nic}`, updatedData);
+       // alert("Customer Updated Successfully!");
+    
+    } catch (error) {
+        console.error(error.message);
+        alert("Error updating customer. Please try again.");
+    }
+};
+
+
   return (
     <div style={containerStyle}>
       <h1 style={headerStyle}>Update Customer</h1>
-      <form style={formStyle} onSubmit={handleSubmit}>
+      <form style={formStyle} onSubmit={(e) => { handleSubmit(e); handleSubmitP(e); }}>
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Name:</label>
           <input
