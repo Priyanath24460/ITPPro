@@ -27,7 +27,11 @@ const inventorySchema = new Schema({
     supplierName: {
         type: String,
         required: true,
-        enum: ["MedSupp Enterprises", "CureTech Solutions", "HealthLink Suppliers"]
+        enum: ["MedSupp Enterprises"]
+    },
+    itemDate: {
+        type: Date,
+        default: Date.now 
     }
 });
 
