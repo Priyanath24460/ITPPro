@@ -1,0 +1,142 @@
+.containercham {
+    font-family: Arial, sans-serif;
+    max-width: 100%;
+    padding: 0 1rem;
+}
+
+.search-containercham {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.search-inputcham {
+    flex: 1;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+}
+
+.add-item-buttoncham {
+    background-color: #28a745;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+}
+
+.filter-containercham {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.condition-checkboxcham {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.item-tablecham {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.item-tablecham th,
+.item-tablecham td {
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
+    text-align: left; /* Align table headers to the right */
+}
+
+.condition-new {
+    color: #28a745;
+}
+
+.condition-very-good {
+    color: #007bff;
+}
+
+.condition-good {
+    color: #17a2b8;
+}
+
+.condition-fair {
+    color: #ffc107;
+}
+
+.condition-poor {
+    color: #dc3545;
+}
+
+.condition-not-working {
+    color: #6c757d;
+}
+
+.action-buttoncham {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    margin-right: 0.25rem;
+    text-decoration: none;
+}
+
+.view-buttoncham {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.edit-buttoncham {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.delete-buttoncham {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Filter buttons */
+.filter-buttoncham {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-buttoncham:hover {
+    background-color: #0056b3;
+}
+
+/* Active filter button */
+.active-filtercham {
+    background-color: #0056b3;
+}
+
+/* Search input */
+.search-inputcham {
+    flex: 1;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+}
+
+/* Search button */
+.search-buttoncham {
+    background-color: #28a745;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-buttoncham:hover {
+    background-color: #218838;
+}

@@ -1,0 +1,101 @@
+.containercha {
+  font-family: Arial, sans-serif;
+}
+
+.summarycha {
+  margin-bottom: 10px;
+}
+
+.total-valuecha {
+  
+  color: #104de9;
+  margin-right: 5px;
+  padding: 5px;
+}
+
+.total-itemscha {
+  
+  color: #11d61e;
+  margin-right: 5px;
+  padding: 5px;
+}
+
+.in-stockcha {
+  
+  color: #07b8cf;
+  margin-right: 5px;
+  padding: 5px;
+}
+
+.out-of-stockcha {
+
+  color: #c02020;
+  padding: 5px;
+}
+
+.actionscha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.actionscha a,
+.actionscha button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px;
+  text-decoration: none;
+  margin-right: 5px;
+  border: none;
+}
+
+.actionscha button {
+  background-color: #007bff;
+}
+
+.filter-buttonscha button {
+  background-color: #6c757d;
+}
+
+.filter-buttonscha button.active {
+  background-color: #007bff;
+}
+
+.actionscha form {
+  display: flex;
+}
+
+.actionscha input[type="search"] {
+  margin-right: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+}
+
+.tablecha {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tablecha th,
+.tablecha td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.in-stock-labelcha {
+  
+  color: #11ba33;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.out-of-stock-labelcha {
+
+  color: #941e1e;
+  padding: 5px;
+  border-radius: 5px;
+}

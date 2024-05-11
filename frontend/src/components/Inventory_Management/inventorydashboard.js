@@ -36,6 +36,12 @@ const InventoryDashboard = () => {
                                 Event Catalog
                             </Link>
                         </li>
+
+                        <li className="nav-item">
+                            <Link to="/history/" className="nav-link-staffdb">
+                                View history
+                            </Link>
+                        </li>
                         
                     </ul>
                 </div>

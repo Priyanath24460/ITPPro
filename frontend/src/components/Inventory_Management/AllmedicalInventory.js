@@ -3,16 +3,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import './RetrieveItems.css'; // Import CSS file for additional styling
-import HistorySummary from "./HistorySummary";
+import "./viewmedicalItemsc.css"; 
 
 const RetrieveItems = () => {
     const [items, setItems] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filterType, setFilterType] = useState("all");
-
     const [selectedItem, setSelectedItem] = useState(null);
-   
     const componentRef = useRef();
 
     useEffect(() => {
@@ -59,21 +56,12 @@ const RetrieveItems = () => {
     );
 
     const handlePrint = () => {
-        // Create a new instance of jsPDF
         const doc = new jsPDF();
-    
-        // Define the position and margins for the table
         const startX = 10;
         const startY = 10;
         const margin = 10;
-    
-        // Define the width of each column
         const columnWidth = (doc.internal.pageSize.width - 2 * margin) / 10;
-    
-        // Set up table columns
         const columns = ["Item Code", "Item Name", "Amount", "Price Per Item", "Total Value", "Brand Name", "Supplier Name", "Item Date", "Status"];
-    
-        // Define the row data
         const rows = filteredItems.map(item => [
             item.itemCode,
             item.itemName,
@@ -85,59 +73,53 @@ const RetrieveItems = () => {
             formatDate(item.itemDate),
             item.amount === 0 ? "Out of Stock" : "In Stock"
         ]);
-    
-        // Set the content of the table
         doc.autoTable({
             startY,
             head: [columns],
             body: rows,
-            startY: startY + 10 // Add padding below the table
+            startY: startY + 10
         });
-    
-        // Save the PDF or open in a new tab
         doc.save("inventory.pdf");
     };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString(); // Adjust formatting as needed
+        return date.toLocaleDateString();
     };
 
     return (
-        <div className="container1">
-            <h1 className="mb-4">Medical Item Catalog</h1>
-            <div className="total-info mb-3">
-                <span className="badge bg-primary me-2">Total Inventory Value: {totalInventoryValue.toFixed(2)}</span>
-                <span className="badge bg-success me-2">Total Items: {totalItemCount}</span>
-                <span className="badge bg-info me-2">In Stock: {inStockItems.length}</span>
-                <span className="badge bg-danger">Out of Stock: {outOfStockItems.length}</span>
+        <div className="containercha">
+            <h1>Medical Item Catalog</h1>
+            <div className="summarycha">
+                <span className="total-valuecha">Total Inventory Value: {totalInventoryValue.toFixed(2)}</span>
+                <span className="total-itemscha">Total Items: {totalItemCount}</span>
+                <span className="in-stockcha">In Stock: {inStockItems.length}</span>
+                <span className="out-of-stockcha">Out of Stock: {outOfStockItems.length}</span>
             </div>
-            <div className="d-flex justify-content-between align-items-center mb-3">
+            <div className="actionscha">
                 <div>
-                    <Link to="/inventory/add" className="btn btn-success">Add Item</Link>
+                    <Link to="/inventory/add">Add Item</Link>
                 </div>
-                <div className="btn-group">
-                    <button className={`btn btn-${filterType === "all" ? "primary" : "secondary"}`} onClick={() => setFilterType("all")}>All</button>
-                    <button className={`btn btn-${filterType === "inStock" ? "primary" : "secondary"}`} onClick={() => setFilterType("inStock")}>In Stock</button>
-                    <button className={`btn btn-${filterType === "outOfStock" ? "primary" : "secondary"}`} onClick={() => setFilterType("outOfStock")}>Out of Stock</button>
+                <div className="filter-buttonscha">
+                    <button className={filterType === "all" ? 'active' : ''} onClick={() => setFilterType("all")}>All</button>
+                    <button className={filterType === "inStock" ? 'active' : ''} onClick={() => setFilterType("inStock")}>In Stock</button>
+                    <button className={filterType === "outOfStock" ? 'active' : ''} onClick={() => setFilterType("outOfStock")}>Out of Stock</button>
                 </div>
-                <form className="d-flex" onSubmit={(e) => e.preventDefault()}>
-                    <input 
-                        className="form-control me-2" 
-                        type="search" 
-                        placeholder="Search by Item Name" 
+                <form>
+                    <input
+                        type="search"
+                        placeholder="Search by Item Name"
                         aria-label="Search"
                         value={searchQuery}
                         onChange={handleSearchChange}
                     />
-                    <button className="btn btn-outline-success" type="submit">Search</button>
+                    <button type="submit">Search</button>
                 </form>
-                <button className="btn btn-primary" onClick={handlePrint}>Print Inventory</button>
-                {/* Use Link component for internal navigation */}
-                <Link to="/history" className="btn btn-info">View History</Link>
+                <button onClick={handlePrint}>Print Inventory</button>
+                
             </div>
-            <div ref={componentRef} className="table-wrapper1">
-                <table className="table1">
+            <div ref={componentRef}>
+                <table className="tablecha">
                     <thead>
                         <tr>
                             <th>Item Code</th>
@@ -162,31 +144,25 @@ const RetrieveItems = () => {
                                 <td>{calculateItemValue(item.amount, item.pricePerItem)}</td>
                                 <td>{item.brandName}</td>
                                 <td>{item.supplierName}</td>
-                                <td>{formatDate(item.itemDate)}</td> 
+                                <td>{formatDate(item.itemDate)}</td>
                                 <td>
                                     {item.amount === 0 ? (
-                                        <span className="badge bg-danger">Out of Stock</span>
+                                        <span className="out-of-stock-labelcha">Out of Stock</span>
                                     ) : (
-                                        <span className="badge bg-success">In Stock</span>
+                                        <span className="in-stock-labelcha">In Stock</span>
                                     )}
                                 </td>
-                                <td>
-                                    <Link 
-                                        to={`/inventory/${item.itemCode}`} 
-                                        className="btn btn-primary me-1"
-                                        onClick={() => setSelectedItem(item)}
-                                    >
-                                        View
-                                    </Link>
-                                    <Link to={`/inventory/update/${item.itemCode}`} className="btn btn-warning me-1">Edit</Link>
-                                    <button onClick={() => handleDelete(item.itemCode)} className="btn btn-danger me-1">Delete</button>
+                                <td style={{ border: '1px solid #dddddd', textAlign: 'left', padding: '8px' }}>
+                                 <Link to={`/inventory/${item.itemCode}`} onClick={() => setSelectedItem(item)} style={{ backgroundColor: '#007bff', color: '#fff', padding: '5px', borderRadius: '5px', textDecoration: 'none', marginRight: '5px' }}>View</Link>
+                                <Link to={`/inventory/update/${item.itemCode}`} style={{ backgroundColor: '#ffc107', color: '#000', padding: '5px', borderRadius: '5px', textDecoration: 'none', marginRight: '5px' }}>Edit</Link>
+                                <button onClick={() => handleDelete(item.itemCode)} style={{ backgroundColor: '#dc3545', color: '#fff', padding: '5px', borderRadius: '5px', border: 'none' }}>Delete</button>
                                 </td>
+
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-            
         </div>
     );
 };

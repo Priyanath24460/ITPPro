@@ -80,37 +80,37 @@ function HistoryList() {
   };
 
   return (
-    <div>
-      <h2>Medical History </h2>
+    <div style={{ fontFamily: "Arial, sans-serif" }}>
+      <h2 style={{ marginBottom: "1rem" }}>Medical History</h2>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <div>
-          <button onClick={generatePDF}>Generate PDF</button>
-          <table className="table table-striped table-bordered">
+          <button onClick={generatePDF} style={{ marginBottom: "1rem" }}>Generate PDF</button>
+          <table style={{ borderCollapse: "collapse", width: "100%" }}>
             <thead>
               <tr>
-                <th>Item Code</th>
-                <th>Operation</th>
-                <th>Count</th>
-                <th>Price Per Item</th>
-                <th>Total Price</th>
-                <th>Update Date</th>
-                <th>Actions</th>
+                <th style={{ border: "1px solid #000", padding: "0.5rem" }}>Item Code</th>
+                <th style={{ border: "1px solid #000", padding: "0.5rem" }}>Operation</th>
+                <th style={{ border: "1px solid #000", padding: "0.5rem" }}>Count</th>
+                <th style={{ border: "1px solid #000", padding: "0.5rem" }}>Price Per Item</th>
+                <th style={{ border: "1px solid #000", padding: "0.5rem" }}>Total Price</th>
+                <th style={{ border: "1px solid #000", padding: "0.5rem" }}>Update Date</th>
+                <th style={{ border: "1px solid #000", padding: "0.5rem" }}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {history.map((entry) => (
                 <tr key={entry._id}>
-                  <td>{entry.itemCode}</td>
-                  <td>{entry.operation}</td>
-                  <td>{entry.count}</td>
-                  <td>{entry.pricePerItem}</td>
-                  <td>{calculateTotalPrice(entry.count, entry.pricePerItem)}</td>
-                  <td>{new Date(entry.updateDate).toLocaleString()}</td>
-                  <td>
+                  <td style={{ border: "1px solid #000", padding: "0.5rem" }}>{entry.itemCode}</td>
+                  <td style={{ border: "1px solid #000", padding: "0.5rem" }}>{entry.operation}</td>
+                  <td style={{ border: "1px solid #000", padding: "0.5rem" }}>{entry.count}</td>
+                  <td style={{ border: "1px solid #000", padding: "0.5rem" }}>{entry.pricePerItem}</td>
+                  <td style={{ border: "1px solid #000", padding: "0.5rem" }}>{calculateTotalPrice(entry.count, entry.pricePerItem)}</td>
+                  <td style={{ border: "1px solid #000", padding: "0.5rem" }}>{new Date(entry.updateDate).toLocaleString()}</td>
+                  <td style={{ border: "1px solid #000", padding: "0.5rem" }}>
                     <button
-                      className="btn btn-danger"
+                      style={{ backgroundColor: "#dc3545", color: "#fff", border: "none", padding: "0.25rem 0.5rem", borderRadius: "0.25rem", cursor: "pointer" }}
                       onClick={() => handleDelete(entry.itemCode)}
                     >
                       Delete
