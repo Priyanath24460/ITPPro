@@ -14,7 +14,7 @@ export default function AddPatient(){
     const[diabetes,setDiabetes] = useState("No");
     const[cholesterol,setCholesterol] = useState("No");
     const[pressure,setPressure] = useState("No");
-    const[otherdisease,setotherdisease] = useState("No");
+   
 
    // const [otherDiseases, setOtherDiseases] = useState("No");
     const [selectedDate, setSelectedDate] = useState(new Date()); // Add state for date
@@ -49,7 +49,7 @@ export default function AddPatient(){
             diabetes,
             cholesterol,
             pressure,
-            otherdisease,
+            
         }
 
         axios.post("http://localhost:8070/patients/add",newPatient).then(()=>{
@@ -242,38 +242,7 @@ export default function AddPatient(){
           </div>
         </div>
 
-        <div className="mb-3">
-          <label className="form-label">Other Disease</label>
-          <div className="form-check">
-            <input
-              type="radio"
-              id="otherdiseaseYes"
-              name="otherdisease"
-              className="form-check-input"
-              value="Yes"
-              checked={otherdisease === "Yes"}
-              onChange={() => setotherdisease("Yes")}
-            />
-            <label className="form-check-label" htmlFor="otherdiseaseYes">
-              Yes
-            </label>
-            
-          </div>
-          <div className="form-check">
-            <input
-              type="radio"
-              id="otherdiseaseNo"
-              name="otherdisease"
-              className="form-check-input"
-              value="No"
-              checked={otherdisease === "No"}
-              onChange={() => setotherdisease("No")}
-            />
-            <label className="form-check-label" htmlFor="otherdiseaseNo">
-              No
-            </label>
-          </div>
-        </div>
+        
 
        {/* <div className="mb-3">
           <label htmlFor="otherDiseases" className="form-label">

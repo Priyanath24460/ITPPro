@@ -129,6 +129,17 @@ router.post("/add", nicValidator, async (req, res) => {
    })
  });
 
+ router.route("/getpatientinnic/:nic").get((req,res)=>{
+  let userNIC = req.params.nic;
+  CustomerA.find({gnic:userNIC}).then((customerA)=>{
+     res.json(customerA)
+  }).catch((err)=>{
+     console.log(err)
+  })
+});
+
+
+
 
  router.route("/update/:nic").put(async (req, res) => {
   let userNIC = req.params.nic;

@@ -8,6 +8,10 @@ const Guardianprofile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [paitentnic, setpaitentnic] = useState([]);
+
+ 
+
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -45,7 +49,33 @@ const Guardianprofile = () => {
     }
 
     fetchUserDetails();
+    
   }, [email, navigate]);
+   
+  useEffect(() => {
+    const fetchDatapatient = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8070/customerA/getpatientinnic/${user.nic}`);
+      setpaitentnic(response.data);
+      console.log(response.data)
+    } catch (error) {
+      setError('Error fetching data. Please try again.');
+      console.error('Fetch Data Error:', error);
+    } 
+  }
+  fetchDatapatient();
+
+  });
+
+  const handleViewMedicalData = (nic) => {
+    // Navigate to another page with the patient's NIC
+    navigate(`/medicaldataviewprofile/${nic}`);
+  };
+
+  
+
+ 
+
 
   return (
     <div className="signup-page" id="signup-section">
@@ -95,6 +125,38 @@ const Guardianprofile = () => {
         ) : (
           <p>User not found.</p>
         )}
+              <div>
+        <h1>Patient Details</h1>
+        {paitentnic.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Action</th>
+                
+                
+
+                {/* Add more table headers as needed */}
+              </tr>
+            </thead>
+            <tbody>
+              {paitentnic.map(patient => (
+                <tr key={patient._id}>
+                  <td>{patient.name}</td>
+                  <td>{patient.age}</td>
+                  <td>
+                  <button onClick={() => handleViewMedicalData(patient.nic)}>View Medical Data</button>
+                </td>
+                  
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No patient data available.</p>
+        )}
+      </div>
       </div>
     </div>
   );
