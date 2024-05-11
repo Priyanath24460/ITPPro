@@ -5,6 +5,8 @@ const express = require("express");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const LoginEvent = require("../../models/user_management_models/LoginEvent");
+const nodemailer = require('nodemailer');
+const randomstring = require('randomstring');
 
 const nicValidator = [
   body('name').notEmpty().withMessage('Name is required'),
@@ -261,5 +263,92 @@ router.post("/guardianlogin", async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
+  
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'lh20011213@gmail.com',
+      pass: 'wwxsprtymxlztmst'
+    }
+  });
+  
+  
+  let generatedOTP; // Define a variable to store the generated OTP
+
+router.post('/forgotpassword', async (req, res) => {
+  const { email } = req.body;
+
+  // Generate a new random OTP each time the route is called
+  generatedOTP = randomstring.generate({
+    length: 6, // Length of the OTP
+    charset: 'numeric' // Use numeric characters for the OTP
+  });
+
+  // Define mail options with OTP included in the text
+  const mailOptions = {
+    from: 'itpmodule2001@gmail.com',
+    to: email,
+    subject: 'Password Reset OTP', // Subject of the email
+    text: `Your OTP for password reset is: ${generatedOTP}` // Include the OTP in the email text
+  };
+
+  try {
+    // Send mail with defined transport object
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+    res.status(200).json({ success: true, message: 'Password reset email sent successfully.' });
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    res.status(500).json({ success: false, message: 'Failed to send password reset email.' });
+  }
+});
+
+router.post('/verifyotp', async (req, res) => {
+  const { enteredOTP } = req.body; // Get the OTP entered by the user
+  const storedOTP = generatedOTP; // Retrieve the stored OTP from the OTP generation route
+
+  try {
+    // Compare the entered OTP with the stored OTP
+    if (enteredOTP === storedOTP) {
+      // If the OTPs match, consider it verified
+      res.status(200).json({ success: true, message: 'OTP verified successfully.' });
+    } else {
+      // If the OTPs don't match, return an error
+      res.status(400).json({ success: false, message: 'Invalid OTP. Please try again.' });
+    }
+  } catch (error) {
+    console.error('Error verifying OTP:', error);
+    res.status(500).json({ success: false, message: 'Failed to verify OTP.' });
+  }
+});
+
+
+
+router.post('/updateguardianpassword/:email', async (req, res) => {
+  const { email } = req.params;
+  const { password } = req.body;
+
+  try {
+    // Find the guardian by email
+    const guardian = await Guardian.findOne({ email });
+
+    if (!guardian) {
+      return res.status(404).json({ error: 'Guardian not found.' });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update guardian's password with the hashed password
+    guardian.password = hashedPassword;
+    await guardian.save();
+
+    res.json({ message: 'Password updated successfully.' });
+  } catch (error) {
+    console.error('Error updating password:', error);
+    res.status(500).json({ error: 'Failed to update password. Please try again.' });
+  }
+});
+
 
   module.exports = router;

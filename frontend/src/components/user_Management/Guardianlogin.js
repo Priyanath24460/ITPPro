@@ -97,16 +97,16 @@ const Guardianlogin = () => {
                 {loading ? "Logging in..." : "Login"}
               </button>
             </div>
-            
-          </form>
-          <div className="form-footer"></div>
-      <div className="vertical-line"></div>
+            </form>
+          <div className="form-footer">
+            <p>Forgot your password? <Link to="/forgotpassword">Reset it here</Link>.</p>
+          </div>
+          <div className="vertical-line"></div>
         </div>
         <div></div>
         <div className="dont-have-account">
           <p>Don't have an account? </p>
-            
-          <Link to="/guardiansignup" className="signup-button">Sign Up Here</Link>
+          <Link to="/addguardian" className="signup-button">Sign Up Here</Link>
         </div>
       </div>
     </div>

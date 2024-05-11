@@ -221,7 +221,53 @@ router.post("/addstaff", async (req, res) => {
     res.json({ message: 'Welcome to the Admin Dashboard', role: req.user.role });
   });
 
+  router.get('/getnic/:email', async (req, res) => {
+    try {
+      const { email } = req.params;
+      // Find the staff member by email in the database
+      const staff = await Staff.findOne({ email });
+      if (!staff) {
+        return res.status(404).json({ error: 'Staff member not found' });
+      }
+      // Return the NIC associated with the staff member's email
+      res.json({ nic: staff.nic });
+    } catch (error) {
+      console.error('Error fetching NIC:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
+  router.route("/updatestaff/:nic").put(async (req, res) => {
+    let userNIC = req.params.nic;
+    const { name, email, contactNumber } = req.body; // Only extract name, email, and contact number from the request body
   
+    const updateStaff = {
+      name,
+      email,
+      contactNumber,
+    };
+  
+    try {
+      const staff = await Staff.findOneAndUpdate(
+        { nic: userNIC },
+        updateStaff,
+        { new: true }
+      );
+  
+      if (!staff) {
+        return res.status(404).json({ status: "Staff not found" });
+      }
+  
+      res.status(200).json({ status: "Staff Updated", staff: staff });
+    } catch (err) {
+      console.error(err.message);
+      res
+        .status(500)
+        .json({ status: "Error with updating data", error: err.message });
+    }
+  });
+
 
 
 

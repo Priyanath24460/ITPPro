@@ -36,6 +36,9 @@ import Allstaff from './components/user_Management/Allstaff';
 import Staffprofile from './components/user_Management/Staffprofile';
 import Admindashboard from './components/user_Management/Admindashboard';
 import LoginPieChart from './components/user_Management/Loginchart';
+import Forgotpassword from './components/user_Management/Forgotpassword';
+import OtpEntry from "./components/user_Management/OtpEntry";
+import UpdateGuardianPassword from "./components/user_Management/UpdateGuardianPassword";
 
 
 // room management
@@ -115,9 +118,14 @@ function App() {
           <Route path="/diabetesmore/:nic/:name/:age/:gender/*" element={<MoreDiabetesData />} />
           <Route path="/cholesterolmore/:nic/:name/:age/:gender/*" element={<MoreCholesterolData />} />
           <Route path="/gurdianView" element={<AllCustomersViewGuardian />} />
+
+
          
+          <Route path="/updateguardianpassword/:email" element={<UpdateGuardianPassword />} />
+          <Route path="/otpentry/:email" element={<OtpEntry/>}/>
+          <Route path="/forgotpassword" element={<Forgotpassword/>}/>
           <Route path="/getloginevent" element={<LoginPieChart/>}/>
-          <Route path="/admin" element={<Admindashboard/>}/>
+          <Route path="/admin:nic" element={<Admindashboard/>}/>
           <Route path="/staffprofile/:nic" element={<Staffprofile/>} />
           <Route path="/allstaff" element= {<Allstaff/>} />
           <Route path="/stafflogin" element ={<Stafflogin/>} />

@@ -24,6 +24,7 @@ router.post("/generateuserpdf", async (req, res) => {
       doc.on('end', () => resolve(Buffer.concat(chunks)));
       doc.end();
     });
+    console.log("Raw PDF data:", pdfData);
 
     // Convert PDF data to base64
     const base64Data = pdfData.toString('base64');

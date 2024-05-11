@@ -44,12 +44,16 @@ const Stafflogin = () => {
       const token = localStorage.getItem('token');
       const decodedToken = jwtDecode(token);
       const role = decodedToken.role;
-      console.log('Role:', role); // Log the role extracted from the token
+      console.log('Role:', role);
+      
+      const nicResponse = await axios.get(`http://localhost:8070/staff/getnic/${email}`);
+      const nic = nicResponse.data.nic;
+      console.log('NIC:', nic);// Log the role extracted from the token
   
       // Redirect based on role
 switch (role) {
   case 'Admin':
-    navigate('/admin');
+    navigate(`/admin/${nic}`);
     break;
   case 'Meal Manager':
     navigate('/financial-manager-dashboard');
