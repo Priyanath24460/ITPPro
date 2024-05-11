@@ -30,6 +30,7 @@ function AddItemForm() {
 
             const data = await response.json();
             alert('Item added successfully:\n' + JSON.stringify(data.item));
+            window.location.href = '/eventinventory';
 
             // Clear form fields after successful submission
             setItemCode('');

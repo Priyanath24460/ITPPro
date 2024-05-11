@@ -1,3 +1,4 @@
+/* General styles */
 .containercha {
   font-family: Arial, sans-serif;
 }
@@ -6,33 +7,34 @@
   margin-bottom: 10px;
 }
 
+/* Total value styles */
 .total-valuecha {
-  
   color: #104de9;
   margin-right: 5px;
   padding: 5px;
 }
 
+/* Total items styles */
 .total-itemscha {
-  
   color: #11d61e;
   margin-right: 5px;
   padding: 5px;
 }
 
+/* In-stock styles */
 .in-stockcha {
-  
   color: #07b8cf;
   margin-right: 5px;
   padding: 5px;
 }
 
+/* Out-of-stock styles */
 .out-of-stockcha {
-
   color: #c02020;
   padding: 5px;
 }
 
+/* Actions container styles */
 .actionscha {
   display: flex;
   justify-content: space-between;
@@ -40,6 +42,7 @@
   margin-bottom: 10px;
 }
 
+/* Action buttons styles */
 .actionscha a,
 .actionscha button {
   background-color: #28a745;
@@ -48,24 +51,37 @@
   text-decoration: none;
   margin-right: 5px;
   border: none;
+  transition: background-color 0.3s ease;
 }
 
+/* Button hover effect */
+.actionscha a:hover,
+.actionscha button:hover {
+  background-color: #218838;
+}
+
+/* Secondary button styles */
 .actionscha button {
-  background-color: #007bff;
+  background-color: #28a745;
 }
 
+/* Filter buttons styles */
 .filter-buttonscha button {
   background-color: #6c757d;
+  transition: background-color 0.3s ease;
 }
 
+/* Active filter button styles */
 .filter-buttonscha button.active {
-  background-color: #007bff;
+  background-color: #28a745;
 }
 
+/* Form inside actions container styles */
 .actionscha form {
   display: flex;
 }
 
+/* Search input styles */
 .actionscha input[type="search"] {
   margin-right: 5px;
   padding: 5px;
@@ -73,12 +89,14 @@
   border: 1px solid #ced4da;
 }
 
+/* Table styles */
 .tablecha {
   font-family: Arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
+/* Table cell styles */
 .tablecha th,
 .tablecha td {
   border: 1px solid #dddddd;
@@ -86,15 +104,15 @@
   padding: 8px;
 }
 
+/* In-stock label styles */
 .in-stock-labelcha {
-  
   color: #11ba33;
   padding: 5px;
   border-radius: 5px;
 }
 
+/* Out-of-stock label styles */
 .out-of-stock-labelcha {
-
   color: #941e1e;
   padding: 5px;
   border-radius: 5px;

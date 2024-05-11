@@ -83,6 +83,7 @@ const UpdateItem = () => {
       const updatedFormData = { ...formData, amount: updatedAmount };
       await axios.put(`http://localhost:8070/Inventory/update/${itemCode}`, updatedFormData);
       alert("Item Updated Successfully!");
+      window.location.href = '/inventory/';
 
       // Add history entry
       const historyData = {
