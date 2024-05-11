@@ -114,7 +114,7 @@ function App() {
           <Route path="/pressuremore/:nic/:name/:age/:gender/*" element={<MorePressureData />} />
           <Route path="/diabetesmore/:nic/:name/:age/:gender/*" element={<MoreDiabetesData />} />
           <Route path="/cholesterolmore/:nic/:name/:age/:gender/*" element={<MoreCholesterolData />} />
-          <Route path="/medicaldataviewprofile/:nic" element={<AllCustomersViewGuardian />} />
+          <Route path="/gurdianView" element={<AllCustomersViewGuardian />} />
          
           <Route path="/getloginevent" element={<LoginPieChart/>}/>
           <Route path="/admin" element={<Admindashboard/>}/>
@@ -161,24 +161,22 @@ function App() {
           <Route path="/addsalary" element={<AddSalaryPage/>}/>
 
 
-      {/*inventory call---------------------------------*/}
+         {/*inventory call---------------------------------*/}
           
         
             {/* Define your routes */}
             <Route path="/inventory/" element={allmedical()} />
-            <Route path="/inventory/add" element={<AddItem />} />
+            <Route path="/inventory/add" element={medicaladdc() } />
             <Route path="/inventory/:itemCode" element={<IndividualItem />} />
-            <Route path="/inventory/update/:itemCode" element={<UpdateItem />} />
+            <Route path="/inventory/update/:itemCode" element={updatemedicalc()} />
             {/* Add the routes for event inventory */}
-            <Route path="/eventinventory/add" element={<AddItemForm />} />
+            <Route path="/eventinventory/add" element={eventaddc() } />
             <Route path="/eventinventory" element={allevent() } />
             {/* Route for individual event inventory item */}
             <Route path="/eventinventory/:itemCode" element={<EventIndividual />} />
             {/* Route for updating individual event inventory item */}
-            <Route path="/eventinventory/update/:itemCode" element={<UpdateEventItem />} />
-            <Route path="/history/" element={<HistorySummary />} />
-
-
+            <Route path="/eventinventory/update/:itemCode" element={updateeventc()} />
+            <Route path="/history/" element={historymedicalviewc() } />
       
       {/*Payment---------------------------------*/}
       <Route path='/viewDetails/' exact Component={viewDetails}/>
@@ -255,6 +253,82 @@ function allevent() {
     </>
   );
 }
+
+function medicaladdc() {
+  return (
+    <>
+    <div className="App">
+       <InventoryDashboard />
+       <div className="content-container">
+       <AddItem />
+       </div>
+       </div>
+      
+     
+    </>
+  );
+}
+
+function eventaddc() {
+  return (
+    <>
+    <div className="App">
+       <InventoryDashboard />
+       <div className="content-container">
+       <AddItemForm />
+       </div>
+       </div>
+      
+     
+    </>
+  );
+}
+
+function historymedicalviewc() {
+  return (
+    <>
+    <div className="App">
+       <InventoryDashboard />
+       <div className="content-container">
+       <HistorySummary />
+       </div>
+       </div>
+      
+     
+    </>
+  );
+}
+
+function updatemedicalc() {
+  return (
+    <>
+    <div className="App">
+       <InventoryDashboard />
+       <div className="content-container">
+       <UpdateItem />
+       </div>
+       </div>
+      
+     
+    </>
+  );
+}
+
+function updateeventc() {
+  return (
+    <>
+    <div className="App">
+       <InventoryDashboard />
+       <div className="content-container">
+       <UpdateEventItem />
+       </div>
+       </div>
+      
+     
+    </>
+  );
+}
+
 
 //room management functions
 

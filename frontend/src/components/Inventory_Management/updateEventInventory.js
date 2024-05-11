@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "./updateItemch.css"; // Import the external CSS file
 
 const UpdateEventItem = () => {
   const { itemCode } = useParams();
@@ -46,6 +47,12 @@ const UpdateEventItem = () => {
       // Update the amount based on the adjustment
       const updatedAmount = adjustmentOperation === "add" ? parseInt(formData.amount) + adjustmentAmount : parseInt(formData.amount) - adjustmentAmount;
       
+      // Ensure amount is not negative
+      if (updatedAmount < 0) {
+        alert("Cannot remove more items than available");
+        return;
+      }
+
       // Make the API call to update the item with the new amount
       await axios.put(`http://localhost:8070/eventinventory/update/${itemCode}`, { ...formData, amount: updatedAmount });
       
@@ -58,12 +65,12 @@ const UpdateEventItem = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="containerch mt-5">
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <div className="card">
-            <div className="card-header bg-primary text-white">Update Event Inventory Item</div>
-            <div className="card-body">
+          <div className="cardch">
+            <div className="card-headerch bg-primary text-white">Update Event Inventory Item</div>
+            <div className="card-bodych">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label className="form-label">Item Name:</label>

@@ -9,24 +9,23 @@ export default function AddItem() {
     const [pricePerItem, setPricePerItem] = useState("");
     const [brandName, setBrandName] = useState("");
     const [supplierName, setSupplierName] = useState("");
-    const [itemDate, setItemDate] = useState(""); // New state for itemDate
+    const [itemDate, setItemDate] = useState("");
     const [supplierList] = useState([
         "MedSupp Enterprises"
-        
     ]); 
 
     const validateItemCode = (value) => {
-        const regex = /^\d{4}[a-zA-Z]{2}$/; // Regex pattern: 4 digits followed by 2 letters
+        const regex = /^\d{4}[a-zA-Z]{2}$/;
         return regex.test(value);
     };
 
     const validateItemName = (value) => {
-        const regex = /^[^\d]+$/; // Regex pattern: doesn't contain numbers
+        const regex = /^[A-Za-z\s]+$/; // Only letters and spaces allowed
         return regex.test(value);
     };
 
     const validateNumberInput = (value) => {
-        const regex = /^\d*\.?\d*$/; // Regex pattern: allow digits and optional decimal point
+        const regex = /^\d*\.?\d*$/; // Only digits and optional decimal point allowed
         return regex.test(value);
     };
 
@@ -84,17 +83,29 @@ export default function AddItem() {
                 <div className="formGroup">
                     <label htmlFor="itemName">Item Name</label>
                     <input type="text" className="form-control" id="itemName" placeholder="Enter item name" 
-                        value={itemName} onChange={(e) => setItemName(e.target.value)} />
+                        value={itemName} onChange={(e) => {
+                            if (validateItemName(e.target.value)) {
+                                setItemName(e.target.value);
+                            }
+                        }} />
                 </div>
                 <div className="formGroup">
                     <label htmlFor="amount">Amount</label>
                     <input type="text" className="form-control" id="amount" placeholder="Enter amount" 
-                        value={amount} onChange={(e) => setAmount(e.target.value)} />
+                        value={amount} onChange={(e) => {
+                            if (validateNumberInput(e.target.value)) {
+                                setAmount(e.target.value);
+                            }
+                        }} />
                 </div>
                 <div className="formGroup">
                     <label htmlFor="pricePerItem">Price Per Item</label>
                     <input type="text" className="form-control" id="pricePerItem" placeholder="Enter price per item"
-                        value={pricePerItem} onChange={(e) => setPricePerItem(e.target.value)} />
+                        value={pricePerItem} onChange={(e) => {
+                            if (validateNumberInput(e.target.value)) {
+                                setPricePerItem(e.target.value);
+                            }
+                        }} />
                 </div>
                 <div className="formGroup">
                     <label htmlFor="brandName">Brand Name</label>
