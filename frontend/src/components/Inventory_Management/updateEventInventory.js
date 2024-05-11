@@ -58,6 +58,8 @@ const UpdateEventItem = () => {
       
       // Show success message
       alert("Event Inventory Item Updated Successfully!");
+      window.location.href = '/eventinventory';
+
     } catch (error) {
       console.error("Error updating event inventory item:", error);
       alert("Error updating event inventory item. Please try again.");

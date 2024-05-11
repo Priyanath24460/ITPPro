@@ -67,15 +67,43 @@ function HistoryList() {
   // Function to generate PDF
   const generatePDF = () => {
     const doc = new jsPDF();
-    doc.text("History Entries", 10, 10);
-    let startY = 20;
+
+    // Set font
+    doc.setFont("times");
+
+    // Add header
+    doc.setFontSize(20);
+    doc.text("Medical History", 105, 15, { align: "center" });
+
+    let startY = 30;
+
+    // Add table headers
+    doc.setFontSize(12);
+    doc.text("Item Code", 15, startY);
+    doc.text("Operation", 45, startY);
+    doc.text("Count", 75, startY);
+    doc.text("Price Per Item", 105, startY);
+    doc.text("Total Price", 135, startY);
+    doc.text("Update Date", 165, startY);
+
+    startY += 10; // Move down after headers
+
+    // Add table data
     history.forEach((entry, index) => {
-      const y = startY + index * 10;
-      doc.text(`${entry.itemCode}, ${entry.operation}, ${entry.count}, ${entry.pricePerItem}, ${calculateTotalPrice(entry.count, entry.pricePerItem)}, ${new Date(entry.updateDate).toLocaleString()}`, 10, y);
+      const rowY = startY + index * 10;
+      doc.text(entry.itemCode, 15, rowY);
+      doc.text(entry.operation, 45, rowY);
+      doc.text(entry.count.toString(), 75, rowY);
+      doc.text(entry.pricePerItem.toString(), 105, rowY);
+      doc.text(calculateTotalPrice(entry.count, entry.pricePerItem).toString(), 135, rowY);
+      doc.text(new Date(entry.updateDate).toLocaleString(), 165, rowY);
     });
+
     // Add total prices
     doc.text(`Total Remove Price: ${totalRemovePrice}`, 10, startY + (history.length + 1) * 10);
     doc.text(`Total Add Price: ${totalAddPrice}`, 10, startY + (history.length + 2) * 10);
+
+    // Save PDF
     doc.save("history.pdf");
   };
 
@@ -120,10 +148,6 @@ function HistoryList() {
               ))}
             </tbody>
           </table>
-          <div>
-            <p>Total Remove Price: {totalRemovePrice}</p>
-            <p>Total Add Price: {totalAddPrice}</p>
-          </div>
         </div>
       )}
     </div>

@@ -27,28 +27,28 @@ const IndividualItem = () => {
   }, [itemCode]);
 
   return (
-    <div className="container">
-      <h1 className="mb-4">Item Details</h1>
+    <div style={{ margin: '20px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
+      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>Item Details</h1>
       {loading && <p>Loading...</p>}
-      {error && <p className="text-danger">{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       {!loading && !error && (
         <div>
-          <div className="mb-3">
+          <div style={{ marginBottom: '10px', fontSize: '18px' }}>
             <strong>Item Code:</strong> {item.itemCode}
           </div>
-          <div className="mb-3">
+          <div style={{ marginBottom: '10px', fontSize: '18px' }}>
             <strong>Item Name:</strong> {item.itemName}
           </div>
-          <div className="mb-3">
+          <div style={{ marginBottom: '10px', fontSize: '18px' }}>
             <strong>Amount:</strong> {item.amount}
           </div>
-          <div className="mb-3">
+          <div style={{ marginBottom: '10px', fontSize: '18px' }}>
             <strong>Price Per Item:</strong> {item.pricePerItem}
           </div>
-          <div className="mb-3">
+          <div style={{ marginBottom: '10px', fontSize: '18px' }}>
             <strong>Brand Name:</strong> {item.brandName}
           </div>
-          <div className="mb-3">
+          <div style={{ marginBottom: '10px', fontSize: '18px' }}>
             <strong>Supplier Name:</strong> {item.supplierName}
           </div>
         </div>

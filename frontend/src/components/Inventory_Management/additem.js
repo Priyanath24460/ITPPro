@@ -65,6 +65,7 @@ export default function AddItem() {
         axios.post("http://localhost:8070/Inventory/add", newItem)
             .then(() => {
                 alert("Item added successfully");
+                window.location.href = '/inventory/';
             })
             .catch((err) => {
                 alert(err);
