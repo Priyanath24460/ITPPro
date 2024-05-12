@@ -2,16 +2,27 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-// import { useLocation, Link } from "react-router-dom";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faDownload } from '@fortawesome/free-solid-svg-icons';
-// import { BsCheckCircle } from 'react-icons/bs'; 
 
 const PaymentDetailsForm = () => {
   const [holderDetails, setHolderDetails] = useState(null);
   const [error, setError] = useState(null);
   const [nic, setNic] = useState('');
   const [month, setMonth] = useState('');
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
 
   const fetchData = async () => {
     try {
@@ -88,34 +99,39 @@ const PaymentDetailsForm = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4">Payment Receipt</h1>
+    <div className="container mt-2">
+      <h1 className="mb-4">Payment History</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="nic" className="form-label">Enter NIC:</label>
           <input type="text" id="nic" placeholder='Enter your NIC' className="form-control" value={nic} onChange={handleChangeNIC} />
         </div>
         <div className="mb-3">
-          <label htmlFor="month" className="form-label">Enter Month of Payment:</label>
-          <input type="text" id="month" placeholder='Enter your Month Of Payment' className="form-control" value={month} onChange={handleChangeMonth} />
+          <label htmlFor="month" className="form-label">Select Month of Payment:</label>
+          <select id="month" className="form-select" value={month} onChange={handleChangeMonth}>
+            <option value="">Select Month...</option>
+            {months.map((month, index) => (
+              <option key={index} value={month}>{month}</option>
+            ))}
+          </select>
         </div>
         <button type="submit" className="btn btn-primary me-2">View Your Payment</button>
         {holderDetails && (
           <button onClick={handleDownloadReceipt} className="btn btn-success">Download Payment Receipt</button>
         )}
       </form>
-      {error && <p className="text-danger mt-3">{error}</p>}
-      {holderDetails && (
-        <div className="mt-4">
-          <h2>Holder Details:</h2>
-          <p>Customer Name: {holderDetails.customerName}</p>
-          <p>NIC: {holderDetails.nic}</p>
-          <p>Phone Number: {holderDetails.phoneNumber}</p>
-          <p>Email Address: {holderDetails.EmailAddress}</p>
-          <p>Month of Payment: {holderDetails.monthOfPayment}</p>
-          <p>Monthly Cost: Rs {holderDetails.monthlyCost}/-</p>
-          {/* Render other details as needed */}
-        </div>
+      {error && <p className="text-danger mt-5">{error}</p>}
+{holderDetails && (
+  <div className="mt-4">
+    <h2 style={{ color: 'green' }}>Holder Details:</h2>
+    <p><strong style={{ color: 'black' }}>Customer Name:</strong> <span style={{ color: 'green' }}>{holderDetails.customerName}</span></p>
+    <p><strong style={{ color: 'black' }}>NIC:</strong> <span style={{ color: 'green' }}>{holderDetails.nic}</span></p>
+    <p><strong style={{ color: 'black' }}>Phone Number:</strong> <span style={{ color: 'green' }}>{holderDetails.phoneNumber}</span></p>
+    <p><strong style={{ color: 'black' }}>Email Address:</strong> <span style={{ color: 'green' }}>{holderDetails.EmailAddress}</span></p>
+    <p><strong style={{ color: 'black' }}>Month of Payment:</strong> <span style={{ color: 'green' }}>{holderDetails.monthOfPayment}</span></p>
+    <p><strong style={{ color: 'black' }}>Monthly Cost:</strong> <span style={{ color: 'green' }}>Rs {holderDetails.monthlyCost}/-</span></p>
+    {/* Render other details as needed */}
+  </div>
       )}
     </div>
   );

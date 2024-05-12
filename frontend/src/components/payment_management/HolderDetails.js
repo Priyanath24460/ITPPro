@@ -12,18 +12,17 @@ export default function HolderDetails(){
     const [EmailAddress, setEmailAddress] = useState("");
     const [monthOfPayment, setMonthOfPayment] = useState("");
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [monthlyCost, setMonthlyCost] = useState(0); // Initialize monthly cost state
-    const [alertMessage, setAlertMessage] = useState(null); // State for alert message
-    const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission
+    const [monthlyCost, setMonthlyCost] = useState(0);
+    const [alertMessage, setAlertMessage] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [otpSent, setOtpSent] = useState(false);
 
     const navigate = useNavigate();
 
-    // Fetch monthly cost details when the component mounts
     useEffect(() => {
         axios.get("http://localhost:8070/monthlyCostAddDetails/cost")
             .then(response => {
-                // Sum up all monthly costs
-                const totalMonthlyCost = response.data.reduce((total, cost) => cost.monthlyCost, 0);
+                const totalMonthlyCost = response.data.reduce((total, cost) => total + cost.monthlyCost, 0);
                 setMonthlyCost(totalMonthlyCost);
             })
             .catch(error => {
@@ -32,7 +31,6 @@ export default function HolderDetails(){
     }, []);
 
     function handleCustomerNameChange(event) {
-        // Allow only letters and spaces
         if (!/^[A-Za-z\s]*$/.test(event.target.value)) {
             setCustomerName(event.target.value.replace(/[^A-Za-z\s]/gi, ''));
         } else {
@@ -41,7 +39,6 @@ export default function HolderDetails(){
     }
 
     function handleNicChange(event) {
-        // Allow only up to 12 digits
         const input = event.target.value.substring(0, 12);
         setNic(input);
     }
@@ -54,38 +51,42 @@ export default function HolderDetails(){
             phoneNumber,
             EmailAddress,
             monthOfPayment,
-            monthlyCost ,
+            monthlyCost,
             nic
         }
         
-        // Disable form submission while processing
         setIsSubmitting(true);
 
         axios.post("http://localhost:8070/paymentHolderDetails/addn", holderDetails)
             .then(() => {
-                // Set alert message for successful payment
                 alert("Payment successful...");
-                // Navigate to payment success page with payment details as URL parameters
+
+                // Call backend to generate and send OTP
+                axios.post("http://localhost:8070/paymentHolderDetails/-------------------------generate-otp", { phoneNumber })
+                    .then(() => {
+                        console.log("OTP sent successfully");
+                        setOtpSent(true);
+                    })
+                    .catch(err => {
+                        console.error("Error sending OTP:", err);
+                    });
+
                 navigate(`/paymentSuccess?customerName=${encodeURIComponent(customerName)}&phoneNumber=${encodeURIComponent(phoneNumber)}&EmailAddress=${encodeURIComponent(EmailAddress)}&monthOfPayment=${encodeURIComponent(monthOfPayment)}&monthlyCost=${encodeURIComponent(monthlyCost)}`);
             })
             .catch((err) => {
-                // Set alert message for payment error
                 setAlertMessage("An error occurred while processing the payment.");
             })
             .finally(() => {
-                // Reset form data and set formSubmitted to true
                 setCustomerName("");
                 setNic("");
                 setPhoneNumber("");
                 setEmailAddress("");
                 setMonthOfPayment("");
                 setFormSubmitted(true);
-                // Enable form submission after processing
                 setIsSubmitting(false);
             });
     };
 
-    // Reset form data after 3 seconds if form has been submitted
     if (formSubmitted) {
         setTimeout(() => {
           setFormSubmitted(false);
@@ -95,7 +96,6 @@ export default function HolderDetails(){
 
     return (
         <div className="container mt-5">
-            {/* Display alert message */}
             {alertMessage && (
                 <Alert variant="danger" onClose={() => setAlertMessage(null)} dismissible>
                     {alertMessage}
@@ -120,7 +120,7 @@ export default function HolderDetails(){
                         value={customerName} 
                         onChange={handleCustomerNameChange} 
                         required 
-                        disabled={isSubmitting} // Disable field while submitting
+                        disabled={isSubmitting} 
                     />
                 </div>
 
@@ -133,7 +133,7 @@ export default function HolderDetails(){
                         value={nic} 
                         onChange={handleNicChange} 
                         required 
-                        disabled={isSubmitting} // Disable field while submitting
+                        disabled={isSubmitting} 
                     />
                 </div>
                 <div className="mb-3">
@@ -145,7 +145,7 @@ export default function HolderDetails(){
                         value={phoneNumber} 
                         onChange={(e) => setPhoneNumber(e.target.value)} 
                         required 
-                        disabled={isSubmitting} // Disable field while submitting
+                        disabled={isSubmitting} 
                     />
                 </div>
                 <div className="mb-3">
@@ -157,7 +157,7 @@ export default function HolderDetails(){
                         value={EmailAddress} 
                         onChange={(e) => setEmailAddress(e.target.value)} 
                         required 
-                        disabled={isSubmitting} // Disable field while submitting
+                        disabled={isSubmitting} 
                     />
                 </div>
                 <div className="mb-3">
@@ -168,7 +168,7 @@ export default function HolderDetails(){
                         value={monthOfPayment} 
                         onChange={(e) => setMonthOfPayment(e.target.value)} 
                         required 
-                        disabled={isSubmitting} // Disable field while submitting
+                        disabled={isSubmitting} 
                     >
                         <option value="">Select month...</option>
                         <option value="January">January</option>
@@ -180,7 +180,7 @@ export default function HolderDetails(){
                         <option value="July">July</option>
                         <option value="August">August</option>
                         <option value="September">September</option>
-                        <option value="Octomber">Octomber</option>
+                        <option value="October">October</option>
                         <option value="November">November</option>
                         <option value="December">December</option>
                     </select>
@@ -189,6 +189,7 @@ export default function HolderDetails(){
                     <button type="submit" className="btn btn-success" disabled={isSubmitting}>Submit</button>
                 </div>
             </form>
+            {otpSent && <p>OTP sent successfully to {phoneNumber}</p>}
             <div className="mt-3">
                 <Link
                     to={{

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import logo from '../../../src/letterhead.jpg'; 
 
 // Create styles
 const styles = StyleSheet.create({
@@ -21,10 +22,10 @@ const styles = StyleSheet.create({
   table: {
     display: 'table',
     width: 'auto',
-    marginVertical: 10,
     borderStyle: 'solid',
     borderWidth: 1,
     borderColor: '#009688',
+    marginBottom: 20,
   },
   tableRow: {
     flexDirection: 'row',
@@ -38,24 +39,29 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'center',
-    width: '20%', // Adjust the width according to your preference
+    width: '20%',
   },
   tableCell: {
     padding: 5,
     fontSize: 10,
-    textAlign: 'left', // Align details to the left side
-    width: '20%', // Adjust the width according to your preference
+    textAlign: 'left',
+    width: '20%',
   },
   totalCost: {
-    marginTop: 20,
-  fontSize: 12,
-  fontWeight: 'bold',
-  textAlign: 'left',
-  color: 'black', 
-  borderStyle: 'solid',
-  borderWidth: 1,
-  padding: 5,
-  borderColor: '#000000', // Border color
+    fontSize: 12,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    color: 'black', 
+    borderStyle: 'solid',
+    borderWidth: 1,
+    padding: 5,
+    borderColor: '#000000',
+    marginBottom: 20,
+  },
+  image: {
+    width: '100%',
+    height: 'auto',
+    marginBottom: 10, // Add margin bottom to create space between image and header
   },
 });
 
@@ -64,12 +70,15 @@ export const HolderDetailsPDF = ({ holderDetails, totalCostByMonth, totalMonthly
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
+        {/* Image and Header */}
+        <Image src={logo} style={styles.image} />
         <Text style={styles.header}>Holder Details</Text>
+        {/* Table */}
         <View style={styles.table}>
           {/* Table Header */}
           <View style={styles.tableRow}>
             <Text style={styles.tableCellHeader}>Customer Name</Text>
-            <Text style={styles.tableCellHeader}>NIC</Text> {/* Include NIC column */}
+            <Text style={styles.tableCellHeader}>NIC</Text>
             <Text style={styles.tableCellHeader}>Phone Number</Text>
             <Text style={styles.tableCellHeader}>Email Address</Text>
             <Text style={styles.tableCellHeader}>Month Of Payment</Text>
@@ -79,7 +88,7 @@ export const HolderDetailsPDF = ({ holderDetails, totalCostByMonth, totalMonthly
           {holderDetails.map((holder, index) => (
             <View key={index} style={styles.tableRow}>
               <Text style={styles.tableCell}>{holder.customerName}</Text>
-              <Text style={styles.tableCell}>{holder.nic}</Text> {/* Display NIC */}
+              <Text style={styles.tableCell}>{holder.nic}</Text>
               <Text style={styles.tableCell}>{holder.phoneNumber}</Text>
               <Text style={styles.tableCell}>{holder.EmailAddress}</Text>
               <Text style={styles.tableCell}>{holder.monthOfPayment}</Text>
@@ -102,3 +111,5 @@ export const HolderDetailsPDF = ({ holderDetails, totalCostByMonth, totalMonthly
     </Page>
   </Document>
 );
+
+export default HolderDetailsPDF;

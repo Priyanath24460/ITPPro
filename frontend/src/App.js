@@ -94,6 +94,7 @@ import viewPaymentDetails from './components/payment_management/viewPaymentDetai
 import AddMonthlyCost from './components/payment_management/AddMonthlyCost';
 import PaymentSuccess from './components/payment_management/paymentSuccess';
 import PaymentHistory from './components/payment_management/PaymentHistory';
+import TotalCostCalculator from './components/payment_management/totalCostCalculator';
 
 
 
@@ -107,7 +108,7 @@ function App() {
   return (
     <Router>
       <div>
-       
+     
         <Routes>
         <Route path="/get" element={MedicalinterfaceRoutes()} />
           
@@ -194,6 +195,7 @@ function App() {
       <Route path='/addcost' exact Component={AddMonthlyCost}/>
       <Route path="/paymentSuccess" element={<PaymentSuccess />} />
       <Route path='checkpage' exact Component={PaymentHistory}/>
+      <Route path='totalCostCalculator' exact Component={TotalCostCalculator}/>
 
         </Routes>
       </div>
