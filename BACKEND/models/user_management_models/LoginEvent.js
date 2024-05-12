@@ -6,7 +6,7 @@ const loginEventSchema = new Schema({
   nic: { type: String, required: true }, // NIC of the user
   userType: {
     type: String,
-    enum: ['Elder', 'Guardian', 'Admin', 'Financial manager', 'meal manager', 'Inventory Manager', 'event coordinator', 'Medical Manager', 'staff manager'],
+    enum: ['Elder', 'Guardian', 'Admin', 'Financial Manager', 'meal manager', 'Inventory Manager', 'event coordinator', 'Medical Manager', 'staff manager'],
     required: true
   },
   timestamp: { type: Date, default: Date.now }
