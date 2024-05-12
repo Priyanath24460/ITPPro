@@ -97,8 +97,13 @@ import PaymentHistory from './components/payment_management/PaymentHistory';
 import TotalCostCalculator from './components/payment_management/totalCostCalculator';
 
 
-
-
+//event management
+import Homeevent from "./components/event_management/Home";
+import AddEvent from "./components/event_management/AddEvent";
+import EventDetails from "./components/event_management/EventDetails";
+import TotalCost from "./components/event_management/TotalCost";
+import Allitems from "./components/event_management/Allitems";
+import EventNavbar from "./components/event_management/eventNavbar";
 
 
 
@@ -196,6 +201,13 @@ function App() {
       <Route path="/paymentSuccess" element={<PaymentSuccess />} />
       <Route path='checkpage' exact Component={PaymentHistory}/>
       <Route path='totalCostCalculator' exact Component={TotalCostCalculator}/>
+
+      {/*event management---------------------------------*/}
+      <Route path="/mainhome" element={<Homeevent />} />
+                      <Route path="/addEvent" element={addevent()} />
+                      <Route path="/eventDetails" element={eventdetails()} />
+                      <Route path="/totalCost" element={totalcost()} />
+                      <Route path="/allitems" element={iteamdetails()}/>
 
         </Routes>
       </div>
@@ -408,4 +420,46 @@ function EditResident1(){
   );
 }
 
+//event management
+function addevent() {
+  return (
+    <>
+      <AddEvent />
+      <EventNavbar/>
+     
+    </>
+  );
+}
+
+function eventdetails() {
+  return (
+    <>
+      <EventDetails />
+      <EventNavbar/>
+     
+    </>
+  );
+}
+
+function totalcost() {
+  return (
+    <>
+      <TotalCost />
+      <EventNavbar/>
+     
+    </>
+  );
+}
+
+function iteamdetails() {
+  return (
+    <>
+      <Allitems />
+      <EventNavbar/>
+     
+    </>
+  );
+}
+
 export default App;
+
