@@ -9,6 +9,12 @@ const Admindashboard = () => {
   const navigate = useNavigate();
   const { email } = useParams(); // Extract 'email' parameter from URL
   const { nic } = useParams();
+  const [showUserDistribution, setShowUserDistribution] = useState(false); 
+
+  const handleUserDistributionClick = () => {
+    // Set the state to true to show the user distribution
+    setShowUserDistribution(true);
+  }
 
 
   useEffect(() => {
@@ -25,7 +31,7 @@ const Admindashboard = () => {
       console.log('Role:', role); // Log the role extracted from the token
 
       // Make a request to the backend to check if the user is an admin
-      axios.get('http://localhost:8070/staff/admin', {
+      axios.get('http://localhost:8070/staff/admin/:nic', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -33,6 +39,7 @@ const Admindashboard = () => {
       .then(response => {
         // If the user is an admin, stay on the admin dashboard
         console.log('Admin logged in:', response.data);
+        handleUserDistributionClick();
         // You can check if the response contains the expected message
         if (response.data.message === 'Welcome to the Admin Dashboard') {
           // User is an admin, no need to navigate
@@ -68,58 +75,75 @@ const Admindashboard = () => {
   };
 
   return (
-    <div className='Main'>
-      {/* Sidebar */}
-      <nav className="sidebar">
-      <div className="sidebar-brand">Admin Dashboard</div>
-      <div className="sidebar-sticky">
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <Link to="/" className="nav-link">
-              Dashboard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/" className="nav-link">
-              All Elders
-            </Link>
-          </li>
-          <li className="nav-item">
-          <Link to={`/staffprofile/${nic}`} className="nav-link">
-              Profile
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/stafflogin" className="nav-link" onClick={handleLogout}>
-              Logout
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/add-staff" className="nav-link">
-              Add Staff
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+        <div className="main-container">
+            {/* Sidebar */}
+            <nav className="sidebar">
+                <div className="sidebar-header">
+                    <h3 className="sidebar-title">Admin</h3>
+                    <button className="btn btn-profile">
+                        <Link to={`/staffprofile/${nic}`} className="profile-link">View Profile</Link>
+                    </button>
+                </div>
 
-      {/* Main content area */}
-      <div className="main-content">
-        <div className="container-fluid">
-          <div className="row">
-            {/* Increase the size of Product Distribution chart */}
-            <div className="col-md-12"> {/* Modified the column size to take the full width */}
-              <div className="chart-placeholder">
-                <h2>Product Distribution</h2>
-                {/* Display the LoginPieChart component here */}
-                <LoginPieChart />
-              </div>
-            </div>
+                <div className="sidebar-menu">
+                    <ul className="nav flex-column">
+                        <li className="nav-item">
+                        <Link className="nav-link-staffdb" onClick={handleUserDistributionClick}>
+                           User Distribution
+                        </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/" className="nav-link-staffdb">
+                               Registered Elders
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/addstaff" className="nav-link-staffdb">
+                            Staff Registration
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/registrationtrend" className="nav-link-staffdb">
+                            Registration Trends
+                            </Link>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div className="sidebar-footer">
+                    <button className="btn btn-logout" onClick={handleLogout}>
+                        <Link to="/stafflogin" className="logout-link">Logout</Link>
+                    </button>
+                </div>
+            </nav>
+
+           {/* Main content area */}
+    <div className="main-content">
+      <div className="container-fluid">
+        <div className="content-wrapper">
+          {/* Top right text "Leisure Home" */}
+          <div className="top-right-text">
+            <h2>Leisure Home</h2>
+            {/* Paragraph "Human Care Center" below the top right text */}
+            <p>Human Care Center</p>
           </div>
+
+          {/* Horizontal line */}
+          <hr className="full-width-line" />
+          {/* Add other content such as tasks or notifications for the staff here */}
+
+          {/* Render User Distribution chart if state is true */}
+          {showUserDistribution && (
+            <div className="user-distribution-container">
+              <LoginPieChart />
+            </div>
+          )}
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Admindashboard;

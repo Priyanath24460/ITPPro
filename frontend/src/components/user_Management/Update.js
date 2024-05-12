@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 const Update = () => {
   const { nic } = useParams();
-  
+
   const [formData, setFormData] = useState({
     name: "",
     nic: "",
@@ -19,6 +19,9 @@ const Update = () => {
     gaddress: "",
     password: "",
   });
+
+  // State variables for form validation
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     async function getCustomer() {
@@ -40,7 +43,7 @@ const Update = () => {
             gnic: customerData.gnic,
             gcontactnumber: customerData.gcontactnumber,
             gaddress: customerData.gaddress,
-            password : customerData.password
+            password: customerData.password,
           });
         }
       } catch (err) {
@@ -56,19 +59,6 @@ const Update = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await axios.put(`http://localhost:8070/customerA/update/${nic}`, formData);
-      alert("Customer Updated Successfully!");
-      window.location.href = `/view/${nic}`;
-    } catch (error) {
-      console.error(error.message);
-      alert("Error updating customer. Please try again.");
-    }
   };
 
   const handleSubmitP = async (e) => {
@@ -91,6 +81,103 @@ const Update = () => {
     }
 };
 
+  const handleKeyDown = (e, regex) => {
+    if (e.key === "Backspace") return; // Allow backspace
+    if (!regex.test(e.key)) {
+      e.preventDefault();
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Validate form data before submitting
+      const validationErrors = validateForm(formData);
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+        return;
+      }
+
+      await axios.put(
+        `http://localhost:8070/customerA/update/${nic}`,
+        formData
+      );
+      alert("Customer Updated Successfully!");
+      window.location.href = `/elderprofile/${nic}`;
+    } catch (error) {
+      console.error(error.message);
+      alert("Error updating customer. Please try again.");
+    }
+  };
+
+  // Function to validate form data
+  const validateForm = (data) => {
+    const errors = {};
+  
+    if (!data.name || !/^[a-zA-Z\s]+$/.test(data.name)) {
+      errors.name = "Name is required and can only contain letters and spaces.";
+    }
+  
+    if (!data.nic || !/^[Vv0-9]+$/.test(data.nic)) {
+      errors.nic = "NIC is required and can only contain 'v', 'V', and numbers.";
+    }
+  
+    if (!data.age || isNaN(data.age) || data.age < 0) {
+      errors.age = "Age is required and must be a valid number.";
+    }
+  
+    if (!data.birthdate) {
+      errors.birthdate = "Birth date is required.";
+    }
+  
+    if (!data.gender || !["male", "female"].includes(data.gender)) {
+      errors.gender =
+        "Gender is required and must be either 'male' or 'female'.";
+    }
+  
+    if (!data.address || !/^[a-zA-Z0-9\s\/]+$/.test(data.address)) {
+      errors.address =
+        "Address is required and can only contain letters, numbers, and '/'.";
+    }
+  
+    if (
+      !data.contactnumber ||
+      !/^\d{10}$/.test(data.contactnumber)
+    ) {
+      errors.contactnumber =
+        "Contact number is required and must be a valid 10-digit number.";
+    }
+  
+    if (!data.gname || !/^[a-zA-Z\s]+$/.test(data.gname)) {
+      errors.gname = "Guardian's name is required and can only contain letters.";
+    }
+  
+    if (!data.gnic || !/^[Vv0-9]+$/.test(data.gnic)) {
+      errors.gnic =
+        "Guardian's NIC is required and can only contain 'v', 'V', and numbers.";
+    }
+  
+    if (
+      !data.gcontactnumber ||
+      !/^\d{10}$/.test(data.gcontactnumber)
+    ) {
+      errors.gcontactnumber =
+        "Guardian's contact number is required and must be a valid 10-digit number.";
+    }
+  
+    if (!data.gaddress || !/^[a-zA-Z0-9\s\/]+$/.test(data.gaddress)) {
+      errors.gaddress =
+        "Guardian's address is required and can only contain letters, numbers, and '/'.";
+    }
+  
+    if (!data.password || data.password.length < 6) {
+      errors.password =
+        "Password is required and must be at least 6 characters long.";
+    }
+  
+    return errors;
+  };
 
   return (
     <div style={containerStyle}>
@@ -103,8 +190,12 @@ const Update = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[a-zA-Z\s]$/)}
             style={inputStyle}
           />
+          {errors.name && (
+            <span style={{ color: "red" }}>{errors.name}</span>
+          )}
         </div>
 
         <div style={inputGroupStyle}>
@@ -114,9 +205,12 @@ const Update = () => {
             name="nic"
             value={formData.nic}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[Vv0-9]$/)}
             style={inputStyle}
           />
+          {errors.nic && <span style={{ color: "red" }}>{errors.nic}</span>}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Age:</label>
           <input
@@ -124,9 +218,12 @@ const Update = () => {
             name="age"
             value={formData.age}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[0-9]$/)}
             style={inputStyle}
           />
+          {errors.age && <span style={{ color: "red" }}>{errors.age}</span>}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Birth Date:</label>
           <input
@@ -134,21 +231,32 @@ const Update = () => {
             name="birthdate"
             value={formData.birthdate}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[0-9-]$/)}
             style={inputStyle}
           />
+          {errors.birthdate && (
+            <span style={{ color: "red" }}>{errors.birthdate}</span>
+          )}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Gender:</label>
           <select
             name="gender"
             value={formData.gender}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[a-zA-Z]$/)}
             style={inputStyle}
           >
+            <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
+          {errors.gender && (
+            <span style={{ color: "red" }}>{errors.gender}</span>
+          )}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Address:</label>
           <input
@@ -156,9 +264,14 @@ const Update = () => {
             name="address"
             value={formData.address}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[a-zA-Z0-9\s\/]$/)}
             style={inputStyle}
           />
+          {errors.address && (
+            <span style={{ color: "red" }}>{errors.address}</span>
+          )}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Contact Number:</label>
           <input
@@ -166,9 +279,14 @@ const Update = () => {
             name="contactnumber"
             value={formData.contactnumber}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[0-9]$/)}
             style={inputStyle}
           />
+          {errors.contactnumber && (
+            <span style={{ color: "red" }}>{errors.contactnumber}</span>
+          )}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Guardian's Name:</label>
           <input
@@ -176,9 +294,14 @@ const Update = () => {
             name="gname"
             value={formData.gname}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[a-zA-Z\s]$/)}
             style={inputStyle}
           />
+          {errors.gname && (
+            <span style={{ color: "red" }}>{errors.gname}</span>
+          )}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Guardian's NIC:</label>
           <input
@@ -186,9 +309,12 @@ const Update = () => {
             name="gnic"
             value={formData.gnic}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[Vv0-9]$/)}
             style={inputStyle}
           />
+          {errors.gnic && <span style={{ color: "red" }}>{errors.gnic}</span>}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Guardian's Contact Number:</label>
           <input
@@ -196,9 +322,14 @@ const Update = () => {
             name="gcontactnumber"
             value={formData.gcontactnumber}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[0-9]$/)}
             style={inputStyle}
           />
+          {errors.gcontactnumber && (
+            <span style={{ color: "red" }}>{errors.gcontactnumber}</span>
+          )}
         </div>
+
         <div style={inputGroupStyle}>
           <label style={labelStyle}>Guardian's Address:</label>
           <input
@@ -206,27 +337,21 @@ const Update = () => {
             name="gaddress"
             value={formData.gaddress}
             onChange={handleChange}
+            onKeyDown={(e) => handleKeyDown(e, /^[a-zA-Z0-9\s\/]$/)}
             style={inputStyle}
           />
+          {errors.gaddress && (
+            <span style={{ color: "red" }}>{errors.gaddress}</span>
+          )}
         </div>
 
-        <div style={inputGroupStyle}>
-          <label style={labelStyle}>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            style={inputStyle}
-          />
-        </div>          
-        
-        <button >View Customer</button>
+        <button type="submit">Update Customer</button>
       </form>
     </div>
   );
 };
 
+// Styles and constants
 const containerStyle = {
   fontFamily: "Arial, sans-serif",
   maxWidth: "800px",
@@ -257,16 +382,6 @@ const inputStyle = {
   padding: "8px",
   width: "100%",
   boxSizing: "border-box",
-};
-
-const buttonStyle = {
-  backgroundColor: "#4CAF50",
-  color: "white",
-  padding: "10px 20px",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer",
-  marginTop: "10px",
 };
 
 export default Update;

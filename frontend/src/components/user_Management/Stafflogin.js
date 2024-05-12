@@ -55,8 +55,8 @@ switch (role) {
   case 'Admin':
     navigate(`/admin/${nic}`);
     break;
-  case 'Meal Manager':
-    navigate('/financial-manager-dashboard');
+  case 'Inventory Manager':
+    navigate('/inventory/');
     break;
   case 'Medical Manager':
     navigate('/get');

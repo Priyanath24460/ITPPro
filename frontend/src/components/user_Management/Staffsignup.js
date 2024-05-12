@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import './user_management_CSS/signup.css';
 
 export default function StaffSignup() {
   const [formData, setFormData] = useState({
@@ -39,6 +40,7 @@ export default function StaffSignup() {
       await axios.post("http://localhost:8070/staff/addstaff", formData);
       alert("Staff added successfully");
       setValidationErrors([]); // Clear previous validation errors on successful submission
+      window.location.href = "/stafflogin";
     } catch (error) {
       alert("Signup Error:", error.message);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -55,6 +57,13 @@ export default function StaffSignup() {
     }
   };
 
+  const handleKeyDown = (e, pattern) => {
+    const inputValue = e.target.value + e.key;
+    const inputPattern = new RegExp(pattern);
+    if (!inputPattern.test(inputValue)) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <div className="signup-page" id="signup-section">
@@ -73,7 +82,7 @@ export default function StaffSignup() {
       </header>
 
       <div className="container">
-        <h1>Staff Signup</h1>
+        <h1 className="signup-title">Staff Signup</h1>
         {validationErrors.length > 0 && (
           <div className="alert alert-danger">
             <ul>
@@ -94,6 +103,7 @@ export default function StaffSignup() {
                 id="inputFullName"
                 name="name"
                 onChange={(e) => handleChange("name", e.target.value)}
+                onKeyDown={(e) => handleKeyDown(e, "[A-Za-z\s]+")}
                 required
               />
             </div>
@@ -108,6 +118,7 @@ export default function StaffSignup() {
                 id="inputNic"
                 name="nic"
                 onChange={(e) => handleChange("nic", e.target.value)}
+                onKeyDown={(e) => handleKeyDown(e, "[0-9]+")}
                 required
               />
             </div>
@@ -122,6 +133,7 @@ export default function StaffSignup() {
                 id="inputContactNumber"
                 name="contactnumber"
                 onChange={(e) => handleChange("contactnumber", e.target.value)}
+                onKeyDown={(e) => handleKeyDown(e, "[0-9]+")}
                 required
               />
             </div>
@@ -136,6 +148,7 @@ export default function StaffSignup() {
                 id="inputEmail"
                 name="email"
                 onChange={(e) => handleChange("email", e.target.value)}
+                onKeyDown={(e) => handleKeyDown(e, "[A-Za-z0-9@.]+")}
                 required
               />
             </div>
@@ -149,7 +162,10 @@ export default function StaffSignup() {
                 className="form-control"
                 id="inputPassword"
                 name="password"
+                pattern=".{8,12}"
+                maxLength="12"
                 onChange={(e) => handleChange("password", e.target.value)}
+                onKeyDown={(e) => handleKeyDown(e, "[A-Za-z0-9]+")}
                 required
               />
             </div>
@@ -163,7 +179,10 @@ export default function StaffSignup() {
                 className="form-control"
                 id="inputConfirmPassword"
                 name="confirmpassword"
+                pattern=".{8,12}"
+                maxLength="12"
                 onChange={(e) => handleChange("confirmpassword", e.target.value)}
+                onKeyDown={(e) => handleKeyDown(e, "[A-Za-z0-9]+")}
                 required
               />
             </div>
@@ -182,11 +201,12 @@ export default function StaffSignup() {
               >
                 <option value="">Select Role</option>
                 <option value="Admin">Admin</option>
-                <option value="Financial Manager">Receptionist</option>
-                <option value="Inventory Manager">Cleaner</option>
+                <option value="Inventory Manager">Inventory Manager</option>
+                <option value="Financial Manager">Payment Manager</option>
                 <option value="Event & Reservation Cordinator">Event & Reservation Cordinator</option>
                 <option value="Meal Manager">Meal Manager</option>
                 <option value="Medical Manager">Medical Manager</option>
+                <option value="Staff Manager">Staff Manager</option>
                 {/* Add more roles as needed */}
               </select>
             </div>
@@ -204,11 +224,13 @@ export default function StaffSignup() {
 
           <div className="row mb-3">
             <div className="col-sm-10 offset-sm-2">
-              <button type="submit" className="btn btn-primary">Submit</button>
+              <button type="submit" className="btn btn-submit">Submit</button>
             </div>
           </div>
         </form>
-        <Link to="/login">Already have an account? Login here</Link>
+        <div className="already-account">
+          <Link to="/login">Already have an account? Login here</Link>
+        </div>
       </div>
     </div>
   );
