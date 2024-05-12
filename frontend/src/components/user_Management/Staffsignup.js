@@ -202,7 +202,7 @@ export default function StaffSignup() {
                 <option value="">Select Role</option>
                 <option value="Admin">Admin</option>
                 <option value="Inventory Manager">Inventory Manager</option>
-                <option value="Financial Manager">Payment Manager</option>
+                <option value="Financial Manager">Financial Manager</option>
                 <option value="Event & Reservation Cordinator">Event & Reservation Cordinator</option>
                 <option value="Meal Manager">Meal Manager</option>
                 <option value="Medical Manager">Medical Manager</option>

@@ -61,6 +61,9 @@ switch (role) {
   case 'Medical Manager':
     navigate('/get');
     break;
+  case 'Financial Manager':
+    navigate('/n');
+    break;
   default:
     navigate('/default'); // Redirect to a default page if role is not recognized
     break;
