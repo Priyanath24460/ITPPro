@@ -287,7 +287,7 @@ const handleDeleteMedicine = async (entryId) => {
 
   return (
     <div>
-        <div className="container">
+        <div className="containerName">
   <h3>NIC:{nic}</h3>
   <h3>Name: {name}</h3>
   <h3>Age: {age}</h3>

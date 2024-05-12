@@ -1,37 +1,69 @@
-// src/components/HomePage.js
 import React from 'react';
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import './user_management_CSS/HomePage.css';
 
+import image1 from '../../image1.jpg';
+import image2 from '../../image2.jpg';
+import image3 from '../../image3.jpg';
+import logo from '../../ourLogo.png'
+
 const HomePage = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true
+  
+  };
+
   return (
-    <div className="home-page"id="home-section">
+    <div className="home-page" id="home-section">
       <header className="header">
         <nav className="navbar">
           <div className="logo">Leisure Home</div>
           <ul className="nav-list">
-                <li className="nav-item">
-                <Link to="/home" className="nav-link"> Home</Link>
-                </li>
-                <li className="nav-item">Services</li>
-                <li className="nav-item">About Us</li>
-                <li className="nav-item">Contact</li>
-                <li className="nav-item">
-                <Link to="/loginchoice" className="nav-link"> Sign In</Link>
-                </li>
-                <li className="nav-item">
-                <Link to="/registrationchoice" className="nav-link">Sign Up</Link>
-                </li>
+            <li className="nav-item">
+              <Link to="/home" className="nav-link"> Home</Link>
+            </li>
+            <li className="nav-item">Services</li>
+            <li className="nav-item">About Us</li>
+            <li className="nav-item">Contact</li>
+            <li className="nav-item">
+              <Link to="/loginchoice" > Sign In</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/registrationchoice" >Sign Up</Link>
+            </li>
           </ul>
         </nav>
       </header>
 
+      
+
       <section className="hero-section">
-        <div className="hero-content">
-          <h1>Welcome to Our Elder Care System</h1>
-          <p>Providing compassionate care for your loved ones.</p>
+  <div className="hero-content">
+    <img src={logo} alt="Home Logo" className="home-logo" />
+    <h1>Welcome to Our Elder Care System</h1>
+    <p>Providing compassionate care for your loved ones.</p>
+  </div>
+</section>
+
+      <Slider {...settings}>
+        <div>
+          <img src={image1} alt="Slide 1" className="slider-image" />
         </div>
-      </section>
+        <div>
+          <img src={image2} alt="Slide 2" className="slider-image" />
+        </div>
+        <div>
+          <img src={image3} alt="Slide 3" className="slider-image" />
+        </div>
+      </Slider>
 
       <section className="main-content">
         <h2>Our Services</h2>
