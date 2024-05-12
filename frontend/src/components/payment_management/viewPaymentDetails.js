@@ -6,6 +6,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import { HolderDetailsPDF } from './HolderDetailsPDF';
 import { Modal, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import logo from '../../../src/letterhead.jpg'; 
 
 
 export default function DisplayHolderDetails() {
@@ -106,6 +107,7 @@ export default function DisplayHolderDetails() {
                                     holderDetails={filteredHolderDetails}
                                     totalCostByMonth={totalCostByMonth}
                                     totalMonthlyCost={totalMonthlyCost}
+                                    
                                 />}
                     fileName="Payment_details.pdf"
                     style={{ textDecoration: 'none' }}
@@ -127,7 +129,7 @@ export default function DisplayHolderDetails() {
                 <span style={{ color: 'blue', fontWeight: 'bold' }}>Total Monthly Cost: Rs.{totalMonthlyCost}</span>
             </p> {/* Display total monthly cost */}
           
-            <table className="table">
+            <table className="table5">
                 <thead>
                     <tr>
                         <th style={{ color: 'green' }}>Customer Name</th>
@@ -183,27 +185,29 @@ export default function DisplayHolderDetails() {
 
             {/* Holder Details Modal */}
             <Modal show={showDetails} onHide={handleCloseDetails}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Holder Details</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {selectedHolder && (
-                        <div>
-                            <p><strong>Name:</strong> {selectedHolder.customerName}</p>
-                            <p><strong>NIC:</strong> {selectedHolder.nic}</p>
-                            <p><strong>Phone Number:</strong> {selectedHolder.phoneNumber}</p>
-                            <p><strong>Email Address:</strong> {selectedHolder.EmailAddress}</p>
-                            <p><strong>Month of Payment:</strong> {selectedHolder.monthOfPayment}</p>
-                            <p><strong>Total Monthly Cost:</strong> Rs.{selectedHolder.monthlyCost}</p>
-                        </div>
-                    )}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseDetails}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+  <Modal.Header closeButton>
+    <Modal.Title style={{ color: 'blue' }}>Holder Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body style={{ backgroundColor: '#f0f0f0' }}>
+    {selectedHolder && (
+      <div>
+        <p><strong style={{ color: 'black' }}>Name:</strong><span style={{ color: 'green' }}> {selectedHolder.customerName}</span></p>
+        <p><strong style={{ color: 'black' }}>NIC:</strong><span style={{ color: 'red' }}> {selectedHolder.nic}</span></p>
+        <p><strong style={{ color: 'black' }}>Phone Number:</strong><span style={{ color: 'red' }}> {selectedHolder.phoneNumber}</span></p>
+        <p><strong style={{ color: 'black' }}>Email Address:</strong><span style={{ color: 'red' }}> {selectedHolder.EmailAddress}</span></p>
+        <p><strong style={{ color: 'black' }}>Month of Payment:</strong><span style={{ color: 'red' }}> {selectedHolder.monthOfPayment}</span></p>
+        <p><strong style={{ color: 'black' }}>Total Monthly Cost:</strong><span style={{ color: 'red' }}> Rs.{selectedHolder.monthlyCost}</span></p>
+      </div>
+    )}
+  </Modal.Body>
+  <Modal.Footer style={{ borderTop: '1px solid #ccc' }}>
+    <Button variant="secondary" onClick={handleCloseDetails}>
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
+
+
         </div>
     );
 }
