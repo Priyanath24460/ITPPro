@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
+import logo from '../../../src/letterhead.jpg'; 
 
 function HistoryList() {
   const [history, setHistory] = useState([]);
@@ -64,48 +65,69 @@ function HistoryList() {
     setTotalAddPrice(addPrice);
   };
 
-  // Function to generate PDF
   const generatePDF = () => {
     const doc = new jsPDF();
 
-    // Set font
-    doc.setFont("times");
+    // Load logo image
+    const logoImg = new Image();
+    logoImg.src = logo;
+    logoImg.onload = function() {
+        // Set logo dimensions to fit the entire page
+        const pageWidth = doc.internal.pageSize.width;
+        const pageHeight = doc.internal.pageSize.height;
+        const imgWidth = pageWidth;
+        const imgHeight = (pageWidth / logoImg.width) * logoImg.height;
 
-    // Add header
-    doc.setFontSize(20);
-    doc.text("Medical History", 105, 15, { align: "center" });
+        // Add logo to fill the entire page
+        doc.addImage(logoImg, "JPEG", 0, 0, pageWidth, imgHeight);
 
-    let startY = 30;
+        // Adjust top margin
+        let startY = 55;
 
-    // Add table headers
-    doc.setFontSize(12);
-    doc.text("Item Code", 15, startY);
-    doc.text("Operation", 45, startY);
-    doc.text("Count", 75, startY);
-    doc.text("Price Per Item", 105, startY);
-    doc.text("Total Price", 135, startY);
-    doc.text("Update Date", 165, startY);
+        // Add content on top of the logo
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold"); // Set font style to bold
+        doc.text("Medical History", pageWidth / 2, startY, { align: "center" });
 
-    startY += 10; // Move down after headers
+        startY += 15; // Increase startY for the next element
 
-    // Add table data
-    history.forEach((entry, index) => {
-      const rowY = startY + index * 10;
-      doc.text(entry.itemCode, 15, rowY);
-      doc.text(entry.operation, 45, rowY);
-      doc.text(entry.count.toString(), 75, rowY);
-      doc.text(entry.pricePerItem.toString(), 105, rowY);
-      doc.text(calculateTotalPrice(entry.count, entry.pricePerItem).toString(), 135, rowY);
-      doc.text(new Date(entry.updateDate).toLocaleString(), 165, rowY);
-    });
+        // Add table headers
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal"); 
+        doc.text("Item Code", 15, startY);
+        doc.text("Operation", 45, startY);
+        doc.text("Count", 75, startY);
+        doc.text("Price Per Item", 105, startY);
+        doc.text("Total Price", 135, startY);
+        doc.text("Update Date", 165, startY);
 
-    // Add total prices
-    doc.text(`Total Remove Price: ${totalRemovePrice}`, 10, startY + (history.length + 1) * 10);
-    doc.text(`Total Add Price: ${totalAddPrice}`, 10, startY + (history.length + 2) * 10);
+        startY += 10; // Move down after headers
 
-    // Save PDF
-    doc.save("history.pdf");
-  };
+        // Add table data
+        history.forEach((entry, index) => {
+            const rowY = startY + index * 10;
+            doc.text(entry.itemCode, 15, rowY);
+            doc.text(entry.operation, 45, rowY);
+            doc.text(entry.count.toString(), 75, rowY);
+            doc.text(entry.pricePerItem.toString(), 105, rowY);
+            doc.text(calculateTotalPrice(entry.count, entry.pricePerItem).toString(), 135, rowY);
+            doc.text(new Date(entry.updateDate).toLocaleString(), 165, rowY);
+        });
+
+        // Add total prices
+        doc.text(`Total Remove Price: ${totalRemovePrice}`, 10, startY + (history.length + 1) * 10);
+        doc.text(`Total Add Price: ${totalAddPrice}`, 10, startY + (history.length + 2) * 10);
+
+        // Save PDF
+        doc.save("history.pdf");
+    };
+};
+
+
+
+
+
+
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif" }}>

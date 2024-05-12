@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import "./viewmedicalItemsc.css"; 
+import logo from '../../../src/letterhead.jpg'; // Import the JPG image
+
 
 const RetrieveItems = () => {
     const [items, setItems] = useState([]);
@@ -57,12 +59,11 @@ const RetrieveItems = () => {
 
     const handlePrint = () => {
         const doc = new jsPDF();
-        const startX = 10;
-        const startY = 10;
         const margin = 10;
+        const top=50;
         const columnWidth = (doc.internal.pageSize.width - 2 * margin) / 10;
         const columns = ["Item Code", "Item Name", "Amount", "Price Per Item", "Total Value", "Brand Name", "Supplier Name", "Item Date", "Status"];
-        const rows = filteredItems.map(item => [
+        const rows = items.map(item => [
             item.itemCode,
             item.itemName,
             item.amount,
@@ -73,14 +74,28 @@ const RetrieveItems = () => {
             formatDate(item.itemDate),
             item.amount === 0 ? "Out of Stock" : "In Stock"
         ]);
-        doc.autoTable({
-            startY,
-            head: [columns],
-            body: rows,
-            startY: startY + 10
-        });
-        doc.save("inventory.pdf");
+    
+        // Load logo image
+        const logoImg = new Image();
+        logoImg.src = logo;
+        logoImg.onload = function() {
+            const imgWidth = doc.internal.pageSize.width; // Adjust to fit the entire page width
+            const imgHeight = (logoImg.height * imgWidth) / logoImg.width;
+    
+            // Add logo as background
+            doc.addImage(logoImg, 'JPEG', 0, 0, imgWidth, imgHeight);
+    
+            // Add table data on top
+            doc.autoTable({
+                startY: top + margin, // Start below the logo
+                head: [columns],
+                body: rows,
+            });
+    
+            doc.save("inventory.pdf");
+        };
     };
+    
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
