@@ -32,6 +32,7 @@ const Guardiansignup = () => {
         role: 'guardian' // Reset role to 'guardian' after submission
       });
       alert('Guardian registered successfully!');
+      navigate('/guardianlogin');
     } catch (error) {
       console.error('Registration error:', error.message);
       alert('Registration error. Please try again.');

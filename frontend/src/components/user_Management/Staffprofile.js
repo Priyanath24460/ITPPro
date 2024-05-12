@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function StaffProfile() {
   const { nic } = useParams();
-  console.log("NIC:", nic);
-  const [staff, setStaff] = useState({ name: "", nic: "" });
+  const [staff, setStaff] = useState({ name: "", nic: "", role: "", contactnumber: "", email: "" });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     async function getStaff() {
@@ -27,41 +27,114 @@ export default function StaffProfile() {
     getStaff();
   }, [nic]);
 
+  
+
+  const handleUpdate = async () => {
+    try {
+      const response = await axios.put(`http://localhost:8070/staff/updatestaff/${nic}`, staff);
+      console.log("Update successful:", response.data);
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Error updating staff data:", err);
+    }
+  };
+
+
+  const handleNameChange = (e) => {
+    const nameRegex = /^[a-zA-Z\s]*$/; // Allow only letters and spaces
+    if (nameRegex.test(e.target.value) || e.target.value === "") {
+      setStaff({ ...staff, name: e.target.value });
+    }
+  };
+
+  const handleContactNumberChange = (e) => {
+    const numberRegex = /^[0-9]*$/; // Allow only numbers
+    if (numberRegex.test(e.target.value) || e.target.value === "") {
+      setStaff({ ...staff, contactnumber: e.target.value });
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // Validate email format
+    if (emailRegex.test(e.target.value) || e.target.value === "" || e.target.value === "@" || e.target.value.endsWith("@")) {
+      setStaff({ ...staff, email: e.target.value });
+    }
+  };
+
   if (!nic) {
     return <p>NIC parameter is missing.</p>;
   }
-  
+
   if (loading) {
     return <p>Loading...</p>;
   }
-  
+
   if (error) {
     return <p>{error}</p>;
   }
-  
+
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: 'auto' }}>
-      <h1 style={{ color: '#333', borderBottom: '2px solid #333', paddingBottom: '10px' }}>Staff Profile</h1>
-      <div style={{ marginBottom: '20px' }}>
-        <strong>Name:</strong> {staff.name} <br />
-        <strong>NIC:</strong> {staff.nic} <br />
-        <strong>Contact Number:</strong> {staff.contactnumber} <br />
-        <strong>Email:</strong> {staff.email} <br />
-        <strong>Role:</strong> {staff.role} <br />
+    <div className="container">
+      <h1 className="heading">Staff Profile</h1>
+      <div className="profile-wrapper">
+        <div className="profile-info">
+          <span className="label">Name:</span>
+          {!isEditing ? (
+            <span>{staff.name}</span>
+          ) : (
+            <input
+              className="input-field"
+              type="text"
+              value={staff.name}
+              onChange={handleNameChange}
+            />
+          )}
+        </div>
+        <div className="profile-info">
+          <span className="label">NIC:</span>
+          <span>{staff.nic}</span>
+        </div>
+        <div className="profile-info">
+          <span className="label">Contact Number:</span>
+          {!isEditing ? (
+            <span>{staff.contactnumber}</span>
+          ) : (
+            <input
+              className="input-field"
+              type="text"
+              value={staff.contactnumber}
+              onChange={handleContactNumberChange}
+            />
+          )}
+        </div>
+        <div className="profile-info">
+          <span className="label">Email:</span>
+          {!isEditing ? (
+            <span>{staff.email}</span>
+          ) : (
+            <input
+              className="input-field"
+              type="text"
+              value={staff.email}
+              onChange={handleEmailChange}
+            />
+          )}
+        </div>
+        <div className="profile-info">
+          <span className="label">Role:</span>
+          <span>{staff.role}</span>
+        </div>
+        <div>
+          {!isEditing ? (
+            <button className="edit-btn" onClick={() => setIsEditing(true)}>Edit</button>
+          ) : (
+            <>
+              <button className="save-btn" onClick={handleUpdate}>Save</button>
+              <button className="cancel-btn" onClick={() => setIsEditing(false)}>Cancel</button>
+            </>
+          )}
+        </div>
       </div>
-      <Link to={`/updatestaff/${staff.nic}`}>
-        <button style={buttonStyle}>Update</button>
-      </Link>
     </div>
   );
 }
-
-const buttonStyle = {
-  backgroundColor: '#4CAF50',
-  color: 'white',
-  padding: '10px 20px',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer',
-  marginTop: '10px',
-};

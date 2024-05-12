@@ -7,10 +7,10 @@ h1.text-center.my-4 {
 /* Apply background image to the body */
 .page-wrapper {
   background-image: url('../../../../public/userimages/registrationbg.jpg');
-  background-size: cover;
+  background-size: cover; /* Change to cover to stretch the image to cover the entire container */
   background-position: center;
   background-repeat: no-repeat;
-  height: 92.3vh; /* Ensures that the div covers the entire viewport height */
+  height: 120vh; /* Increase the height to 120vh or adjust as needed */
 }
 
 

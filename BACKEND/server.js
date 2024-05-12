@@ -84,12 +84,6 @@ app.use("/rooms",roomsRouter);
 const residentsRouter = require("./routes/room_management_routes/residents.js");
 app.use("/residents",residentsRouter);
 
-// event management
-const eventRouter = require("./routes/event_management_route/Events.js");
-app.use("/event",eventRouter);
-
-const itemRouter = require("./routes/event_management_route/EventItems.js");
-app.use("/items",itemRouter);
 
 
 // staff management

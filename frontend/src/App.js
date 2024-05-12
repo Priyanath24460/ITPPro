@@ -125,7 +125,7 @@ function App() {
           <Route path="/otpentry/:email" element={<OtpEntry/>}/>
           <Route path="/forgotpassword" element={<Forgotpassword/>}/>
           <Route path="/getloginevent" element={<LoginPieChart/>}/>
-          <Route path="/admin:nic" element={<Admindashboard/>}/>
+          <Route path="/admin/:nic" element={<Admindashboard/>}/>
           <Route path="/staffprofile/:nic" element={<Staffprofile/>} />
           <Route path="/allstaff" element= {<Allstaff/>} />
           <Route path="/stafflogin" element ={<Stafflogin/>} />
